@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-03-23 Mon 09:50 -->
+<!-- 2020-03-23 Mon 12:46 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Writing Testable Code</title>
@@ -180,14 +180,15 @@ body {
   max-width: 800px;
   padding: 0 1em;
   font-size: 16pt;
-  font-family: Latin Modern Roman, "Latin Modern Roman", Times, serif;
+  font-family: Times, serif;
   line-height: 1.4;
+  /* background: #34363e; */
   color: #343637;
 }
 
 code, pre {
-  font-size: 14pt;
-  font-family: "Latin Modern Mono", Monaco, Menlo, DejaVu Sans Mono, monospace;
+  font-size: 10pt;
+  font-family: Monaco, Menlo, DejaVu Sans Mono, monospace;
 }
 
 .title {
@@ -303,19 +304,19 @@ pre.src {
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org558c568">Overview of "Guide: Writing Testable Code"</a>
+<li><a href="#org1c65b09">Overview of "Guide: Writing Testable Code"</a>
 <ul>
-<li><a href="#orgdc87517">Global state</a>
+<li><a href="#orgdc6068d">Global state</a>
 <ul>
-<li><a href="#org6b7a38d">Caveats</a></li>
+<li><a href="#orgf778d30">Caveats</a></li>
 </ul>
 </li>
-<li><a href="#org6e6e570">Digging into Collaborators</a></li>
-<li><a href="#orga17b092">Doing too much or too many things</a></li>
-<li><a href="#org1a424c1">Business Logic in Constructors</a></li>
+<li><a href="#org2fc2aa7">Digging into Collaborators</a></li>
+<li><a href="#orgdde7608">Doing too much or too many things</a></li>
+<li><a href="#org629a4a5">Business Logic in Constructors</a></li>
 </ul>
 </li>
-<li><a href="#org2a6ff4d">Epilogue</a></li>
+<li><a href="#orgf1fe58a">Epilogue</a></li>
 </ul>
 </div>
 </div>
@@ -355,9 +356,9 @@ purely functional ones. But to be fair, purely functional languages, like Elm,
 makes it really hard to write untestable code.
 </p>
 
-<div id="outline-container-org558c568" class="outline-2">
-<h2 id="org558c568">Overview of "Guide: Writing Testable Code"</h2>
-<div class="outline-text-2" id="text-org558c568">
+<div id="outline-container-org1c65b09" class="outline-2">
+<h2 id="org1c65b09">Overview of "Guide: Writing Testable Code"</h2>
+<div class="outline-text-2" id="text-org1c65b09">
 <p>
 "Guide: Writing Testable Code" was written as internal document at Google
 targeting Java code. Many of given examples are very much tied to Java and
@@ -390,9 +391,9 @@ least.
 </p>
 </div>
 
-<div id="outline-container-orgdc87517" class="outline-3">
-<h3 id="orgdc87517">Global state</h3>
-<div class="outline-text-3" id="text-orgdc87517">
+<div id="outline-container-orgdc6068d" class="outline-3">
+<h3 id="orgdc6068d">Global state</h3>
+<div class="outline-text-3" id="text-orgdc6068d">
 <p>
 Global state is sneaky. It might hide under multiple concepts: mutable
 variables, static methods, singleton objects, and any dependencies that are not
@@ -647,9 +648,9 @@ duration:  11ms
 </pre>
 </div>
 
-<div id="outline-container-org6b7a38d" class="outline-4">
-<h4 id="org6b7a38d">Caveats</h4>
-<div class="outline-text-4" id="text-org6b7a38d">
+<div id="outline-container-orgf778d30" class="outline-4">
+<h4 id="orgf778d30">Caveats</h4>
+<div class="outline-text-4" id="text-orgf778d30">
 <ol class="org-ol">
 <li>Not every dependency has to become a parameter. Constant values, value
 objects, and pure functions can be used without worry. Good example is
@@ -663,9 +664,9 @@ once in the former part and never in the latter.</li>
 </div>
 </div>
 
-<div id="outline-container-org6e6e570" class="outline-3">
-<h3 id="org6e6e570">Digging into Collaborators</h3>
-<div class="outline-text-3" id="text-org6e6e570">
+<div id="outline-container-org2fc2aa7" class="outline-3">
+<h3 id="org2fc2aa7">Digging into Collaborators</h3>
+<div class="outline-text-3" id="text-org2fc2aa7">
 <p>
 This one is very easy to spot. For example, if we see a second level access of
 property in your code like this
@@ -731,9 +732,9 @@ you need to answer a question of what exactly component needs to do its job.
 </div>
 </div>
 
-<div id="outline-container-orga17b092" class="outline-3">
-<h3 id="orga17b092">Doing too much or too many things</h3>
-<div class="outline-text-3" id="text-orga17b092">
+<div id="outline-container-orgdde7608" class="outline-3">
+<h3 id="orgdde7608">Doing too much or too many things</h3>
+<div class="outline-text-3" id="text-orgdde7608">
 <p>
 Also known as a failure to maintain single responsibility principle. Usual rule
 of thumb is to look for names containing "and". But I find this problematic as
@@ -800,9 +801,9 @@ which will lead to other solutions.
 </div>
 </div>
 
-<div id="outline-container-org1a424c1" class="outline-3">
-<h3 id="org1a424c1">Business Logic in Constructors</h3>
-<div class="outline-text-3" id="text-org1a424c1">
+<div id="outline-container-org629a4a5" class="outline-3">
+<h3 id="org629a4a5">Business Logic in Constructors</h3>
+<div class="outline-text-3" id="text-org629a4a5">
 <p>
 This one is my favourite. Mostly because I've never seen it articulated and
 written down so clearly before.
@@ -878,9 +879,9 @@ ReactDOM.render(&lt;App /&gt;, document.getElementById(... ));
 </div>
 </div>
 
-<div id="outline-container-org2a6ff4d" class="outline-2">
-<h2 id="org2a6ff4d">Epilogue</h2>
-<div class="outline-text-2" id="text-org2a6ff4d">
+<div id="outline-container-orgf1fe58a" class="outline-2">
+<h2 id="orgf1fe58a">Epilogue</h2>
+<div class="outline-text-2" id="text-orgf1fe58a">
 <p>
 After meditating on this blog post for some time I couldn't help but reflect and
 compare my experience with React and AngularJS. There's still a place in my
