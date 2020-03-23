@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-03-23 Mon 09:50 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Writing Testable Code</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Donatas Petrauskas">
+<style type="text/css">.title  { text-align: center;
+          margin-bottom: .2em; }
+.subtitle { text-align: center;
+            font-size: medium;
+            font-weight: bold;
+            margin-top:0; }
+.todo   { font-family: monospace; color: red; }
+.done   { font-family: monospace; color: green; }
+.priority { font-family: monospace; color: orange; }
+.tag    { background-color: #eee; font-family: monospace;
+          padding: 2px; font-size: 80%; font-weight: normal; }
+.timestamp { color: #bebebe; }
+.timestamp-kwd { color: #5f9ea0; }
+.org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+.org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+.org-center { margin-left: auto; margin-right: auto; text-align: center; }
+.underline { text-decoration: underline; }
+#postamble p, #preamble p { font-size: 90%; margin: .2em; }
+p.verse { margin-left: 3%; }
+pre {
+  border: 1px solid #ccc;
+  box-shadow: 3px 3px 3px #eee;
+  padding: 8pt;
+  font-family: monospace;
+  overflow: auto;
+  margin: 1.2em;
+}
+pre.src {
+  position: relative;
+  overflow: visible;
+  padding-top: 1.2em;
+}
+pre.src:before {
+  display: none;
+  position: absolute;
+  background-color: white;
+  top: -10px;
+  right: 10px;
+  padding: 3px;
+  border: 1px solid black;
+}
+pre.src:hover:before { display: inline;}
+/* Languages per Org manual */
+pre.src-asymptote:before { content: 'Asymptote'; }
+pre.src-awk:before { content: 'Awk'; }
+pre.src-C:before { content: 'C'; }
+/* pre.src-C++ doesn't work in CSS */
+pre.src-clojure:before { content: 'Clojure'; }
+pre.src-css:before { content: 'CSS'; }
+pre.src-D:before { content: 'D'; }
+pre.src-ditaa:before { content: 'ditaa'; }
+pre.src-dot:before { content: 'Graphviz'; }
+pre.src-calc:before { content: 'Emacs Calc'; }
+pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+pre.src-fortran:before { content: 'Fortran'; }
+pre.src-gnuplot:before { content: 'gnuplot'; }
+pre.src-haskell:before { content: 'Haskell'; }
+pre.src-hledger:before { content: 'hledger'; }
+pre.src-java:before { content: 'Java'; }
+pre.src-js:before { content: 'Javascript'; }
+pre.src-latex:before { content: 'LaTeX'; }
+pre.src-ledger:before { content: 'Ledger'; }
+pre.src-lisp:before { content: 'Lisp'; }
+pre.src-lilypond:before { content: 'Lilypond'; }
+pre.src-lua:before { content: 'Lua'; }
+pre.src-matlab:before { content: 'MATLAB'; }
+pre.src-mscgen:before { content: 'Mscgen'; }
+pre.src-ocaml:before { content: 'Objective Caml'; }
+pre.src-octave:before { content: 'Octave'; }
+pre.src-org:before { content: 'Org mode'; }
+pre.src-oz:before { content: 'OZ'; }
+pre.src-plantuml:before { content: 'Plantuml'; }
+pre.src-processing:before { content: 'Processing.js'; }
+pre.src-python:before { content: 'Python'; }
+pre.src-R:before { content: 'R'; }
+pre.src-ruby:before { content: 'Ruby'; }
+pre.src-sass:before { content: 'Sass'; }
+pre.src-scheme:before { content: 'Scheme'; }
+pre.src-screen:before { content: 'Gnu Screen'; }
+pre.src-sed:before { content: 'Sed'; }
+pre.src-sh:before { content: 'shell'; }
+pre.src-sql:before { content: 'SQL'; }
+pre.src-sqlite:before { content: 'SQLite'; }
+/* additional languages in org.el's org-babel-load-languages alist */
+pre.src-forth:before { content: 'Forth'; }
+pre.src-io:before { content: 'IO'; }
+pre.src-J:before { content: 'J'; }
+pre.src-makefile:before { content: 'Makefile'; }
+pre.src-maxima:before { content: 'Maxima'; }
+pre.src-perl:before { content: 'Perl'; }
+pre.src-picolisp:before { content: 'Pico Lisp'; }
+pre.src-scala:before { content: 'Scala'; }
+pre.src-shell:before { content: 'Shell Script'; }
+pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+/* additional language identifiers per \"defun org-babel-execute\"
+       in ob-*.el */
+pre.src-cpp:before  { content: 'C++'; }
+pre.src-abc:before  { content: 'ABC'; }
+pre.src-coq:before  { content: 'Coq'; }
+pre.src-groovy:before  { content: 'Groovy'; }
+/* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+pre.src-bash:before  { content: 'bash'; }
+pre.src-csh:before  { content: 'csh'; }
+pre.src-ash:before  { content: 'ash'; }
+pre.src-dash:before  { content: 'dash'; }
+pre.src-ksh:before  { content: 'ksh'; }
+pre.src-mksh:before  { content: 'mksh'; }
+pre.src-posh:before  { content: 'posh'; }
+/* Additional Emacs modes also supported by the LaTeX listings package */
+pre.src-ada:before { content: 'Ada'; }
+pre.src-asm:before { content: 'Assembler'; }
+pre.src-caml:before { content: 'Caml'; }
+pre.src-delphi:before { content: 'Delphi'; }
+pre.src-html:before { content: 'HTML'; }
+pre.src-idl:before { content: 'IDL'; }
+pre.src-mercury:before { content: 'Mercury'; }
+pre.src-metapost:before { content: 'MetaPost'; }
+pre.src-modula-2:before { content: 'Modula-2'; }
+pre.src-pascal:before { content: 'Pascal'; }
+pre.src-ps:before { content: 'PostScript'; }
+pre.src-prolog:before { content: 'Prolog'; }
+pre.src-simula:before { content: 'Simula'; }
+pre.src-tcl:before { content: 'tcl'; }
+pre.src-tex:before { content: 'TeX'; }
+pre.src-plain-tex:before { content: 'Plain TeX'; }
+pre.src-verilog:before { content: 'Verilog'; }
+pre.src-vhdl:before { content: 'VHDL'; }
+pre.src-xml:before { content: 'XML'; }
+pre.src-nxml:before { content: 'XML'; }
+/* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf \" \")) in .emacs */
+pre.src-conf:before { content: 'Configuration File'; }
+
+table { border-collapse:collapse; }
+caption.t-above { caption-side: top; }
+caption.t-bottom { caption-side: bottom; }
+td, th { vertical-align:top;  }
+th.org-right  { text-align: center;  }
+th.org-left   { text-align: center;   }
+th.org-center { text-align: center; }
+td.org-right  { text-align: right;  }
+td.org-left   { text-align: left;   }
+td.org-center { text-align: center; }
+dt { font-weight: bold; }
+.footpara { display: inline; }
+.footdef  { margin-bottom: 1em; }
+.figure { padding: 1em; }
+.figure p { text-align: center; }
+.inlinetask {
+  padding: 10px;
+  border: 2px solid gray;
+  margin: 10px;
+  background: #ffffcc;
+}
+#org-div-home-and-up
+{ text-align: right; font-size: 70%; white-space: nowrap; }
+textarea { overflow-x: auto; }
+.linenr { font-size: smaller }
+.code-highlighted { background-color: #ffff00; }
+.org-info-js_info-navigation { border-style: none; }
+#org-info-js_console-label
+{ font-size: 10px; font-weight: bold; white-space: nowrap; }
+.org-info-js_search-highlight
+{ background-color: #ffff00; color: #000000; font-weight: bold; }
+.org-svg { width: 90%; }
+
+body {
+  margin: 10em auto 1em;
+  max-width: 800px;
+  padding: 0 1em;
+  font-size: 16pt;
+  font-family: Latin Modern Roman, "Latin Modern Roman", Times, serif;
+  line-height: 1.4;
+  color: #343637;
+}
+
+code, pre {
+  font-size: 14pt;
+  font-family: "Latin Modern Mono", Monaco, Menlo, DejaVu Sans Mono, monospace;
+}
+
+.title {
+  margin-bottom: 3em;
+}
+
+p {
+  text-align: justify;
+}
+
+.org-src-name {
+  font-size: 12pt;
+}
+
+pre.src {
+  padding: 1em;
+  border: 1px solid #eee;
+  border-radius: 2px;
+}
+
+#footnotes {
+  font-size: 12pt;
+}
+
+#navigation {
+  display: flex;
+  align-items: top;
+  position: fixed;
+  top: 16pt;
+  left: 0;
+  padding: 6pt 10pt;
+  font-size: 20pt;
+  background: black;
+  color: white;
+  border-top-right-radius: 6pt;
+  border-bottom-right-radius: 6pt;
+}
+
+#navigation a, #navigation a:active, #navigation a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+#navigation ul {
+  padding: 0 0 0 10pt;
+  margin: 0;
+  list-style: none;
+}
+
+#navigation button {
+  width: 20pt;
+  font-size: 20pt;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0 none;
+  cursor: pointer;
+  line-height: 1;
+  height: 27pt;
+  color: white;
+}
+
+#navigation ul li {
+  line-height: 1em;
+  padding: .25em 0;
+}
+
+#navigation.closed ul {
+  display: none
+}
+#navigation.open ul {
+  display: block
+}
+
+#navigation #nav-menu { display: none }
+#navigation.closed #nav-close { display: none }
+#navigation.closed #nav-menu { display: block }
+</style><script>(function () {
+  window.addEventListener('DOMContentLoaded', initialize);
+
+  let nav;
+  let close;
+  let menu;
+
+  function initialize() {
+    nav = document.getElementById('navigation');
+    close = document.getElementById('nav-close');
+    menu = document.getElementById('nav-menu');
+
+    close.onclick = closeMenu;
+    menu.onclick = showMenu;
+
+    closeMenu();
+  }
+
+  function closeMenu() {
+    nav.classList.add('closed');
+  }
+
+  function showMenu() {
+    nav.classList.remove('closed');
+  }
+})();
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Writing Testable Code
+<br>
+<span class="subtitle">TypeScript and JavaScript Edition</span>
+</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org558c568">Overview of "Guide: Writing Testable Code"</a>
+<ul>
+<li><a href="#orgdc87517">Global state</a>
+<ul>
+<li><a href="#org6b7a38d">Caveats</a></li>
+</ul>
+</li>
+<li><a href="#org6e6e570">Digging into Collaborators</a></li>
+<li><a href="#orga17b092">Doing too much or too many things</a></li>
+<li><a href="#org1a424c1">Business Logic in Constructors</a></li>
+</ul>
+</li>
+<li><a href="#org2a6ff4d">Epilogue</a></li>
+</ul>
+</div>
+</div>
+<p>
+<i>Reading time: up to 10 years</i>.
+</p>
+
+<p>
+I spend substantial amount of time writing tests and consequentially learning
+about software design in the process. I also learn best from my own mistakes as
+it's hard for me to understand abstract ideas unless presented with concrete and
+familiar examples. That is why video talks and articles in "Guide: Writing
+Testable Code"<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> series from Miško Hevery of AngularJS fame resonated with
+me. It has a nice balance of theory and practical examples.
+</p>
+
+<p>
+The reason why I read this pretty long document and watched Google Tech Talks on
+testable code<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> is that my career as front-end developer started with
+AngularJS about 6<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup> years ago. The great thing with AngularJS was (and is)
+that it introduced architecture which encourage testable code. It took me a
+couple of years to appreciate what AngularJS offered and to really grasp it's
+potential. Guiding principles laid out in Miško's articles was what I
+lacked. Once understood, it became clear what constitutes testable code. It
+didn't become easy to write, though.
+</p>
+
+<p>
+My hope with this article is to channel Miško's ideas and give you, dear reader,
+cognitive tools for recognizing untestable code.
+</p>
+
+<p>
+<i>Note</i>: In this article I will be using TypeScript and JavaScript code as
+examples, but rules are universal and can be applied to other languages. Even
+purely functional ones. But to be fair, purely functional languages, like Elm,
+makes it really hard to write untestable code.
+</p>
+
+<div id="outline-container-org558c568" class="outline-2">
+<h2 id="org558c568">Overview of "Guide: Writing Testable Code"</h2>
+<div class="outline-text-2" id="text-org558c568">
+<p>
+"Guide: Writing Testable Code" was written as internal document at Google
+targeting Java code. Many of given examples are very much tied to Java and
+Dependency Injection framework Guice. But the underlying ideas are applicable to
+TypeScript and JavaScript nonetheless.
+</p>
+
+<p>
+Guide consists of 4 parts (flaws):
+</p>
+<ol class="org-ol">
+<li>"Constructor does Real Work"</li>
+<li>"Digging into Collaborators"</li>
+<li>"Brittle Global State &amp; Singletons"</li>
+<li>"Class Does Too Much"</li>
+</ol>
+
+<p>
+Parts 2 to 4 are kind of obvious, but we will go through them anyway. While part
+1 is definitely a common sense one, I don't think I ever saw it mentioned and
+pointed out so clearly before. Making your constructors dumb is very important
+for objects to be testable. Moreover, it also has this nice consequence of
+forcing your app or module to have clearly separated initialization and
+execution phases.
+</p>
+
+<p>
+I would like to take you through these flaws from, subjectively, most obvious to
+least.
+</p>
+</div>
+
+<div id="outline-container-orgdc87517" class="outline-3">
+<h3 id="orgdc87517">Global state</h3>
+<div class="outline-text-3" id="text-orgdc87517">
+<p>
+Global state is sneaky. It might hide under multiple concepts: mutable
+variables, static methods, singleton objects, and any dependencies that are not
+passed as arguments. Global state is infectious. Single instance of it in small
+module will corrupt all of your application.
+</p>
+
+<p>
+Singleton pattern in OOP is well spread practice, so how come it is
+bad? Answer is that it's not bad, unless it is global.
+</p>
+
+<p>
+Let's take a look at small example of sneaky global state.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>Cache module.</label><pre class="src src-javascript"><span class="org-keyword">const</span> <span class="org-variable-name">cache</span> = {};
+
+<span class="org-keyword">function</span> <span class="org-function-name">set</span>(<span class="org-variable-name">key</span>, <span class="org-variable-name">value</span>) {
+  <span class="org-keyword">return</span> cache[key] = value;
+}
+
+<span class="org-keyword">function</span> <span class="org-function-name">get</span>(<span class="org-variable-name">key</span>) {
+  <span class="org-keyword">return</span> cache[key];
+}
+
+module.exports = {
+  set,
+  get,
+};
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>Utility to fetch posts.</label><pre class="src src-javascript"><span class="org-keyword">const</span> <span class="org-variable-name">fetch</span> = require(<span class="org-string">'node-fetch'</span>);
+<span class="org-keyword">const</span> <span class="org-variable-name">cache</span> = require(<span class="org-string">'./cache'</span>);
+
+<span class="org-keyword">const</span> <span class="org-variable-name">BASE_URL</span> = <span class="org-string">'http://localhost:8080'</span>;
+
+<span class="org-keyword">async</span> <span class="org-keyword">function</span> fetchPosts(<span class="org-variable-name">since</span>) {
+  <span class="org-keyword">const</span> <span class="org-variable-name">timestamp</span> = since.getTime();
+  <span class="org-keyword">const</span> <span class="org-variable-name">KEY</span> = <span class="org-string">'posts_since_'</span> + timestamp;
+  <span class="org-keyword">let</span> <span class="org-variable-name">posts</span> = cache.get(KEY);
+  <span class="org-keyword">if</span> (posts == <span class="org-constant">null</span>) {
+    <span class="org-keyword">const</span> <span class="org-variable-name">response</span> = <span class="org-keyword">await</span> fetch(BASE_URL + <span class="org-string">'/posts?since='</span> + timestamp);
+    <span class="org-keyword">if</span> (response.status === 200) {
+      posts = <span class="org-keyword">await</span> response.json();
+      cache.set(KEY, posts);
+    } <span class="org-keyword">else</span> {
+      <span class="org-keyword">return</span> {error: <span class="org-string">'Cannot fetch posts'</span>};
+    }
+  }
+  <span class="org-keyword">return</span> {result: posts};
+}
+
+module.exports = {
+  fetchPosts,
+};
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>Complicated tests.</label><pre class="src src-javascript"><span class="org-keyword">const</span> <span class="org-variable-name">test</span> = require(<span class="org-string">'tape'</span>);
+<span class="org-keyword">const</span> <span class="org-variable-name">proxyquire</span> = require(<span class="org-string">'proxyquire'</span>);
+
+test(<span class="org-string">'fetchPosts()'</span>, <span class="org-keyword">async</span> (assert) =&gt; {
+  <span class="org-keyword">const</span> <span class="org-variable-name">expectedPosts</span> = [1, 2, 3];
+  <span class="org-keyword">const</span> <span class="org-variable-name">expectedError</span> = <span class="org-string">'Cannot fetch posts'</span>;
+  <span class="org-keyword">let</span> <span class="org-variable-name">fetchPostsModule</span> = proxyquire(<span class="org-string">'./fetch-posts'</span>, {
+    <span class="org-string">'node-fetch'</span>: (url) =&gt;
+      Promise.resolve({status: 200, json: () =&gt; Promise.resolve(expectedPosts)})
+  });
+
+  assert.deepEqual(
+    <span class="org-keyword">await</span> fetchPostsModule.fetchPosts(<span class="org-keyword">new</span> <span class="org-type">Date</span>()),
+    {result: expectedPosts},
+    <span class="org-string">'successfully fetches posts'</span>
+  );
+
+  fetchPostsModule = proxyquire(<span class="org-string">'./fetch-posts'</span>, {
+    <span class="org-string">'node-fetch'</span>: (url) =&gt; Promise.resolve({status: 500})
+  });
+
+  assert.deepEqual(
+    <span class="org-keyword">await</span> fetchPostsModule.fetchPosts(<span class="org-keyword">new</span> <span class="org-type">Date</span>()),
+    {error: expectedError},
+    <span class="org-string">'returns empty array and error on failure'</span>
+  );
+
+  assert.end();
+});
+</pre>
+</div>
+
+<p>
+Great success!?
+</p>
+
+<pre class="example">
+
+fetchPosts()
+
+  ✔ successfully fetches posts
+  ✔ returns empty array and error on failure
+
+
+total:     2
+passing:   2
+duration:  25ms
+
+
+</pre>
+
+<p>
+Not really. Even though tests have passed, we had to use proxyquire<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup> to tap
+into module system and override dependencies. This a neat trick, but ultimately
+it's a sign of global state issue. Modules are singletons, they're run only
+once. Even though it's pretty common to see such code in a wild, it's not
+testable or REPL friendly.
+</p>
+
+<p>
+There is another catch &#x2013; our tests are only accidentally successful. If they
+would run fast enough to produce the same timestamp, we would get data served
+from the cache, which is a singleton object for whole application.
+</p>
+
+<p>
+What does testable code look like?
+</p>
+
+<p>
+First, Cache module exposes a function to create one.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>Cache module.</label><pre class="src src-javascript"><span class="org-keyword">function</span> <span class="org-function-name">Cache</span>() {
+  <span class="org-keyword">const</span> <span class="org-variable-name">store</span> = {};
+
+  <span class="org-keyword">function</span> <span class="org-function-name">set</span>(<span class="org-variable-name">key</span>, <span class="org-variable-name">value</span>) {
+    <span class="org-keyword">return</span> store[key] = value;
+  }
+
+  <span class="org-keyword">function</span> <span class="org-function-name">get</span>(<span class="org-variable-name">key</span>) {
+    <span class="org-keyword">return</span> store[key];
+  }
+
+  <span class="org-keyword">return</span> {
+    set,
+    get,
+  };
+}
+
+module.exports = Cache;
+</pre>
+</div>
+
+<p>
+The same goes for utility to fetch posts. It's a repository object now, that can
+be configured with all it's dependencies.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>Posts repository object.</label><pre class="src src-javascript"><span class="org-keyword">function</span> <span class="org-function-name">PostsRepo</span>(<span class="org-variable-name">BASE_URL</span>, <span class="org-variable-name">fetch</span>, <span class="org-variable-name">cache</span>) {
+  <span class="org-keyword">async</span> <span class="org-keyword">function</span> query(<span class="org-variable-name">since</span>) {
+    <span class="org-keyword">const</span> <span class="org-variable-name">timestamp</span> = since.getTime();
+    <span class="org-keyword">const</span> <span class="org-variable-name">KEY</span> = <span class="org-string">'posts_since_'</span> + timestamp;
+    <span class="org-keyword">let</span> <span class="org-variable-name">posts</span> = cache.get(KEY);
+    <span class="org-keyword">if</span> (posts == <span class="org-constant">null</span>) {
+      <span class="org-keyword">const</span> <span class="org-variable-name">response</span> = <span class="org-keyword">await</span> fetch(BASE_URL + <span class="org-string">'/posts?since='</span> + timestamp);
+      <span class="org-keyword">if</span> (response.status === 200) {
+        posts = <span class="org-keyword">await</span> response.json();
+        cache.set(KEY, posts);
+      } <span class="org-keyword">else</span> {
+        <span class="org-keyword">return</span> {error: <span class="org-string">'Cannot fetch posts'</span>};
+      }
+    }
+    <span class="org-keyword">return</span> {result: posts};
+  }
+
+  <span class="org-keyword">return</span> {
+    query,
+  }
+}
+
+module.exports = PostsRepo;
+</pre>
+</div>
+
+<p>
+As a result, we no longer need proxyquire. It's also painfully clear, that we
+have a cache, and we should be careful with it.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>Complicated but honest tests.</label><pre class="src src-javascript"><span class="org-keyword">const</span> <span class="org-variable-name">test</span> = require(<span class="org-string">'tape'</span>);
+
+<span class="org-keyword">const</span> <span class="org-variable-name">Cache</span> = require(<span class="org-string">'./cache'</span>);
+<span class="org-keyword">const</span> <span class="org-variable-name">PostsRepo</span> = require(<span class="org-string">'./posts-repo'</span>);
+
+test(<span class="org-string">'PostsRepo'</span>, (assert) =&gt; {
+  <span class="org-keyword">function</span> <span class="org-function-name">newPostsRepo</span>(<span class="org-variable-name">fetch</span>) {
+    <span class="org-keyword">return</span> PostsRepo(<span class="org-string">'/'</span>, fetch, Cache());
+  }
+
+  assert.test(<span class="org-string">'fetch()'</span>, <span class="org-keyword">async</span> () =&gt; {
+    <span class="org-keyword">const</span> <span class="org-variable-name">expectedPosts</span> = [1, 2, 3];
+    <span class="org-keyword">const</span> <span class="org-variable-name">okFetch</span> = () =&gt; Promise.resolve({
+      status: 200,
+      json: () =&gt; expectedPosts
+    });
+    assert.deepEqual(
+      <span class="org-keyword">await</span> newPostsRepo(okFetch).query(<span class="org-keyword">new</span> <span class="org-type">Date</span>()),
+      {result: expectedPosts},
+      <span class="org-string">'successfully fetches posts'</span>
+    );
+
+    <span class="org-keyword">const</span> <span class="org-variable-name">failFetch</span> = () =&gt; Promise.resolve({status: 500});
+    assert.deepEqual(
+      <span class="org-keyword">await</span> newPostsRepo(failFetch).query(<span class="org-keyword">new</span> <span class="org-type">Date</span>()),
+      {error: <span class="org-string">'Cannot fetch posts'</span>},
+      <span class="org-string">'returns empty array and error on failure'</span>
+    );
+
+    assert.end();
+  });
+});
+</pre>
+</div>
+
+<p>
+Nice consequence of ditching proxyquire is that our tests run faster.
+</p>
+
+<pre class="example">
+
+PostsRepo
+
+
+fetch()
+
+  ✔ successfully fetches posts
+  ✔ returns empty array and error on failure
+
+
+total:     2
+passing:   2
+duration:  11ms
+
+
+</pre>
+</div>
+
+<div id="outline-container-org6b7a38d" class="outline-4">
+<h4 id="org6b7a38d">Caveats</h4>
+<div class="outline-text-4" id="text-org6b7a38d">
+<ol class="org-ol">
+<li>Not every dependency has to become a parameter. Constant values, value
+objects, and pure functions can be used without worry. Good example is
+lodash<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>.</li>
+<li>If global state is evil, how do we do singletons? Answer is realated to the
+last part of this overview and the fact that you need to separate application
+construction and execution time. Singletons are objects that get constructed
+once in the former part and never in the latter.</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6e6e570" class="outline-3">
+<h3 id="org6e6e570">Digging into Collaborators</h3>
+<div class="outline-text-3" id="text-org6e6e570">
+<p>
+This one is very easy to spot. For example, if we see a second level access of
+property in your code like this
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span class="org-constant">this</span>.session.getAccount().getNickname()
+</pre>
+</div>
+
+<p>
+we have a problem. It will become clear when writing a test for it. We will have
+to either mock or construct <code>Account</code> in addition to <code>Session</code> in all places where
+<code>Session</code> is a dependency. Renaming a method of <code>Account</code> will impact places where
+direct dependency is <code>Session</code>, not <code>Account</code>. While most IDEs have no problem with
+renaming, your code repository history will become noisy.
+</p>
+
+<p>
+Let's take a look at the following example.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span class="org-keyword">function</span> <span class="org-function-name">App</span>() {
+  <span class="org-keyword">const</span> <span class="org-variable-name">session</span> = useSession();
+  <span class="org-keyword">return</span> (
+    &lt;div&gt;
+      &lt;div&gt;Hello, {session?.account?.name ?? <span class="org-string">'Anonymous'</span>}!&lt;/div&gt;
+      <span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
+    &lt;/div&gt;
+  );
+}
+</pre>
+</div>
+
+<p>
+Instead of chains of method calls we have nested property access exhibiting the
+same issue. To avoid digging into <code>session</code>, we might introduce a selector
+<code>getAccountName</code> or pass only necessary data to child component.
+</p>
+
+<p>
+Here's how second solution might look.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span class="org-keyword">function</span> <span class="org-function-name">App</span>() {
+  <span class="org-keyword">const</span> <span class="org-variable-name">session</span> = useSession();
+  <span class="org-keyword">return</span> (
+    &lt;div&gt;
+      &lt;Greet account={session.account} /&gt;
+      <span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
+    &lt;/div&gt;
+  );
+}
+</pre>
+</div>
+
+<p>
+Both of the solutions are related to separating concerns. To choose correct one,
+you need to answer a question of what exactly component needs to do its job.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga17b092" class="outline-3">
+<h3 id="orga17b092">Doing too much or too many things</h3>
+<div class="outline-text-3" id="text-orga17b092">
+<p>
+Also known as a failure to maintain single responsibility principle. Usual rule
+of thumb is to look for names containing "and". But I find this problematic as
+some people are good (or bad) at naming. It is possible to name <code>PersistentCache</code>
+as <code>CacheAndSave</code>, but it does not mean that former is good and latter is
+bad. It's hard to come up with example that is not ridiculous, but here we go.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript"><span class="org-keyword">function</span> <span class="org-function-name">UserRepo</span>(<span class="org-variable-name">store</span>, <span class="org-variable-name">mailer</span>) {
+  <span class="org-keyword">return</span> {
+    list() {
+      <span class="org-keyword">return</span> store.fetch(<span class="org-string">'user:*'</span>);
+    },
+    fetch(id) {
+      <span class="org-keyword">return</span> store.fetch(<span class="org-string">'user:'</span> + id);
+    },
+    <span class="org-keyword">async</span> update(id, data) {
+      <span class="org-keyword">const</span> <span class="org-variable-name">old</span> = <span class="org-keyword">await</span> <span class="org-constant">this</span>.fetch(id);
+      <span class="org-keyword">const</span> <span class="org-variable-name">result</span> = <span class="org-keyword">await</span> store.save(<span class="org-string">'user:'</span> + data.id, data);
+      <span class="org-keyword">if</span> (old.email != data.email) {
+        <span class="org-keyword">await</span> mailer.confirmEmail(id, data.email);
+      }
+      <span class="org-keyword">return</span> result;
+    },
+    <span class="org-keyword">async</span> save(data) {
+      <span class="org-keyword">const</span> <span class="org-variable-name">id</span> = <span class="org-keyword">await</span> store.nextId();
+      <span class="org-keyword">const</span> <span class="org-variable-name">result</span> = <span class="org-keyword">await</span> store.save(<span class="org-string">'user:'</span> + id, data);
+      <span class="org-keyword">await</span> mailer.confirmEmail(id, data.email);
+      <span class="org-keyword">return</span> result;
+    }
+  };
+}
+</pre>
+</div>
+
+<p>
+Besides the funky key value store, we have repository initiating email
+confirmation. On its own, this only feels wrong, but might be completely
+benign. Why does it feel wrong? First, <code>mailer</code> is used only in two of four
+methods. Maybe it would make sense to split <code>UserRepo</code> into reader and writer
+parts? Queries and commands? Invocation of confirmation flow also raises some
+questions. Since we are passing user ID, is <code>mailer</code> supposed to understand it's
+meaning? Will we have to encode confirmation link inside <code>mailer</code>? Does it mean
+that <code>mailer</code> will have to understand routing? Oh my&#x2026; It seems that <code>mailer</code> is
+not supposed to be here, and its interface has to be different.
+</p>
+
+<p>
+Where should we put it? Let's help ourselves by imagining that we also have
+account registration form, and profile view. Now, <code>mailer</code> makes sense in a
+registration form, but profile screen does not need it. So we are going to move
+<code>mailer</code> to registration handler (a.k.a. controller). It makes sense that request
+handler knows how to construct links, thus we can build email message with
+confirmation URL there. We'll pass it to <code>mailer</code> via generic interface, for
+example <code>mailer.send(recepients, subject, body)</code>.
+</p>
+
+<p>
+To solve this puzzle of responsibilities, we asked some questions and gave
+ourselves hypothetical answers. In real world, question will have real answers,
+which will lead to other solutions.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1a424c1" class="outline-3">
+<h3 id="org1a424c1">Business Logic in Constructors</h3>
+<div class="outline-text-3" id="text-org1a424c1">
+<p>
+This one is my favourite. Mostly because I've never seen it articulated and
+written down so clearly before.
+</p>
+
+<p>
+It is also very powerful as it influences code structure in fundamental way and
+paves the road for the rest of testable design.
+</p>
+
+<p>
+The essence of the rule is that all your side-effecting modules (objects) have
+to be constructed at the start of your application. This phase could be
+understood as configuration part. Once everything is constructed and wired,
+execution part begins. In this part only value (pure) objects can be
+constructed.
+</p>
+
+<p>
+Applying this rule to my React projects lead to unorthodox architectures which
+some people found off putting because of unfamiliar looks. The upside of it is
+that all of the components can be pure, easily <a href="https://storybook.js.org">storybookable</a> and testable.
+</p>
+
+<p>
+Following is an example of how it might look.
+</p>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>Initialization part.</label><pre class="src src-javascript"><span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">map</span> = <span class="org-keyword">new</span> <span class="org-type">GoogolMap</span>();
+<span class="org-keyword">const</span> <span class="org-variable-name">MapView</span> = mapView(map);
+<span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
+<span class="org-keyword">const</span> <span class="org-variable-name">App</span> = app(storage, MapView, ...);
+
+ReactDOM.render(&lt;App /&gt;, document.getElementById(... ));
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 8: </span>Map component.</label><pre class="src src-javascript"><span class="org-keyword">function</span> <span class="org-function-name">mapView</span>(<span class="org-variable-name">map</span>: <span class="org-variable-name">MapServiceProvider</span>) {
+  <span class="org-keyword">return</span> <span class="org-keyword">function</span> MapView({longitude, latitude}) {
+    <span class="org-keyword">const</span> [<span class="org-variable-name">mapUrl</span>, <span class="org-variable-name">setMapUrl</span>] = useState(<span class="org-constant">null</span>);
+
+    useEffect(<span class="org-keyword">async</span> () =&gt; {
+      setMapUrl(<span class="org-keyword">await</span> map.getImageUrl(longitude, latitude));
+    }, [longitude, latitude]);
+
+    <span class="org-keyword">return</span> &lt;div&gt;{mapUrl ? &lt;img src={mapUrl}/&gt; : SOME_DEFAULT_MAP_IMAGE}&lt;/div&gt;;
+  }
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+<label class="org-src-name"><span class="listing-number">Listing 9: </span>App component.</label><pre class="src src-javascript"><span class="org-keyword">function</span> <span class="org-function-name">app</span>(<span class="org-variable-name">storage</span>, <span class="org-variable-name">MapView</span>) {
+  <span class="org-keyword">return</span> <span class="org-keyword">function</span> App() {
+    <span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
+    <span class="org-keyword">const</span> <span class="org-variable-name">coordinates</span> = storage.getCoordinates();
+
+    <span class="org-keyword">return</span> (
+      &lt;div&gt;
+        <span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
+        &lt;MapView {...coordinates} /&gt;
+        <span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
+      &lt;/div&gt;
+    );
+  };
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2a6ff4d" class="outline-2">
+<h2 id="org2a6ff4d">Epilogue</h2>
+<div class="outline-text-2" id="text-org2a6ff4d">
+<p>
+After meditating on this blog post for some time I couldn't help but reflect and
+compare my experience with React and AngularJS. There's still a place in my
+heart for Angular's principled testable design, but it definitely loses by
+having overly complicated templating layer. And that is the part that front-end
+developers spend most of the time on.
+</p>
+
+<p>
+On the other hand, while it's very easy<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup> to start with React, unprincipled
+developers would soon find themselves in a mess of global state and monolithic
+untestable application. It's not React's fault, but, I guess, it missed out on
+pedagogical opportunity.
+</p>
+
+<p>
+If you find yourself overwhelmed by multitude of state management solutions,
+latest React developments, or just general JavaScript fatigue, just know that
+you're not alone. I'm with you! We are two unique snowflakes, like
+two React codebases, vastly different because started on different weeks, when
+different libraries were trending. Trends will pass, but those 4 pitfalls we
+just learned about will still be there. Let's stay vigilant and keep our code
+testable and evolvable<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup>.
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="http://misko.hevery.com/code-reviewers-guide/">http://misko.hevery.com/code-reviewers-guide/</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://www.youtube.com/playlist?list=PLD0011D00849E1B79">https://www.youtube.com/playlist?list=PLD0011D00849E1B79</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+I switched to full front-end position in autumn of 2013.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://github.com/thlorenz/proxyquire">https://github.com/thlorenz/proxyquire</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://github.com/lodash/lodash">https://github.com/lodash/lodash</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><p class="footpara">
+Some would argue otherwise. Search for "JavaScript fatigue".
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara"><p class="footpara">
+Unless you rewrite everything every other month. In that case this post is not for you. Sorry if this was revealed only after reading all of it!
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<nav id="navigation">
+  <button id="nav-menu">☰</button>
+  <button id="nav-close">&times;</button>
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+  </ul>
+</nav>
+</div>
+</body>
+</html>
