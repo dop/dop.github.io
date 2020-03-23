@@ -1,0 +1,11 @@
+#+TITLE: Donato Blogas
+#+SUBTITLE: At a speed of 1 post every couple of years. Or not.
+#+OPTIONS: num:nil toc:nil
+
+* Posts
+** [[file:posts/testable-code.org][Writing Testable Code: JavaScript and React Edition]]
+Inspired by Miško Hevery's posts and talks on same topic. This is my summary and overview of
+important rules for testable code in context of JavaScript (TypeScript) and React. [[file:posts/testable-code.org][Read here]].
+* About Me
+My name is Donatas Petrauskas and I'm a citizen of Lithuania currently residing
+in lovely capital Vilnius.
