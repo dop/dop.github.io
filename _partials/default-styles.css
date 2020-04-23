@@ -257,3 +257,16 @@ pre.src {
 #navigation #nav-menu { display: none }
 #navigation.closed #nav-close { display: none }
 #navigation.closed #nav-menu { display: block }
+
+code, blockquote {
+  background: #eeeeec;
+  padding: .2em;
+  border-radius: 3pt;
+}
+
+blockquote {
+  margin: 0;
+  padding: .2em 1em;
+  background: #eeeeec;
+  font-style: italic;
+}
