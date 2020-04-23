@@ -34,6 +34,9 @@ purely functional ones. But to be fair, purely functional languages, like Elm,
 makes it really hard to write untestable code.
 
 * Overview of "Guide: Writing Testable Code"
+:PROPERTIES:
+:CUSTOM_ID: Overview
+:END:
 
 "Guide: Writing Testable Code" was written as internal document at Google
 targeting Java code. Many of given examples are very much tied to Java and
@@ -57,6 +60,9 @@ I would like to take you through these flaws from, subjectively, most obvious to
 least.
 
 ** Global state
+:PROPERTIES:
+:CUSTOM_ID: GlobalState
+:END:
 Global state is sneaky. It might hide under multiple concepts: mutable
 variables, static methods, singleton objects, and any dependencies that are not
 passed as arguments. Global state is infectious. Single instance of it in small
@@ -311,6 +317,9 @@ true
    once in the former part and never in the latter.
 
 ** Digging into Collaborators
+:PROPERTIES:
+:CUSTOM_ID: DiggingIntoCollaborators
+:END:
 
 This one is very easy to spot. For example, if we see a second level access of
 property in your code like this
@@ -361,6 +370,9 @@ Both of the solutions are related to separating concerns. To choose correct one,
 you need to answer a question of what exactly component needs to do its job.
 
 ** Doing too much or too many things
+:PROPERTIES:
+:CUSTOM_ID: DoingTooMuch
+:END:
 
 Also known as a failure to maintain single responsibility principle. Usual rule
 of thumb is to look for names containing "and". But I find this problematic as
@@ -418,6 +430,9 @@ ourselves hypothetical answers. In real world, question will have real answers,
 which will lead to other solutions.
 
 ** Business Logic in Constructors
+:PROPERTIES:
+:CUSTOM_ID: BusinessLogicInConstructors
+:END:
 This one is my favourite. Mostly because I've never seen it articulated and
 written down so clearly before.
 
@@ -482,6 +497,9 @@ function app(storage, MapView) {
 #+END_SRC
 
 * Epilogue
+:PROPERTIES:
+:CUSTOM_ID: Epilogue
+:END:
 
 After meditating on this blog post for some time I couldn't help but reflect and
 compare my experience with React and AngularJS. There's still a place in my
