@@ -418,18 +418,18 @@ ourselves hypothetical answers. In real world, question will have real answers,
 which will lead to other solutions.
 
 ** Business Logic in Constructors
-
 This one is my favourite. Mostly because I've never seen it articulated and
 written down so clearly before.
 
 It is also very powerful as it influences code structure in fundamental way and
 paves the road for the rest of testable design.
 
-The essence of the rule is that all your side-effecting modules (objects) have
-to be constructed at the start of your application. This phase could be
+The essence of the rule is to not have any logic in constructors besides setting
+instance variables. It follows that all your objects have to be constructed (and
+only constructed) at the start of your application. This phase could be
 understood as configuration part. Once everything is constructed and wired,
-execution part begins. In this part only value (pure) objects can be
-constructed.
+execution part begins and business gets done. At this time only value (pure)
+objects can be created.
 
 Applying this rule to my React projects lead to unorthodox architectures which
 some people found off putting because of unfamiliar looks. The upside of it is
