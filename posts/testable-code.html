@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-03-23 Mon 12:46 -->
+<!-- 2020-04-23 Thu 17:00 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Writing Testable Code</title>
@@ -266,6 +266,19 @@ pre.src {
 #navigation #nav-menu { display: none }
 #navigation.closed #nav-close { display: none }
 #navigation.closed #nav-menu { display: block }
+
+code, blockquote {
+  background: #eeeeec;
+  padding: .2em;
+  border-radius: 3pt;
+}
+
+blockquote {
+  margin: 0;
+  padding: .2em 1em;
+  background: #eeeeec;
+  font-style: italic;
+}
 </style><script>(function () {
   window.addEventListener('DOMContentLoaded', initialize);
 
@@ -304,19 +317,19 @@ pre.src {
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1c65b09">Overview of "Guide: Writing Testable Code"</a>
+<li><a href="#Overview">Overview of "Guide: Writing Testable Code"</a>
 <ul>
-<li><a href="#orgdc6068d">Global state</a>
+<li><a href="#GlobalState">Global state</a>
 <ul>
-<li><a href="#orgf778d30">Caveats</a></li>
+<li><a href="#orge404a4b">Caveats</a></li>
 </ul>
 </li>
-<li><a href="#org2fc2aa7">Digging into Collaborators</a></li>
-<li><a href="#orgdde7608">Doing too much or too many things</a></li>
-<li><a href="#org629a4a5">Business Logic in Constructors</a></li>
+<li><a href="#DiggingIntoCollaborators">Digging into Collaborators</a></li>
+<li><a href="#DoingTooMuch">Doing too much or too many things</a></li>
+<li><a href="#BusinessLogicInConstructors">Business Logic in Constructors</a></li>
 </ul>
 </li>
-<li><a href="#orgf1fe58a">Epilogue</a></li>
+<li><a href="#Epilogue">Epilogue</a></li>
 </ul>
 </div>
 </div>
@@ -356,9 +369,9 @@ purely functional ones. But to be fair, purely functional languages, like Elm,
 makes it really hard to write untestable code.
 </p>
 
-<div id="outline-container-org1c65b09" class="outline-2">
-<h2 id="org1c65b09">Overview of "Guide: Writing Testable Code"</h2>
-<div class="outline-text-2" id="text-org1c65b09">
+<div id="outline-container-org968fff2" class="outline-2">
+<h2 id="Overview"><a id="org968fff2"></a>Overview of "Guide: Writing Testable Code"</h2>
+<div class="outline-text-2" id="text-Overview">
 <p>
 "Guide: Writing Testable Code" was written as internal document at Google
 targeting Java code. Many of given examples are very much tied to Java and
@@ -391,9 +404,9 @@ least.
 </p>
 </div>
 
-<div id="outline-container-orgdc6068d" class="outline-3">
-<h3 id="orgdc6068d">Global state</h3>
-<div class="outline-text-3" id="text-orgdc6068d">
+<div id="outline-container-orgcbb52ec" class="outline-3">
+<h3 id="GlobalState"><a id="orgcbb52ec"></a>Global state</h3>
+<div class="outline-text-3" id="text-GlobalState">
 <p>
 Global state is sneaky. It might hide under multiple concepts: mutable
 variables, static methods, singleton objects, and any dependencies that are not
@@ -648,9 +661,9 @@ duration:  11ms
 </pre>
 </div>
 
-<div id="outline-container-orgf778d30" class="outline-4">
-<h4 id="orgf778d30">Caveats</h4>
-<div class="outline-text-4" id="text-orgf778d30">
+<div id="outline-container-orge404a4b" class="outline-4">
+<h4 id="orge404a4b">Caveats</h4>
+<div class="outline-text-4" id="text-orge404a4b">
 <ol class="org-ol">
 <li>Not every dependency has to become a parameter. Constant values, value
 objects, and pure functions can be used without worry. Good example is
@@ -664,9 +677,9 @@ once in the former part and never in the latter.</li>
 </div>
 </div>
 
-<div id="outline-container-org2fc2aa7" class="outline-3">
-<h3 id="org2fc2aa7">Digging into Collaborators</h3>
-<div class="outline-text-3" id="text-org2fc2aa7">
+<div id="outline-container-org79d170c" class="outline-3">
+<h3 id="DiggingIntoCollaborators"><a id="org79d170c"></a>Digging into Collaborators</h3>
+<div class="outline-text-3" id="text-DiggingIntoCollaborators">
 <p>
 This one is very easy to spot. For example, if we see a second level access of
 property in your code like this
@@ -732,9 +745,9 @@ you need to answer a question of what exactly component needs to do its job.
 </div>
 </div>
 
-<div id="outline-container-orgdde7608" class="outline-3">
-<h3 id="orgdde7608">Doing too much or too many things</h3>
-<div class="outline-text-3" id="text-orgdde7608">
+<div id="outline-container-org1be87cc" class="outline-3">
+<h3 id="DoingTooMuch"><a id="org1be87cc"></a>Doing too much or too many things</h3>
+<div class="outline-text-3" id="text-DoingTooMuch">
 <p>
 Also known as a failure to maintain single responsibility principle. Usual rule
 of thumb is to look for names containing "and". But I find this problematic as
@@ -801,9 +814,9 @@ which will lead to other solutions.
 </div>
 </div>
 
-<div id="outline-container-org629a4a5" class="outline-3">
-<h3 id="org629a4a5">Business Logic in Constructors</h3>
-<div class="outline-text-3" id="text-org629a4a5">
+<div id="outline-container-org073791c" class="outline-3">
+<h3 id="BusinessLogicInConstructors"><a id="org073791c"></a>Business Logic in Constructors</h3>
+<div class="outline-text-3" id="text-BusinessLogicInConstructors">
 <p>
 This one is my favourite. Mostly because I've never seen it articulated and
 written down so clearly before.
@@ -815,11 +828,12 @@ paves the road for the rest of testable design.
 </p>
 
 <p>
-The essence of the rule is that all your side-effecting modules (objects) have
-to be constructed at the start of your application. This phase could be
+The essence of the rule is to not have any logic in constructors besides setting
+instance variables. It follows that all your objects have to be constructed (and
+only constructed) at the start of your application. This phase could be
 understood as configuration part. Once everything is constructed and wired,
-execution part begins. In this part only value (pure) objects can be
-constructed.
+execution part begins and business gets done. At this time only value (pure)
+objects can be created.
 </p>
 
 <p>
@@ -879,9 +893,9 @@ ReactDOM.render(&lt;App /&gt;, document.getElementById(... ));
 </div>
 </div>
 
-<div id="outline-container-orgf1fe58a" class="outline-2">
-<h2 id="orgf1fe58a">Epilogue</h2>
-<div class="outline-text-2" id="text-orgf1fe58a">
+<div id="outline-container-org36a0014" class="outline-2">
+<h2 id="Epilogue"><a id="org36a0014"></a>Epilogue</h2>
+<div class="outline-text-2" id="text-Epilogue">
 <p>
 After meditating on this blog post for some time I couldn't help but reflect and
 compare my experience with React and AngularJS. There's still a place in my
