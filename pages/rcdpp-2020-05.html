@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2020-05-20 Wed 12:20 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Intro to React Component Driver</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Donatas Petrauskas">
+<style type="text/css">.title  { text-align: center;
+          margin-bottom: .2em; }
+.subtitle { text-align: center;
+            font-size: medium;
+            font-weight: bold;
+            margin-top:0; }
+.todo   { font-family: monospace; color: red; }
+.done   { font-family: monospace; color: green; }
+.priority { font-family: monospace; color: orange; }
+.tag    { background-color: #eee; font-family: monospace;
+          padding: 2px; font-size: 80%; font-weight: normal; }
+.timestamp { color: #bebebe; }
+.timestamp-kwd { color: #5f9ea0; }
+.org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+.org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+.org-center { margin-left: auto; margin-right: auto; text-align: center; }
+.underline { text-decoration: underline; }
+#postamble p, #preamble p { font-size: 90%; margin: .2em; }
+p.verse { margin-left: 3%; }
+pre {
+  border: 1px solid #ccc;
+  box-shadow: 3px 3px 3px #eee;
+  padding: 8pt;
+  font-family: monospace;
+  overflow: auto;
+  margin: 1.2em;
+}
+pre.src {
+  position: relative;
+  overflow: visible;
+  padding-top: 1.2em;
+}
+pre.src:before {
+  display: none;
+  position: absolute;
+  background-color: white;
+  top: -10px;
+  right: 10px;
+  padding: 3px;
+  border: 1px solid black;
+}
+pre.src:hover:before { display: inline;}
+/* Languages per Org manual */
+pre.src-asymptote:before { content: 'Asymptote'; }
+pre.src-awk:before { content: 'Awk'; }
+pre.src-C:before { content: 'C'; }
+/* pre.src-C++ doesn't work in CSS */
+pre.src-clojure:before { content: 'Clojure'; }
+pre.src-css:before { content: 'CSS'; }
+pre.src-D:before { content: 'D'; }
+pre.src-ditaa:before { content: 'ditaa'; }
+pre.src-dot:before { content: 'Graphviz'; }
+pre.src-calc:before { content: 'Emacs Calc'; }
+pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+pre.src-fortran:before { content: 'Fortran'; }
+pre.src-gnuplot:before { content: 'gnuplot'; }
+pre.src-haskell:before { content: 'Haskell'; }
+pre.src-hledger:before { content: 'hledger'; }
+pre.src-java:before { content: 'Java'; }
+pre.src-js:before { content: 'Javascript'; }
+pre.src-latex:before { content: 'LaTeX'; }
+pre.src-ledger:before { content: 'Ledger'; }
+pre.src-lisp:before { content: 'Lisp'; }
+pre.src-lilypond:before { content: 'Lilypond'; }
+pre.src-lua:before { content: 'Lua'; }
+pre.src-matlab:before { content: 'MATLAB'; }
+pre.src-mscgen:before { content: 'Mscgen'; }
+pre.src-ocaml:before { content: 'Objective Caml'; }
+pre.src-octave:before { content: 'Octave'; }
+pre.src-org:before { content: 'Org mode'; }
+pre.src-oz:before { content: 'OZ'; }
+pre.src-plantuml:before { content: 'Plantuml'; }
+pre.src-processing:before { content: 'Processing.js'; }
+pre.src-python:before { content: 'Python'; }
+pre.src-R:before { content: 'R'; }
+pre.src-ruby:before { content: 'Ruby'; }
+pre.src-sass:before { content: 'Sass'; }
+pre.src-scheme:before { content: 'Scheme'; }
+pre.src-screen:before { content: 'Gnu Screen'; }
+pre.src-sed:before { content: 'Sed'; }
+pre.src-sh:before { content: 'shell'; }
+pre.src-sql:before { content: 'SQL'; }
+pre.src-sqlite:before { content: 'SQLite'; }
+/* additional languages in org.el's org-babel-load-languages alist */
+pre.src-forth:before { content: 'Forth'; }
+pre.src-io:before { content: 'IO'; }
+pre.src-J:before { content: 'J'; }
+pre.src-makefile:before { content: 'Makefile'; }
+pre.src-maxima:before { content: 'Maxima'; }
+pre.src-perl:before { content: 'Perl'; }
+pre.src-picolisp:before { content: 'Pico Lisp'; }
+pre.src-scala:before { content: 'Scala'; }
+pre.src-shell:before { content: 'Shell Script'; }
+pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+/* additional language identifiers per \"defun org-babel-execute\"
+       in ob-*.el */
+pre.src-cpp:before  { content: 'C++'; }
+pre.src-abc:before  { content: 'ABC'; }
+pre.src-coq:before  { content: 'Coq'; }
+pre.src-groovy:before  { content: 'Groovy'; }
+/* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+pre.src-bash:before  { content: 'bash'; }
+pre.src-csh:before  { content: 'csh'; }
+pre.src-ash:before  { content: 'ash'; }
+pre.src-dash:before  { content: 'dash'; }
+pre.src-ksh:before  { content: 'ksh'; }
+pre.src-mksh:before  { content: 'mksh'; }
+pre.src-posh:before  { content: 'posh'; }
+/* Additional Emacs modes also supported by the LaTeX listings package */
+pre.src-ada:before { content: 'Ada'; }
+pre.src-asm:before { content: 'Assembler'; }
+pre.src-caml:before { content: 'Caml'; }
+pre.src-delphi:before { content: 'Delphi'; }
+pre.src-html:before { content: 'HTML'; }
+pre.src-idl:before { content: 'IDL'; }
+pre.src-mercury:before { content: 'Mercury'; }
+pre.src-metapost:before { content: 'MetaPost'; }
+pre.src-modula-2:before { content: 'Modula-2'; }
+pre.src-pascal:before { content: 'Pascal'; }
+pre.src-ps:before { content: 'PostScript'; }
+pre.src-prolog:before { content: 'Prolog'; }
+pre.src-simula:before { content: 'Simula'; }
+pre.src-tcl:before { content: 'tcl'; }
+pre.src-tex:before { content: 'TeX'; }
+pre.src-plain-tex:before { content: 'Plain TeX'; }
+pre.src-verilog:before { content: 'Verilog'; }
+pre.src-vhdl:before { content: 'VHDL'; }
+pre.src-xml:before { content: 'XML'; }
+pre.src-nxml:before { content: 'XML'; }
+/* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf \" \")) in .emacs */
+pre.src-conf:before { content: 'Configuration File'; }
+
+table { border-collapse:collapse; }
+caption.t-above { caption-side: top; }
+caption.t-bottom { caption-side: bottom; }
+td, th { vertical-align:top;  }
+th.org-right  { text-align: center;  }
+th.org-left   { text-align: center;   }
+th.org-center { text-align: center; }
+td.org-right  { text-align: right;  }
+td.org-left   { text-align: left;   }
+td.org-center { text-align: center; }
+dt { font-weight: bold; }
+.footpara { display: inline; }
+.footdef  { margin-bottom: 1em; }
+.figure { padding: 1em; }
+.figure p { text-align: center; }
+.inlinetask {
+  padding: 10px;
+  border: 2px solid gray;
+  margin: 10px;
+  background: #ffffcc;
+}
+#org-div-home-and-up
+{ text-align: right; font-size: 70%; white-space: nowrap; }
+textarea { overflow-x: auto; }
+.linenr { font-size: smaller }
+.code-highlighted { background-color: #ffff00; }
+.org-info-js_info-navigation { border-style: none; }
+#org-info-js_console-label
+{ font-size: 10px; font-weight: bold; white-space: nowrap; }
+.org-info-js_search-highlight
+{ background-color: #ffff00; color: #000000; font-weight: bold; }
+.org-svg { width: 90%; }
+
+body {
+  margin: 10em auto 1em;
+  max-width: 800px;
+  padding: 0 1em;
+  font-size: 16pt;
+  font-family: Times, serif;
+  line-height: 1.4;
+  /* background: #34363e; */
+  color: #343637;
+}
+
+code, pre {
+  font-size: 10pt;
+  font-family: Monaco, Menlo, DejaVu Sans Mono, monospace;
+}
+
+.title {
+  margin-bottom: 3em;
+}
+
+p {
+  text-align: justify;
+}
+
+.org-src-name {
+  font-size: 12pt;
+}
+
+pre.src {
+  padding: 1em;
+  border: 1px solid #eee;
+  border-radius: 2px;
+}
+
+#footnotes {
+  font-size: 12pt;
+}
+
+#navigation {
+  display: flex;
+  align-items: top;
+  position: fixed;
+  top: 16pt;
+  left: 0;
+  padding: 6pt 10pt;
+  font-size: 20pt;
+  background: black;
+  color: white;
+  border-top-right-radius: 6pt;
+  border-bottom-right-radius: 6pt;
+}
+
+#navigation a, #navigation a:active, #navigation a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+#navigation ul {
+  padding: 0 0 0 10pt;
+  margin: 0;
+  list-style: none;
+}
+
+#navigation button {
+  width: 20pt;
+  font-size: 20pt;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0 none;
+  cursor: pointer;
+  line-height: 1;
+  height: 27pt;
+  color: white;
+}
+
+#navigation ul li {
+  line-height: 1em;
+  padding: .25em 0;
+}
+
+#navigation.closed ul {
+  display: none
+}
+#navigation.open ul {
+  display: block
+}
+
+#navigation #nav-menu { display: none }
+#navigation.closed #nav-close { display: none }
+#navigation.closed #nav-menu { display: block }
+
+code, blockquote {
+  background: #eeeeec;
+  padding: .2em;
+  border-radius: 3pt;
+}
+
+blockquote {
+  margin: 0;
+  padding: .2em 1em;
+  background: #eeeeec;
+  font-style: italic;
+}
+</style><script>(function () {
+  window.addEventListener('DOMContentLoaded', initialize);
+
+  let nav;
+  let close;
+  let menu;
+
+  function initialize() {
+    nav = document.getElementById('navigation');
+    close = document.getElementById('nav-close');
+    menu = document.getElementById('nav-menu');
+
+    close.onclick = closeMenu;
+    menu.onclick = showMenu;
+
+    closeMenu();
+  }
+
+  function closeMenu() {
+    nav.classList.add('closed');
+  }
+
+  function showMenu() {
+    nav.classList.remove('closed');
+  }
+})();
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Intro to React Component Driver
+<br>
+<span class="subtitle">Prezentacija Praktikantams</span>
+</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgf2bd457">1. React Component Driver</a></li>
+<li><a href="#orgf28c452">2. Agenda</a></li>
+<li><a href="#orgdbd6409">3. Kas yra React Component Driver?</a></li>
+<li><a href="#org696c757">4. Panašūs įrankiai</a></li>
+<li><a href="#orgb82fff8">5. Istorija</a></li>
+<li><a href="#org55b7db4">6. Ko nedaro React Component Driver</a></li>
+<li><a href="#org9310beb">7. Demo: React Test Renderer</a></li>
+<li><a href="#org7ed6cba">8. Komponento Evoliucija</a></li>
+<li><a href="#org320cdec">9. Demo: React Component Driver</a></li>
+<li><a href="#org646611d">10. Ateities Vizija</a></li>
+<li><a href="#org1767d6d">11. Dokumentacija</a></li>
+<li><a href="#orgb97faa9">12. REPL</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgf2bd457" class="outline-2">
+<h2 id="orgf2bd457"><span class="section-number-2">1</span> React Component Driver</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+(╯°□°)╯︵ ┻━┻
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf28c452" class="outline-2">
+<h2 id="orgf28c452"><span class="section-number-2">2</span> Agenda</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>Istorija</li>
+
+<li>Demo: Read Test Renderer</li>
+
+<li>Demo: React Component Driver <del>ir TDD</del></li>
+
+<li>Ateities Vizija</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgdbd6409" class="outline-2">
+<h2 id="orgdbd6409"><span class="section-number-2">3</span> Kas yra React Component Driver?</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li><a href="https://reactjs.org/docs/test-renderer.html">React Test Renderer</a> apvalkalas.</li>
+
+<li>Įrankių rinkinys leidžiantis analizuoti komponentų medį.
+
+<ul class="org-ul">
+<li>Konstravimas: render, renderComponent, &#x2026;</li>
+
+<li>Užklausos: filterBy, getTextNodes, &#x2026;</li>
+</ul></li>
+
+<li>Test Driver konvencija.
+
+<ul class="org-ul">
+<li>Paslepia komplikuotą konstravimą, manipuliavimą.</li>
+
+<li>Pasakoja istoriją.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org696c757" class="outline-2">
+<h2 id="org696c757"><span class="section-number-2">4</span> Panašūs įrankiai</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li><a href="https://github.com/enzymejs/enzyme">Enzyme</a></li>
+
+<li><a href="https://github.com/testing-library/native-testing-library">React Testing Library</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb82fff8" class="outline-2">
+<h2 id="orgb82fff8"><span class="section-number-2">5</span> Istorija</h2>
+<div class="outline-text-2" id="text-5">
+<pre class="example">
+commit 93e02b2044d3f82ac7526449ec72ca7acd088840
+Author: Donatas Petrauskas &lt;donatasp@wix.com&gt;
+Date:   Mon Nov 21 16:17:19 2016 +0200
+
+  Try to include custom built testkit.
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org55b7db4" class="outline-2">
+<h2 id="org55b7db4"><span class="section-number-2">6</span> Ko nedaro React Component Driver</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li>Nevykdo native kodo. Tam skirtas <a href="https://github.com/wix/detox">Detox</a>.</li>
+
+<li>Nepalengvina testų rašymo.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9310beb" class="outline-2">
+<h2 id="org9310beb"><span class="section-number-2">7</span> Demo: React Test Renderer</h2>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li>Importavimas</li>
+
+<li>Renderer objektas</li>
+
+<li>Komponentų medis</li>
+
+<li>Komponento evoliucija</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7ed6cba" class="outline-2">
+<h2 id="org7ed6cba"><span class="section-number-2">8</span> Komponento Evoliucija</h2>
+<div class="outline-text-2" id="text-8">
+<div class="org-src-container">
+<pre class="src src-js"><span class="org-keyword">function</span> <span class="org-function-name">Counter</span>() {
+  <span class="org-keyword">const</span> [<span class="org-variable-name">count</span>, <span class="org-variable-name">setCount</span>] = React.useState(0);
+  <span class="org-keyword">return</span> (&lt;button onClick={() =&gt; setCount(count + 1)}&gt;Count is {count}&lt;/button&gt;);
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org320cdec" class="outline-2">
+<h2 id="org320cdec"><span class="section-number-2">9</span> Demo: React Component Driver</h2>
+<div class="outline-text-2" id="text-9">
+<ul class="org-ul">
+<li>Užklausos</li>
+
+<li><code>ComponentDriver</code></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org646611d" class="outline-2">
+<h2 id="org646611d"><span class="section-number-2">10</span> Ateities Vizija</h2>
+</div>
+
+<div id="outline-container-org1767d6d" class="outline-2">
+<h2 id="org1767d6d"><span class="section-number-2">11</span> Dokumentacija</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+<a href="https://github.com/wix-incubator/react-component-driver/blob/master/react-component-driver/README.org">React Component Driver</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgb97faa9" class="outline-2">
+<h2 id="orgb97faa9"><span class="section-number-2">12</span> REPL</h2>
+<div class="outline-text-2" id="text-12">
+<pre class="example">
+babel &gt; const React = require('react')
+undefined
+babel &gt; const {create} = require('react-test-renderer')
+undefined
+babel &gt; const pp = (x) =&gt; console.log(JSON.stringify(x, null, 2))
+undefined
+babel &gt; create(&lt;div /&gt;).toJSON()
+{ type: 'div', props: {}, children: null }
+babel &gt; create(&lt;div id="app" /&gt;).toJSON()
+{ type: 'div', props: { id: 'app' }, children: null }
+babel &gt; create(&lt;div&gt;Hello, World!&lt;/div&gt;).toJSON()
+{ type: 'div', props: {}, children: [ 'Hello, World!' ] }
+babel &gt; pp(create(&lt;div&gt;&lt;span&gt;Hello, World!&lt;/span&gt;&lt;button/&gt;&lt;/div&gt;).toJSON())
+{
+  "type": "div",
+  "props": {},
+  "children": [
+    {
+      "type": "span",
+      "props": {},
+      "children": [
+        "Hello, World!"
+      ]
+    },
+    {
+      "type": "button",
+      "props": {},
+      "children": null
+    }
+  ]
+}
+undefined
+babel &gt; const onClick = () =&gt; console.log('Hello!')
+undefined
+babel &gt; const button = create(&lt;button onClick={onClick}&gt;Click Me!&lt;/button&gt;).toJSON()
+undefined
+babel &gt; button.props.onClick()
+Hello!
+undefined
+babel &gt; function Counter() {
+  const [count, setCount] = React.useState(0);
+  return (&lt;button onClick={() =&gt; setCount(count + 1)}&gt;Count is {count}&lt;/button&gt;);
+}
+undefined
+babel &gt; const renderer = create(&lt;Counter /&gt;)
+undefined
+babel &gt; renderer.toJSON()
+{
+  type: 'button',
+  props: { onClick: [Function: onClick] },
+  children: [ 'Count is ', '0' ]
+}
+babel &gt; renderer.toJSON().props.onClick()
+undefined
+babel &gt; renderer.toJSON()
+{
+  type: 'button',
+  props: { onClick: [Function: onClick] },
+  children: [ 'Count is ', '1' ]
+}
+babel &gt; const RCD = require('react-component-driver')
+undefined
+babel &gt; RCD
+{
+  withContext: [Function: withContext],
+  ComponentDriver: [Function: ComponentDriver],
+  componentDriver: [Function: factory],
+  render: [Function: render],
+  renderComponent: [Function: renderComponent],
+  toJSON: [Function: toJSON],
+  filterBy: [Function: filterBy],
+  filterByTestID: [Function: filterByTestID],
+  filterByType: [Function: filterByType],
+  getTextNodes: [Function: getTextNodes]
+}
+babel &gt; const {filterByTestID, filterBy, getTextNodes, renderComponent, toJSON, ComponentDriver} = RCD
+undefined
+babel &gt; renderComponent(Counter, {}).toJSON()
+{
+  type: 'button',
+  props: { onClick: [Function: onClick] },
+  children: [ 'Count is ', '0' ]
+}
+babel &gt; toJSON(renderComponent(Counter, {}))
+{
+  type: 'button',
+  props: { onClick: [Function] },
+  children: [ 'Count is ', '0' ]
+}
+babel &gt; function Counter() {
+  const [count, setCount] = React.useState(0);
+  return (
+    &lt;div&gt;
+      &lt;div testID="COUNT"&gt;{count}&lt;/div&gt;
+      &lt;button testID="COUNTER_BUTTON" onClick={() =&gt; setCount(count + 1)}&gt;+&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}
+undefined
+babel &gt; const r = renderComponent(Counter, {})
+undefined
+babel &gt; const x = toJSON(r)
+undefined
+babel &gt; pp(x)
+{
+  "type": "div",
+  "props": {},
+  "children": [
+    "       ",
+    {
+      "type": "div",
+      "props": {
+        "testID": "COUNT"
+      },
+      "children": [
+        "0"
+      ]
+    },
+    "       ",
+    {
+      "type": "button",
+      "props": {
+        "testID": "COUNTER_BUTTON"
+      },
+      "children": [
+        "+"
+      ]
+    },
+    "     "
+  ]
+}
+undefined
+babel &gt; filterByTestID('COUNT', x)
+[ { type: 'div', props: { testID: 'COUNT' }, children: [ '0' ] } ]
+babel &gt; filterByTestID('X', x)
+[]
+babel &gt; getTextNodes(filterByTestID('COUNT', x))
+[ '0' ]
+babel &gt; filterByTestID('COUNTER_BUTTON', x)[0].props.onClick()
+undefined
+babel &gt; pp(filterByTestID('COUNT', toJSON(r)))
+[
+  {
+    "type": "div",
+    "props": {
+      "testID": "COUNT"
+    },
+    "children": [
+      "1"
+    ]
+  }
+]
+undefined
+babel &gt; const CounterDriver = class extends ComponentDriver {
+  constructor() {
+    super(Counter);
+  }
+
+  clickPlusButton() {
+    this.getByID('COUNTER_BUTTON').props.onClick();
+    return this;
+  }
+
+  getCount() {
+    return this.getByID('COUNT').children[0];
+  }
+}
+undefined
+babel &gt; new CounterDriver().clickPlusButton().clickPlusButton().getCount()
+'2'
+babel &gt;
+</pre>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<nav id="navigation">
+  <button id="nav-menu">☰</button>
+  <button id="nav-close">&times;</button>
+  <ul>
+    <li><a href="../index.html">Home</a></li>
+  </ul>
+</nav>
+</div>
+</body>
+</html>

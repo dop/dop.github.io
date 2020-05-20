@@ -1,0 +1,382 @@
+#+TITLE: Intro to React Component Driver
+#+SUBTITLE: Prezentacija Praktikantams
+#+DATE: <2020-05-20 Wed>
+
+#+BEGIN_SRC elisp :exports none :results none
+(defvar demo-repl-buffer-name "repl")
+(setq demo-it--insert-text-speed :instant)
+(set-frame-parameter nil 'internal-border-width 60)
+
+(defun comint-send-without-newlines (proc str)
+  (comint-send-string proc (concat (s-join " " (s-lines str)) "\n")))
+
+(defun ddit-ensure-repl (name)
+  (let ((buf (get-buffer (format "*%s*" name))))
+    (unless buf
+      (let ((comint-prompt-regexp "^.*> *")
+            (comint-input-sender #'comint-send-without-newlines))
+        (setf buf (make-comint name "node_modules/.bin/babel-node"))))
+    buf))
+
+(defmacro in-repl (&rest body)
+  (let ((bufvar (gensym)))
+    `(let ((,bufvar (ddit-ensure-repl demo-repl-buffer-name)))
+       (pop-to-buffer ,bufvar)
+       (with-current-buffer ,bufvar
+         ,@body))))
+
+(defun $.. (str)
+  (in-repl
+   (demo-it-insert str)))
+
+(defun $> (command)
+  (in-repl
+   (demo-it-insert command)
+   (comint-send-input)))
+
+(defun $^ ()
+  (in-repl (comint-clear-buffer)))
+
+(defun dp/demo-block ()
+  (interactive)
+  ($> (nth 1 (org-babel-get-src-block-info))))
+
+(global-set-key [f5] #'dp/demo-block)
+
+(demo-it-create
+ (demo-it-presentation "rcd.org")
+ (demo-it-presentation-advance)
+ (demo-it-presentation-advance)
+ (demo-it-presentation-advance)
+ (demo-it-presentation-advance)
+ (demo-it-presentation-highlight-phrase "^Date: .*")
+ (progn
+   (demo-it-presentation-unhighlight-all)
+   (demo-it-presentation-advance))
+ (demo-it-presentation-advance)
+ ($> "const React = require('react')")
+ ($> "const {create} = require('react-test-renderer')")
+ ($> "const pp = (x) => console.log(JSON.stringify(x, null, 2))")
+ ($^)
+ ($> "create(<div />).toJSON()")
+ ($> "create(<div id=\"app\" />).toJSON()")
+ ($> "create(<div>Hello, World!</div>).toJSON()")
+ ($> "pp(create(<div><span>Hello, World!</span><button/></div>).toJSON())")
+ ($^)
+ ($> "const onClick = () => console.log('Hello!')")
+ ($> "const button = create(<button onClick={onClick}>Click Me!</button>).toJSON()")
+ ($> "button.props.onClick()")
+ (demo-it-presentation-advance)
+ ($^)
+ ($> "function Counter() {
+  const [count, setCount] = React.useState(0);
+  return (<button onClick={() => setCount(count + 1)}>Count is {count}</button>);
+}")
+ ($^)
+ ($> "const renderer = create(<Counter />)")
+ ($> "renderer.toJSON()")
+ ($> "renderer.toJSON().props.onClick()")
+ ($> "renderer.toJSON()")
+ (demo-it-presentation-advance)
+ ($> "const RCD = require('react-component-driver')")
+ ($> "RCD")
+ ($> "const {filterByTestID, filterBy, getTextNodes, renderComponent, toJSON, ComponentDriver} = RCD")
+ ($> "renderComponent(Counter, {}).toJSON()")
+ ($> "toJSON(renderComponent(Counter, {}))")
+ ($> "function Counter() {
+  const [count, setCount] = React.useState(0);
+  return (
+    <div>
+      <div testID=\"COUNT\">{count}</div>
+      <button testID=\"COUNTER_BUTTON\" onClick={() => setCount(count + 1)}>+</button>
+    </div>
+  );
+}")
+ ($> "const r = renderComponent(Counter, {})")
+ ($> "const x = toJSON(r)")
+ ($> "pp(x)")
+ ($> "filterByTestID('COUNT', x)")
+ ($> "filterByTestID('X', x)")
+ ($> "getTextNodes(filterByTestID('COUNT', x))")
+ ($.. "filterByTestID('COUNTER_BUTTON', x)")
+ ($.. "[0]")
+ ($> ".props.onClick()")
+ ($> "pp(filterByTestID('COUNT', toJSON(r)))")
+ ($> "const CounterDriver = class extends ComponentDriver {
+  constructor() {
+    super(Counter);
+  }
+
+  clickPlusButton() {
+    this.getByID('COUNTER_BUTTON').props.onClick();
+    return this;
+  }
+
+  getCount() {
+    return this.getByID('COUNT').children[0];
+  }
+}")
+ ($.. "new CounterDriver()")
+ ($.. ".clickPlusButton()")
+ ($.. ".clickPlusButton()")
+ ($> ".getCount()")
+ (demo-it-presentation-advance)
+ (demo-it-presentation-advance))
+#+END_SRC
+
+* React Component Driver
+
+(╯°□°)╯︵ ┻━┻
+
+* Agenda
+
+- Istorija
+
+- Demo: Read Test Renderer
+
+- Demo: React Component Driver +ir TDD+
+
+- Ateities Vizija
+
+* Kas yra React Component Driver?
+
+- [[https://reactjs.org/docs/test-renderer.html][React Test Renderer]] apvalkalas.
+
+- Įrankių rinkinys leidžiantis analizuoti komponentų medį.
+
+  + Konstravimas: render, renderComponent, ...
+
+  + Užklausos: filterBy, getTextNodes, ...
+
+- Test Driver konvencija.
+
+  + Paslepia komplikuotą konstravimą, manipuliavimą.
+
+  + Pasakoja istoriją.
+
+* Panašūs įrankiai
+
+- [[https://github.com/enzymejs/enzyme][Enzyme]]
+
+- [[https://github.com/testing-library/native-testing-library][React Testing Library]]
+
+* Istorija
+
+#+BEGIN_EXAMPLE
+commit 93e02b2044d3f82ac7526449ec72ca7acd088840
+Author: Donatas Petrauskas <donatasp@wix.com>
+Date:   Mon Nov 21 16:17:19 2016 +0200
+
+  Try to include custom built testkit.
+#+END_EXAMPLE
+
+* Ko nedaro React Component Driver
+
+- Nevykdo native kodo. Tam skirtas [[https://github.com/wix/detox][Detox]].
+
+- Nepalengvina testų rašymo.
+
+* Demo: React Test Renderer
+
+- Importavimas
+
+- Renderer objektas
+
+- Komponentų medis
+
+- Komponento evoliucija
+
+* Komponento Evoliucija
+
+#+BEGIN_SRC js
+function Counter() {
+  const [count, setCount] = React.useState(0);
+  return (<button onClick={() => setCount(count + 1)}>Count is {count}</button>);
+}
+#+END_SRC
+
+* Demo: React Component Driver
+
+- Užklausos
+
+- =ComponentDriver=
+
+* Ateities Vizija
+
+* Dokumentacija
+
+[[https://github.com/wix-incubator/react-component-driver/blob/master/react-component-driver/README.org][React Component Driver]]
+* REPL
+#+BEGIN_EXAMPLE
+babel > const React = require('react')
+undefined
+babel > const {create} = require('react-test-renderer')
+undefined
+babel > const pp = (x) => console.log(JSON.stringify(x, null, 2))
+undefined
+babel > create(<div />).toJSON()
+{ type: 'div', props: {}, children: null }
+babel > create(<div id="app" />).toJSON()
+{ type: 'div', props: { id: 'app' }, children: null }
+babel > create(<div>Hello, World!</div>).toJSON()
+{ type: 'div', props: {}, children: [ 'Hello, World!' ] }
+babel > pp(create(<div><span>Hello, World!</span><button/></div>).toJSON())
+{
+  "type": "div",
+  "props": {},
+  "children": [
+    {
+      "type": "span",
+      "props": {},
+      "children": [
+        "Hello, World!"
+      ]
+    },
+    {
+      "type": "button",
+      "props": {},
+      "children": null
+    }
+  ]
+}
+undefined
+babel > const onClick = () => console.log('Hello!')
+undefined
+babel > const button = create(<button onClick={onClick}>Click Me!</button>).toJSON()
+undefined
+babel > button.props.onClick()
+Hello!
+undefined
+babel > function Counter() {
+  const [count, setCount] = React.useState(0);
+  return (<button onClick={() => setCount(count + 1)}>Count is {count}</button>);
+}
+undefined
+babel > const renderer = create(<Counter />)
+undefined
+babel > renderer.toJSON()
+{
+  type: 'button',
+  props: { onClick: [Function: onClick] },
+  children: [ 'Count is ', '0' ]
+}
+babel > renderer.toJSON().props.onClick()
+undefined
+babel > renderer.toJSON()
+{
+  type: 'button',
+  props: { onClick: [Function: onClick] },
+  children: [ 'Count is ', '1' ]
+}
+babel > const RCD = require('react-component-driver')
+undefined
+babel > RCD
+{
+  withContext: [Function: withContext],
+  ComponentDriver: [Function: ComponentDriver],
+  componentDriver: [Function: factory],
+  render: [Function: render],
+  renderComponent: [Function: renderComponent],
+  toJSON: [Function: toJSON],
+  filterBy: [Function: filterBy],
+  filterByTestID: [Function: filterByTestID],
+  filterByType: [Function: filterByType],
+  getTextNodes: [Function: getTextNodes]
+}
+babel > const {filterByTestID, filterBy, getTextNodes, renderComponent, toJSON, ComponentDriver} = RCD
+undefined
+babel > renderComponent(Counter, {}).toJSON()
+{
+  type: 'button',
+  props: { onClick: [Function: onClick] },
+  children: [ 'Count is ', '0' ]
+}
+babel > toJSON(renderComponent(Counter, {}))
+{
+  type: 'button',
+  props: { onClick: [Function] },
+  children: [ 'Count is ', '0' ]
+}
+babel > function Counter() {
+  const [count, setCount] = React.useState(0);
+  return (
+    <div>
+      <div testID="COUNT">{count}</div>
+      <button testID="COUNTER_BUTTON" onClick={() => setCount(count + 1)}>+</button>
+    </div>
+  );
+}
+undefined
+babel > const r = renderComponent(Counter, {})
+undefined
+babel > const x = toJSON(r)
+undefined
+babel > pp(x)
+{
+  "type": "div",
+  "props": {},
+  "children": [
+    "       ",
+    {
+      "type": "div",
+      "props": {
+        "testID": "COUNT"
+      },
+      "children": [
+        "0"
+      ]
+    },
+    "       ",
+    {
+      "type": "button",
+      "props": {
+        "testID": "COUNTER_BUTTON"
+      },
+      "children": [
+        "+"
+      ]
+    },
+    "     "
+  ]
+}
+undefined
+babel > filterByTestID('COUNT', x)
+[ { type: 'div', props: { testID: 'COUNT' }, children: [ '0' ] } ]
+babel > filterByTestID('X', x)
+[]
+babel > getTextNodes(filterByTestID('COUNT', x))
+[ '0' ]
+babel > filterByTestID('COUNTER_BUTTON', x)[0].props.onClick()
+undefined
+babel > pp(filterByTestID('COUNT', toJSON(r)))
+[
+  {
+    "type": "div",
+    "props": {
+      "testID": "COUNT"
+    },
+    "children": [
+      "1"
+    ]
+  }
+]
+undefined
+babel > const CounterDriver = class extends ComponentDriver {
+  constructor() {
+    super(Counter);
+  }
+
+  clickPlusButton() {
+    this.getByID('COUNTER_BUTTON').props.onClick();
+    return this;
+  }
+
+  getCount() {
+    return this.getByID('COUNT').children[0];
+  }
+}
+undefined
+babel > new CounterDriver().clickPlusButton().clickPlusButton().getCount()
+'2'
+babel >
+#+END_EXAMPLE
