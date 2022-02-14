@@ -4,7 +4,7 @@
 <!-- 2022-02-14 Mon 22:12 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Donato Blogas</title>
+<title>That Advent I Learned Two Pointers Technique</title>
 <meta name="author" content="Donatas Petrauskas" />
 <meta name="generator" content="Org Mode" />
 <style type="text/css">.title  { text-align: center;
@@ -283,40 +283,66 @@ blockquote {
   }
 }
 </style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content" class="content">
-<h1 class="title">Donato Blogas
-<br>
-<span class="subtitle">At a speed of 1 post every couple of years.</span>
-</h1>
+<h1 class="title">That Advent I Learned Two Pointers Technique</h1>
+<blockquote>
+<p>
+<i>That Advent I Learned</i> is a series where I reflect on my solutions to <a href="https://adventofcode.com/">Advent of Code</a> puzzles.
+</p>
+</blockquote>
 
-<div id="outline-container-orgfc42898" class="outline-2">
-<h2 id="orgfc42898">Posts</h2>
-<div class="outline-text-2" id="text-orgfc42898">
-</div>
-<div id="outline-container-org1778a13" class="outline-3">
-<h3 id="org1778a13"><a href="posts/tail-202001.html">TAIL: Two Pointers Technique</a></h3>
-<div class="outline-text-3" id="text-org1778a13">
+<div id="outline-container-org28642a7" class="outline-2">
+<h2 id="org28642a7"><a href="https://adventofcode.com/2020/day/1">Report Repair</a></h2>
+<div class="outline-text-2" id="text-org28642a7">
 <p>
-Humble first day success.
+Goal was, given a list of numbers, to find a pair (part I) or a triplet (part II)  that adds up to 2020.
 </p>
-</div>
-</div>
-<div id="outline-container-org7f1fbd2" class="outline-3">
-<h3 id="org7f1fbd2"><a href="posts/testable-code.html">Writing Testable Code: JavaScript and React Edition</a></h3>
-<div class="outline-text-3" id="text-org7f1fbd2">
+
 <p>
-Inspired by Miško Hevery's posts and talks on the same topic. This is my summary and overview of important rules for testable code in context of JavaScript (TypeScript) and React.
+I did not expect anything complicated on the first day and implemented dumb \(\mathcal{O}(n^2)\) and \(\mathcal{O}(n^3)\) algorithms to compare every possible combination.
 </p>
-</div>
+
+<p>
+Unsurprisingly, it was enough since input had mere 200 numbers. For part I, it gives upper bound of \(\binom{200}{2} = 19\,900\) comparisons, and for part II &#x2013; \(\binom{200}{3} = 1\,313\,400\). Both numbers are small enough for any modern machine. Especially when numbers are in random order which means that on average solution will be found in fewer steps.
+</p>
+
+<p>
+Speaking of random order &#x2013; I missed (now) obvious optimization. Sorted list of numbers requires only a single pass to find the solution! Walking from both sides of a list and narrowing range depending on whether current sum is smaller or bigger than target, would give solution in \(\mathcal{O}(n)\) time.
+</p>
+
+<p>
+So first day was a success as I learned about <a href="https://www.geeksforgeeks.org/two-pointers-technique/">Two Pointers Technique</a>!
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <nav id="navigation">
   <ul>
-    <li><a href="index.html">Posts</a></li><li><a href="pages.html">Pages</a></li>
+    <li><a href="../index.html">Posts</a></li><li><a href="../pages.html">Pages</a></li>
     <li>&middot;</li>
     <li><a href="https://github.com/dop">GitHub</a></li>
     <li><a href="https://gitlab.com/setq">GitLab</a></li>

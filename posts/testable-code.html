@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-04-23 Thu 17:00 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 2022-02-14 Mon 22:12 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Writing Testable Code</title>
-<meta name="generator" content="Org mode">
-<meta name="author" content="Donatas Petrauskas">
+<meta name="author" content="Donatas Petrauskas" />
+<meta name="generator" content="Org Mode" />
 <style type="text/css">.title  { text-align: center;
-          margin-bottom: .2em; }
+          margin-bottom: .2em;
+          line-height: 1;
+        }
 .subtitle { text-align: center;
             font-size: medium;
             font-weight: bold;
-            margin-top:0; }
+            margin-top:0;
+            display: inline-block;
+          }
 .todo   { font-family: monospace; color: red; }
 .done   { font-family: monospace; color: green; }
 .priority { font-family: monospace; color: orange; }
@@ -180,23 +184,26 @@ body {
   max-width: 800px;
   padding: 0 1em;
   font-size: 16pt;
-  font-family: Times, serif;
+  font-family: Georgia, Times, serif;
   line-height: 1.4;
-  /* background: #34363e; */
   color: #343637;
+  background: white;
+}
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
 
 code, pre {
   font-size: 10pt;
-  font-family: Monaco, Menlo, DejaVu Sans Mono, monospace;
+  font-family: monospace;
 }
 
 .title {
   margin-bottom: 3em;
-}
-
-p {
-  text-align: justify;
 }
 
 .org-src-name {
@@ -205,69 +212,42 @@ p {
 
 pre.src {
   padding: 1em;
-  border: 1px solid #eee;
-  border-radius: 2px;
 }
 
 #footnotes {
   font-size: 12pt;
 }
 
+#postamble {
+  font-size: 10pt;
+  font-family: Helvetica, sans-serif;
+  padding-top: 3em;
+}
+
 #navigation {
-  display: flex;
-  align-items: top;
-  position: fixed;
-  top: 16pt;
-  left: 0;
-  padding: 6pt 10pt;
-  font-size: 20pt;
-  background: black;
-  color: white;
-  border-top-right-radius: 6pt;
-  border-bottom-right-radius: 6pt;
+  color: black;
+  background: white;
+  padding: 2em 0;
+  border-top: 1px solid #eee;
 }
 
 #navigation a, #navigation a:active, #navigation a:visited {
-  color: white;
   text-decoration: none;
+  text-transform: uppercase;
 }
 
 #navigation ul {
-  padding: 0 0 0 10pt;
+  display: flex;
+  padding: 0;
   margin: 0;
   list-style: none;
 }
-
-#navigation button {
-  width: 20pt;
-  font-size: 20pt;
-  padding: 0;
+#navigation li {
+  padding: 0 1em 0 0;
   margin: 0;
-  background: transparent;
-  border: 0 none;
-  cursor: pointer;
-  line-height: 1;
-  height: 27pt;
-  color: white;
 }
 
-#navigation ul li {
-  line-height: 1em;
-  padding: .25em 0;
-}
-
-#navigation.closed ul {
-  display: none
-}
-#navigation.open ul {
-  display: block
-}
-
-#navigation #nav-menu { display: none }
-#navigation.closed #nav-close { display: none }
-#navigation.closed #nav-menu { display: block }
-
-code, blockquote {
+pre, code, blockquote {
   background: #eeeeec;
   padding: .2em;
   border-radius: 3pt;
@@ -276,52 +256,49 @@ code, blockquote {
 blockquote {
   margin: 0;
   padding: .2em 1em;
-  background: #eeeeec;
   font-style: italic;
 }
-</style><script>(function () {
-  window.addEventListener('DOMContentLoaded', initialize);
 
-  let nav;
-  let close;
-  let menu;
-
-  function initialize() {
-    nav = document.getElementById('navigation');
-    close = document.getElementById('nav-close');
-    menu = document.getElementById('nav-menu');
-
-    close.onclick = closeMenu;
-    menu.onclick = showMenu;
-
-    closeMenu();
+@media (prefers-color-scheme: dark) {
+  body, #navigation {
+    background: #343637;
+    color: #eeeeec;
   }
-
-  function closeMenu() {
-    nav.classList.add('closed');
+  pre, code, blockquote {
+    background: #545657;
+    color: #eeeeec;
   }
-
-  function showMenu() {
-    nav.classList.remove('closed');
+  pre, pre.src {
+    border-color: #646667;
+    box-shadow: none;
   }
-})();
-</script>
+  #navigation {
+    border-color: #646667;
+  }
+  a {
+    color: #00bfff;
+  }
+  a:visited {
+    color: #836fff;
+  }
+}
+</style>
 </head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <h1 class="title">Writing Testable Code
 <br>
 <span class="subtitle">TypeScript and JavaScript Edition</span>
 </h1>
-<div id="table-of-contents">
+<div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
-<div id="text-table-of-contents">
+<div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#Overview">Overview of "Guide: Writing Testable Code"</a>
 <ul>
 <li><a href="#GlobalState">Global state</a>
 <ul>
-<li><a href="#orge404a4b">Caveats</a></li>
+<li><a href="#org3f9fe21">Caveats</a></li>
 </ul>
 </li>
 <li><a href="#DiggingIntoCollaborators">Digging into Collaborators</a></li>
@@ -338,45 +315,26 @@ blockquote {
 </p>
 
 <p>
-I spend substantial amount of time writing tests and consequentially learning
-about software design in the process. I also learn best from my own mistakes as
-it's hard for me to understand abstract ideas unless presented with concrete and
-familiar examples. That is why video talks and articles in "Guide: Writing
-Testable Code"<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> series from Miško Hevery of AngularJS fame resonated with
-me. It has a nice balance of theory and practical examples.
+I spend substantial amount of time writing tests and learning about software design in the process. Also, I find it hard to understand abstract ideas unless presented with concrete and familiar examples. It must be why talks and articles in "Guide: Writing Testable Code"<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup> series from Miško Hevery of AngularJS fame resonated with me. It has a nice balance of theory and examples.
 </p>
 
 <p>
-The reason why I read this pretty long document and watched Google Tech Talks on
-testable code<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> is that my career as front-end developer started with
-AngularJS about 6<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup> years ago. The great thing with AngularJS was (and is)
-that it introduced architecture which encourage testable code. It took me a
-couple of years to appreciate what AngularJS offered and to really grasp it's
-potential. Guiding principles laid out in Miško's articles was what I
-lacked. Once understood, it became clear what constitutes testable code. It
-didn't become easy to write, though.
+I read this pretty long document and watched Google Tech Talks on testable code<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup> because my career as front-end developer started with AngularJS<sup><a id="fnr.3" class="footref" href="#fn.3" role="doc-backlink">3</a></sup>. The great thing about AngularJS is that it introduced architecture which encourage testable code. It took me a couple of years to appreciate what AngularJS offered and really grasp its potential. Guiding principles laid out in Miško's articles was what I lacked. Once understood, it became clear what constitutes testable code. It didn't become easy to write, though.
 </p>
 
 <p>
-My hope with this article is to channel Miško's ideas and give you, dear reader,
-cognitive tools for recognizing untestable code.
+My hope with this article is to channel Miško's ideas and give you, dear reader, cognitive tools to recognize untestable code.
 </p>
 
 <p>
-<i>Note</i>: In this article I will be using TypeScript and JavaScript code as
-examples, but rules are universal and can be applied to other languages. Even
-purely functional ones. But to be fair, purely functional languages, like Elm,
-makes it really hard to write untestable code.
+<i>Note</i>: In this article I will be using TypeScript and JavaScript code as examples, but rules are universal and can be applied to other languages. Even purely functional ones. But to be fair, purely functional languages, like Elm, makes it really hard to write untestable code.
 </p>
 
-<div id="outline-container-org968fff2" class="outline-2">
-<h2 id="Overview"><a id="org968fff2"></a>Overview of "Guide: Writing Testable Code"</h2>
+<div id="outline-container-Overview" class="outline-2">
+<h2 id="Overview">Overview of "Guide: Writing Testable Code"</h2>
 <div class="outline-text-2" id="text-Overview">
 <p>
-"Guide: Writing Testable Code" was written as internal document at Google
-targeting Java code. Many of given examples are very much tied to Java and
-Dependency Injection framework Guice. But the underlying ideas are applicable to
-TypeScript and JavaScript nonetheless.
+"Guide: Writing Testable Code" was written as internal document at Google targeting Java code. Many of given examples are tied to Java and Dependency Injection framework Guice but the underlying ideas are applicable to both TypeScript and JavaScript nonetheless.
 </p>
 
 <p>
@@ -390,33 +348,23 @@ Guide consists of 4 parts (flaws):
 </ol>
 
 <p>
-Parts 2 to 4 are kind of obvious, but we will go through them anyway. While part
-1 is definitely a common sense one, I don't think I ever saw it mentioned and
-pointed out so clearly before. Making your constructors dumb is very important
-for objects to be testable. Moreover, it also has this nice consequence of
-forcing your app or module to have clearly separated initialization and
-execution phases.
+Parts 2 to 4 are obvious, but we will go through them anyway. While part 1 is definitely a common sense one, I don't think I ever saw it mentioned and pointed out so clearly before. Making your constructors dumb is important for objects to be testable. Moreover, it also has this nice consequence of forcing your app or module to have clearly separated initialization and execution phases.
 </p>
 
 <p>
-I would like to take you through these flaws from, subjectively, most obvious to
-least.
+I would like to take you through these flaws from, subjectively, most obvious to least.
 </p>
 </div>
 
-<div id="outline-container-orgcbb52ec" class="outline-3">
-<h3 id="GlobalState"><a id="orgcbb52ec"></a>Global state</h3>
+<div id="outline-container-GlobalState" class="outline-3">
+<h3 id="GlobalState">Global state</h3>
 <div class="outline-text-3" id="text-GlobalState">
 <p>
-Global state is sneaky. It might hide under multiple concepts: mutable
-variables, static methods, singleton objects, and any dependencies that are not
-passed as arguments. Global state is infectious. Single instance of it in small
-module will corrupt all of your application.
+Global state is sneaky. It hides under mutable variables, static methods, singleton objects, and any dependency that is not passed as an argument. Global state is infectious. Single instance of it in a small module will corrupt all of your application.
 </p>
 
 <p>
-Singleton pattern in OOP is well spread practice, so how come it is
-bad? Answer is that it's not bad, unless it is global.
+Singleton pattern in OOP<sup><a id="fnr.4" class="footref" href="#fn.4" role="doc-backlink">4</a></sup> is well spread practice, so how come it's bad? Answer is that, unless global, it is not.
 </p>
 
 <p>
@@ -424,14 +372,14 @@ Let's take a look at small example of sneaky global state.
 </p>
 
 <div class="org-src-container">
-<label class="org-src-name"><span class="listing-number">Listing 1: </span>Cache module.</label><pre class="src src-javascript"><span class="org-keyword">const</span> <span class="org-variable-name">cache</span> = {};
+<label class="org-src-name"><span class="listing-number">Listing 1: </span>Cache module.</label><pre class="src src-javascript">const cache = {};
 
-<span class="org-keyword">function</span> <span class="org-function-name">set</span>(<span class="org-variable-name">key</span>, <span class="org-variable-name">value</span>) {
-  <span class="org-keyword">return</span> cache[key] = value;
+function set(key, value) {
+  return cache[key] = value;
 }
 
-<span class="org-keyword">function</span> <span class="org-function-name">get</span>(<span class="org-variable-name">key</span>) {
-  <span class="org-keyword">return</span> cache[key];
+function get(key) {
+  return cache[key];
 }
 
 module.exports = {
@@ -442,25 +390,25 @@ module.exports = {
 </div>
 
 <div class="org-src-container">
-<label class="org-src-name"><span class="listing-number">Listing 2: </span>Utility to fetch posts.</label><pre class="src src-javascript"><span class="org-keyword">const</span> <span class="org-variable-name">fetch</span> = require(<span class="org-string">'node-fetch'</span>);
-<span class="org-keyword">const</span> <span class="org-variable-name">cache</span> = require(<span class="org-string">'./cache'</span>);
+<label class="org-src-name"><span class="listing-number">Listing 2: </span>Utility to fetch posts.</label><pre class="src src-javascript">const fetch = require('node-fetch');
+const cache = require('./cache');
 
-<span class="org-keyword">const</span> <span class="org-variable-name">BASE_URL</span> = <span class="org-string">'http://localhost:8080'</span>;
+const BASE_URL = 'http://localhost:8080';
 
-<span class="org-keyword">async</span> <span class="org-keyword">function</span> fetchPosts(<span class="org-variable-name">since</span>) {
-  <span class="org-keyword">const</span> <span class="org-variable-name">timestamp</span> = since.getTime();
-  <span class="org-keyword">const</span> <span class="org-variable-name">KEY</span> = <span class="org-string">'posts_since_'</span> + timestamp;
-  <span class="org-keyword">let</span> <span class="org-variable-name">posts</span> = cache.get(KEY);
-  <span class="org-keyword">if</span> (posts == <span class="org-constant">null</span>) {
-    <span class="org-keyword">const</span> <span class="org-variable-name">response</span> = <span class="org-keyword">await</span> fetch(BASE_URL + <span class="org-string">'/posts?since='</span> + timestamp);
-    <span class="org-keyword">if</span> (response.status === 200) {
-      posts = <span class="org-keyword">await</span> response.json();
+async function fetchPosts(since) {
+  const timestamp = since.getTime();
+  const KEY = 'posts_since_' + timestamp;
+  let posts = cache.get(KEY);
+  if (posts == null) {
+    const response = await fetch(BASE_URL + '/posts?since=' + timestamp);
+    if (response.status === 200) {
+      posts = await response.json();
       cache.set(KEY, posts);
-    } <span class="org-keyword">else</span> {
-      <span class="org-keyword">return</span> {error: <span class="org-string">'Cannot fetch posts'</span>};
+    } else {
+      return {error: 'Cannot fetch posts'};
     }
   }
-  <span class="org-keyword">return</span> {result: posts};
+  return {result: posts};
 }
 
 module.exports = {
@@ -470,31 +418,31 @@ module.exports = {
 </div>
 
 <div class="org-src-container">
-<label class="org-src-name"><span class="listing-number">Listing 3: </span>Complicated tests.</label><pre class="src src-javascript"><span class="org-keyword">const</span> <span class="org-variable-name">test</span> = require(<span class="org-string">'tape'</span>);
-<span class="org-keyword">const</span> <span class="org-variable-name">proxyquire</span> = require(<span class="org-string">'proxyquire'</span>);
+<label class="org-src-name"><span class="listing-number">Listing 3: </span>Complicated tests.</label><pre class="src src-javascript">const test = require('tape');
+const proxyquire = require('proxyquire');
 
-test(<span class="org-string">'fetchPosts()'</span>, <span class="org-keyword">async</span> (assert) =&gt; {
-  <span class="org-keyword">const</span> <span class="org-variable-name">expectedPosts</span> = [1, 2, 3];
-  <span class="org-keyword">const</span> <span class="org-variable-name">expectedError</span> = <span class="org-string">'Cannot fetch posts'</span>;
-  <span class="org-keyword">let</span> <span class="org-variable-name">fetchPostsModule</span> = proxyquire(<span class="org-string">'./fetch-posts'</span>, {
-    <span class="org-string">'node-fetch'</span>: (url) =&gt;
+test('fetchPosts()', async (assert) =&gt; {
+  const expectedPosts = [1, 2, 3];
+  const expectedError = 'Cannot fetch posts';
+  let fetchPostsModule = proxyquire('./fetch-posts', {
+    'node-fetch': (url) =&gt;
       Promise.resolve({status: 200, json: () =&gt; Promise.resolve(expectedPosts)})
   });
 
   assert.deepEqual(
-    <span class="org-keyword">await</span> fetchPostsModule.fetchPosts(<span class="org-keyword">new</span> <span class="org-type">Date</span>()),
+    await fetchPostsModule.fetchPosts(new Date()),
     {result: expectedPosts},
-    <span class="org-string">'successfully fetches posts'</span>
+    'successfully fetches posts'
   );
 
-  fetchPostsModule = proxyquire(<span class="org-string">'./fetch-posts'</span>, {
-    <span class="org-string">'node-fetch'</span>: (url) =&gt; Promise.resolve({status: 500})
+  fetchPostsModule = proxyquire('./fetch-posts', {
+    'node-fetch': (url) =&gt; Promise.resolve({status: 500})
   });
 
   assert.deepEqual(
-    <span class="org-keyword">await</span> fetchPostsModule.fetchPosts(<span class="org-keyword">new</span> <span class="org-type">Date</span>()),
+    await fetchPostsModule.fetchPosts(new Date()),
     {error: expectedError},
-    <span class="org-string">'returns empty array and error on failure'</span>
+    'returns empty array and error on failure'
   );
 
   assert.end();
@@ -502,11 +450,7 @@ test(<span class="org-string">'fetchPosts()'</span>, <span class="org-keyword">a
 </pre>
 </div>
 
-<p>
-Great success!?
-</p>
-
-<pre class="example">
+<pre class="example" id="orgb7b3163">
 
 fetchPosts()
 
@@ -522,17 +466,15 @@ duration:  25ms
 </pre>
 
 <p>
-Not really. Even though tests have passed, we had to use proxyquire<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup> to tap
-into module system and override dependencies. This a neat trick, but ultimately
-it's a sign of global state issue. Modules are singletons, they're run only
-once. Even though it's pretty common to see such code in a wild, it's not
-testable or REPL friendly.
+Great success?
 </p>
 
 <p>
-There is another catch &#x2013; our tests are only accidentally successful. If they
-would run fast enough to produce the same timestamp, we would get data served
-from the cache, which is a singleton object for whole application.
+Not really. Even though tests have passed, we had to use proxyquire<sup><a id="fnr.5" class="footref" href="#fn.5" role="doc-backlink">5</a></sup> to tap into module system and override dependencies. This a neat trick, but ultimately it's a sign of global state issue. Modules are singletons, they're run only once. Even though it's pretty common to see such code in the wild, it's not testable or REPL friendly.
+</p>
+
+<p>
+There is another catch &#x2013; our tests are only accidentally successful. If they would run fast enough to produce the same timestamp, we would get data served from the cache, which is a singleton object for the whole application.
 </p>
 
 <p>
@@ -544,18 +486,18 @@ First, Cache module exposes a function to create one.
 </p>
 
 <div class="org-src-container">
-<label class="org-src-name"><span class="listing-number">Listing 4: </span>Cache module.</label><pre class="src src-javascript"><span class="org-keyword">function</span> <span class="org-function-name">Cache</span>() {
-  <span class="org-keyword">const</span> <span class="org-variable-name">store</span> = {};
+<label class="org-src-name"><span class="listing-number">Listing 4: </span>Cache module.</label><pre class="src src-javascript">function Cache() {
+  const store = {};
 
-  <span class="org-keyword">function</span> <span class="org-function-name">set</span>(<span class="org-variable-name">key</span>, <span class="org-variable-name">value</span>) {
-    <span class="org-keyword">return</span> store[key] = value;
+  function set(key, value) {
+    return store[key] = value;
   }
 
-  <span class="org-keyword">function</span> <span class="org-function-name">get</span>(<span class="org-variable-name">key</span>) {
-    <span class="org-keyword">return</span> store[key];
+  function get(key) {
+    return store[key];
   }
 
-  <span class="org-keyword">return</span> {
+  return {
     set,
     get,
   };
@@ -566,29 +508,28 @@ module.exports = Cache;
 </div>
 
 <p>
-The same goes for utility to fetch posts. It's a repository object now, that can
-be configured with all it's dependencies.
+The same goes for utility to fetch posts. It's a repository object now and can be configured with all of dependencies.
 </p>
 
 <div class="org-src-container">
-<label class="org-src-name"><span class="listing-number">Listing 5: </span>Posts repository object.</label><pre class="src src-javascript"><span class="org-keyword">function</span> <span class="org-function-name">PostsRepo</span>(<span class="org-variable-name">BASE_URL</span>, <span class="org-variable-name">fetch</span>, <span class="org-variable-name">cache</span>) {
-  <span class="org-keyword">async</span> <span class="org-keyword">function</span> query(<span class="org-variable-name">since</span>) {
-    <span class="org-keyword">const</span> <span class="org-variable-name">timestamp</span> = since.getTime();
-    <span class="org-keyword">const</span> <span class="org-variable-name">KEY</span> = <span class="org-string">'posts_since_'</span> + timestamp;
-    <span class="org-keyword">let</span> <span class="org-variable-name">posts</span> = cache.get(KEY);
-    <span class="org-keyword">if</span> (posts == <span class="org-constant">null</span>) {
-      <span class="org-keyword">const</span> <span class="org-variable-name">response</span> = <span class="org-keyword">await</span> fetch(BASE_URL + <span class="org-string">'/posts?since='</span> + timestamp);
-      <span class="org-keyword">if</span> (response.status === 200) {
-        posts = <span class="org-keyword">await</span> response.json();
-        cache.set(KEY, posts);
-      } <span class="org-keyword">else</span> {
-        <span class="org-keyword">return</span> {error: <span class="org-string">'Cannot fetch posts'</span>};
+<label class="org-src-name"><span class="listing-number">Listing 5: </span>Posts repository object.</label><pre class="src src-javascript">function PostsRepo(BASE_URL, fetch, cache) {
+  async function query(since) {
+    const timestamp = since.getTime();
+    const KEY = 'posts_since_' + timestamp;
+    let posts = cache.get(KEY);
+    if (posts == null) {
+      const response = await fetch(BASE_URL + '/posts?since=' + timestamp);
+      if (response.status === 200) {
+	posts = await response.json();
+	cache.set(KEY, posts);
+      } else {
+	return {error: 'Cannot fetch posts'};
       }
     }
-    <span class="org-keyword">return</span> {result: posts};
+    return {result: posts};
   }
 
-  <span class="org-keyword">return</span> {
+  return {
     query,
   }
 }
@@ -598,38 +539,37 @@ module.exports = PostsRepo;
 </div>
 
 <p>
-As a result, we no longer need proxyquire. It's also painfully clear, that we
-have a cache, and we should be careful with it.
+As a result, we no longer need proxyquire. It's also painfully clear, that we have a cache, and we should be careful with it.
 </p>
 
 <div class="org-src-container">
-<label class="org-src-name"><span class="listing-number">Listing 6: </span>Complicated but honest tests.</label><pre class="src src-javascript"><span class="org-keyword">const</span> <span class="org-variable-name">test</span> = require(<span class="org-string">'tape'</span>);
+<label class="org-src-name"><span class="listing-number">Listing 6: </span>Complicated but honest tests.</label><pre class="src src-javascript">const test = require('tape');
 
-<span class="org-keyword">const</span> <span class="org-variable-name">Cache</span> = require(<span class="org-string">'./cache'</span>);
-<span class="org-keyword">const</span> <span class="org-variable-name">PostsRepo</span> = require(<span class="org-string">'./posts-repo'</span>);
+const Cache = require('./cache');
+const PostsRepo = require('./posts-repo');
 
-test(<span class="org-string">'PostsRepo'</span>, (assert) =&gt; {
-  <span class="org-keyword">function</span> <span class="org-function-name">newPostsRepo</span>(<span class="org-variable-name">fetch</span>) {
-    <span class="org-keyword">return</span> PostsRepo(<span class="org-string">'/'</span>, fetch, Cache());
+test('PostsRepo', (assert) =&gt; {
+  function newPostsRepo(fetch) {
+    return PostsRepo('/', fetch, Cache());
   }
 
-  assert.test(<span class="org-string">'fetch()'</span>, <span class="org-keyword">async</span> () =&gt; {
-    <span class="org-keyword">const</span> <span class="org-variable-name">expectedPosts</span> = [1, 2, 3];
-    <span class="org-keyword">const</span> <span class="org-variable-name">okFetch</span> = () =&gt; Promise.resolve({
+  assert.test('fetch()', async () =&gt; {
+    const expectedPosts = [1, 2, 3];
+    const okFetch = () =&gt; Promise.resolve({
       status: 200,
       json: () =&gt; expectedPosts
     });
     assert.deepEqual(
-      <span class="org-keyword">await</span> newPostsRepo(okFetch).query(<span class="org-keyword">new</span> <span class="org-type">Date</span>()),
+      await newPostsRepo(okFetch).query(new Date()),
       {result: expectedPosts},
-      <span class="org-string">'successfully fetches posts'</span>
+      'successfully fetches posts'
     );
 
-    <span class="org-keyword">const</span> <span class="org-variable-name">failFetch</span> = () =&gt; Promise.resolve({status: 500});
+    const failFetch = () =&gt; Promise.resolve({status: 500});
     assert.deepEqual(
-      <span class="org-keyword">await</span> newPostsRepo(failFetch).query(<span class="org-keyword">new</span> <span class="org-type">Date</span>()),
-      {error: <span class="org-string">'Cannot fetch posts'</span>},
-      <span class="org-string">'returns empty array and error on failure'</span>
+      await newPostsRepo(failFetch).query(new Date()),
+      {error: 'Cannot fetch posts'},
+      'returns empty array and error on failure'
     );
 
     assert.end();
@@ -642,7 +582,7 @@ test(<span class="org-string">'PostsRepo'</span>, (assert) =&gt; {
 Nice consequence of ditching proxyquire is that our tests run faster.
 </p>
 
-<pre class="example">
+<pre class="example" id="orgfba24b8">
 
 PostsRepo
 
@@ -661,41 +601,31 @@ duration:  11ms
 </pre>
 </div>
 
-<div id="outline-container-orge404a4b" class="outline-4">
-<h4 id="orge404a4b">Caveats</h4>
-<div class="outline-text-4" id="text-orge404a4b">
+<div id="outline-container-org3f9fe21" class="outline-4">
+<h4 id="org3f9fe21">Caveats</h4>
+<div class="outline-text-4" id="text-org3f9fe21">
 <ol class="org-ol">
-<li>Not every dependency has to become a parameter. Constant values, value
-objects, and pure functions can be used without worry. Good example is
-lodash<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>.</li>
-<li>If global state is evil, how do we do singletons? Answer is realated to the
-last part of this overview and the fact that you need to separate application
-construction and execution time. Singletons are objects that get constructed
-once in the former part and never in the latter.</li>
+<li>Not every dependency has to become a parameter. Constant values, value objects, and pure functions can be used without worry. Good example is lodash<sup><a id="fnr.6" class="footref" href="#fn.6" role="doc-backlink">6</a></sup>.</li>
+<li>If global state is evil, how do we do singletons? Answer is related to the last part of this overview and the fact that you need to separate application construction and execution time. Singletons are objects that get constructed once in the former part and never in the latter.</li>
 </ol>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org79d170c" class="outline-3">
-<h3 id="DiggingIntoCollaborators"><a id="org79d170c"></a>Digging into Collaborators</h3>
+<div id="outline-container-DiggingIntoCollaborators" class="outline-3">
+<h3 id="DiggingIntoCollaborators">Digging into Collaborators</h3>
 <div class="outline-text-3" id="text-DiggingIntoCollaborators">
 <p>
-This one is very easy to spot. For example, if we see a second level access of
-property in your code like this
+This one is easy to spot. For example, if we see a second level access of property in your code like this
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript"><span class="org-constant">this</span>.session.getAccount().getNickname()
+<pre class="src src-javascript">this.session.getAccount().getNickname()
 </pre>
 </div>
 
 <p>
-we have a problem. It will become clear when writing a test for it. We will have
-to either mock or construct <code>Account</code> in addition to <code>Session</code> in all places where
-<code>Session</code> is a dependency. Renaming a method of <code>Account</code> will impact places where
-direct dependency is <code>Session</code>, not <code>Account</code>. While most IDEs have no problem with
-renaming, your code repository history will become noisy.
+we have a problem. It will become clear when writing a test for it. We will have to either mock or construct <code>Account</code> in addition to <code>Session</code> in all places where <code>Session</code> is a dependency. Renaming a method of <code>Account</code> will impact places where direct dependency is <code>Session</code>, not <code>Account</code>. While most IDEs have no problem with renaming, your code repository history will become noisy.
 </p>
 
 <p>
@@ -703,12 +633,12 @@ Let's take a look at the following example.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript"><span class="org-keyword">function</span> <span class="org-function-name">App</span>() {
-  <span class="org-keyword">const</span> <span class="org-variable-name">session</span> = useSession();
-  <span class="org-keyword">return</span> (
+<pre class="src src-javascript">function App() {
+  const session = useSession();
+  return (
     &lt;div&gt;
-      &lt;div&gt;Hello, {session?.account?.name ?? <span class="org-string">'Anonymous'</span>}!&lt;/div&gt;
-      <span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
+      &lt;div&gt;Hello, {session?.account?.name ?? 'Anonymous'}!&lt;/div&gt;
+      // ...
     &lt;/div&gt;
   );
 }
@@ -716,9 +646,7 @@ Let's take a look at the following example.
 </div>
 
 <p>
-Instead of chains of method calls we have nested property access exhibiting the
-same issue. To avoid digging into <code>session</code>, we might introduce a selector
-<code>getAccountName</code> or pass only necessary data to child component.
+Instead of chains of method calls we have nested property access exhibiting the same issue. To avoid digging into <code>session</code>, we might introduce a selector <code>getAccountName</code> or pass only necessary data to child component.
 </p>
 
 <p>
@@ -726,12 +654,12 @@ Here's how second solution might look.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript"><span class="org-keyword">function</span> <span class="org-function-name">App</span>() {
-  <span class="org-keyword">const</span> <span class="org-variable-name">session</span> = useSession();
-  <span class="org-keyword">return</span> (
+<pre class="src src-javascript">function App() {
+  const session = useSession();
+  return (
     &lt;div&gt;
       &lt;Greet account={session.account} /&gt;
-      <span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
+      // ...
     &lt;/div&gt;
   );
 }
@@ -739,45 +667,40 @@ Here's how second solution might look.
 </div>
 
 <p>
-Both of the solutions are related to separating concerns. To choose correct one,
-you need to answer a question of what exactly component needs to do its job.
+Both of the solutions are related to separating concerns. To choose correct one, you need to answer a question of what exactly does component need to do its job.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org1be87cc" class="outline-3">
-<h3 id="DoingTooMuch"><a id="org1be87cc"></a>Doing too much or too many things</h3>
+<div id="outline-container-DoingTooMuch" class="outline-3">
+<h3 id="DoingTooMuch">Doing too much or too many things</h3>
 <div class="outline-text-3" id="text-DoingTooMuch">
 <p>
-Also known as a failure to maintain single responsibility principle. Usual rule
-of thumb is to look for names containing "and". But I find this problematic as
-some people are good (or bad) at naming. It is possible to name <code>PersistentCache</code>
-as <code>CacheAndSave</code>, but it does not mean that former is good and latter is
-bad. It's hard to come up with example that is not ridiculous, but here we go.
+Also known as a failure to maintain single responsibility principle. Usual rule of thumb is to look for names containing "and". But I find this problematic as some people are good (or bad) at naming. It is possible to name <code>PersistentCache</code> as <code>CacheAndSave</code>, but it does not mean that former is good and latter is bad. It's hard to come up with example that is not ridiculous, but here we go.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-javascript"><span class="org-keyword">function</span> <span class="org-function-name">UserRepo</span>(<span class="org-variable-name">store</span>, <span class="org-variable-name">mailer</span>) {
-  <span class="org-keyword">return</span> {
+<pre class="src src-javascript">function UserRepo(store, mailer) {
+  return {
     list() {
-      <span class="org-keyword">return</span> store.fetch(<span class="org-string">'user:*'</span>);
+      return store.fetch('user:*');
     },
     fetch(id) {
-      <span class="org-keyword">return</span> store.fetch(<span class="org-string">'user:'</span> + id);
+      return store.fetch('user:' + id);
     },
-    <span class="org-keyword">async</span> update(id, data) {
-      <span class="org-keyword">const</span> <span class="org-variable-name">old</span> = <span class="org-keyword">await</span> <span class="org-constant">this</span>.fetch(id);
-      <span class="org-keyword">const</span> <span class="org-variable-name">result</span> = <span class="org-keyword">await</span> store.save(<span class="org-string">'user:'</span> + data.id, data);
-      <span class="org-keyword">if</span> (old.email != data.email) {
-        <span class="org-keyword">await</span> mailer.confirmEmail(id, data.email);
+    async update(id, data) {
+      const old = await this.fetch(id);
+      const result = await store.save('user:' + data.id, data);
+      if (old.email != data.email) {
+	await mailer.confirmEmail(id, data.email);
       }
-      <span class="org-keyword">return</span> result;
+      return result;
     },
-    <span class="org-keyword">async</span> save(data) {
-      <span class="org-keyword">const</span> <span class="org-variable-name">id</span> = <span class="org-keyword">await</span> store.nextId();
-      <span class="org-keyword">const</span> <span class="org-variable-name">result</span> = <span class="org-keyword">await</span> store.save(<span class="org-string">'user:'</span> + id, data);
-      <span class="org-keyword">await</span> mailer.confirmEmail(id, data.email);
-      <span class="org-keyword">return</span> result;
+    async save(data) {
+      const id = await store.nextId();
+      const result = await store.save('user:' + id, data);
+      await mailer.confirmEmail(id, data.email);
+      return result;
     }
   };
 }
@@ -785,61 +708,36 @@ bad. It's hard to come up with example that is not ridiculous, but here we go.
 </div>
 
 <p>
-Besides the funky key value store, we have repository initiating email
-confirmation. On its own, this only feels wrong, but might be completely
-benign. Why does it feel wrong? First, <code>mailer</code> is used only in two of four
-methods. Maybe it would make sense to split <code>UserRepo</code> into reader and writer
-parts? Queries and commands? Invocation of confirmation flow also raises some
-questions. Since we are passing user ID, is <code>mailer</code> supposed to understand it's
-meaning? Will we have to encode confirmation link inside <code>mailer</code>? Does it mean
-that <code>mailer</code> will have to understand routing? Oh my&#x2026; It seems that <code>mailer</code> is
-not supposed to be here, and its interface has to be different.
+Besides the funky key value store, we have repository initiating email confirmation. On its own, this only feels wrong, but might be completely benign. Why does it feel wrong? First, <code>mailer</code> is used only in two of four methods. Maybe it would make sense to split <code>UserRepo</code> into reader and writer parts? Queries and commands? Invocation of confirmation flow also raises some questions. Since we are passing user ID, is <code>mailer</code> supposed to understand it's meaning? Will we have to encode confirmation link inside <code>mailer</code>? Does it mean that <code>mailer</code> will have to understand routing? Oh my&#x2026; It seems that <code>mailer</code> is not supposed to be here, and its interface has to be different.
 </p>
 
 <p>
-Where should we put it? Let's help ourselves by imagining that we also have
-account registration form, and profile view. Now, <code>mailer</code> makes sense in a
-registration form, but profile screen does not need it. So we are going to move
-<code>mailer</code> to registration handler (a.k.a. controller). It makes sense that request
-handler knows how to construct links, thus we can build email message with
-confirmation URL there. We'll pass it to <code>mailer</code> via generic interface, for
-example <code>mailer.send(recepients, subject, body)</code>.
+Where should we put it? Let's help ourselves by imagining that we also have account registration form, and profile view. Now, <code>mailer</code> makes sense in a registration form, but profile screen does not need it. So we are going to move <code>mailer</code> to registration handler (a.k.a. controller). It makes sense that request handler knows how to construct links, thus we can build email message with confirmation URL there. We'll pass it to <code>mailer</code> via generic interface, for example <code>mailer.send(recepients, subject, body)</code>.
 </p>
 
 <p>
-To solve this puzzle of responsibilities, we asked some questions and gave
-ourselves hypothetical answers. In real world, question will have real answers,
-which will lead to other solutions.
+To solve this puzzle of responsibilities, we asked some questions and gave ourselves hypothetical answers. In real world, question will have real answers, which will lead to other solutions.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org073791c" class="outline-3">
-<h3 id="BusinessLogicInConstructors"><a id="org073791c"></a>Business Logic in Constructors</h3>
+<div id="outline-container-BusinessLogicInConstructors" class="outline-3">
+<h3 id="BusinessLogicInConstructors">Business Logic in Constructors</h3>
 <div class="outline-text-3" id="text-BusinessLogicInConstructors">
 <p>
-This one is my favourite. Mostly because I've never seen it articulated and
-written down so clearly before.
+This one is my favourite. Mostly because I've never seen it articulated and written down so clearly before.
 </p>
 
 <p>
-It is also very powerful as it influences code structure in fundamental way and
-paves the road for the rest of testable design.
+It is also very powerful as it influences code structure in fundamental way and paves the road for the rest of testable design.
 </p>
 
 <p>
-The essence of the rule is to not have any logic in constructors besides setting
-instance variables. It follows that all your objects have to be constructed (and
-only constructed) at the start of your application. This phase could be
-understood as configuration part. Once everything is constructed and wired,
-execution part begins and business gets done. At this time only value (pure)
-objects can be created.
+The essence of the rule is to not have any logic in constructors besides setting instance variables. It follows that all your objects have to be constructed (and only constructed) at the start of your application. This phase could be understood as configuration part. Once everything is constructed and wired, execution part begins and business gets done. At this time only value (pure) objects can be created.
 </p>
 
 <p>
-Applying this rule to my React projects lead to unorthodox architectures which
-some people found off putting because of unfamiliar looks. The upside of it is
-that all of the components can be pure, easily <a href="https://storybook.js.org">storybookable</a> and testable.
+Applying this rule to my React projects lead to unorthodox architectures which some people found off-putting because of unfamiliar looks. The upside of it is that all of the components can be pure, easily <a href="https://storybook.js.org">storybookable</a> and testable.
 </p>
 
 <p>
@@ -847,42 +745,42 @@ Following is an example of how it might look.
 </p>
 
 <div class="org-src-container">
-<label class="org-src-name"><span class="listing-number">Listing 7: </span>Initialization part.</label><pre class="src src-javascript"><span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
-<span class="org-keyword">const</span> <span class="org-variable-name">map</span> = <span class="org-keyword">new</span> <span class="org-type">GoogolMap</span>();
-<span class="org-keyword">const</span> <span class="org-variable-name">MapView</span> = mapView(map);
-<span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
-<span class="org-keyword">const</span> <span class="org-variable-name">App</span> = app(storage, MapView, ...);
+<label class="org-src-name"><span class="listing-number">Listing 7: </span>Initialization part.</label><pre class="src src-javascript">// ...
+const map = new GoogolMap();
+const MapView = mapView(map);
+// ...
+const App = app(storage, MapView, ...);
 
 ReactDOM.render(&lt;App /&gt;, document.getElementById(... ));
 </pre>
 </div>
 
 <div class="org-src-container">
-<label class="org-src-name"><span class="listing-number">Listing 8: </span>Map component.</label><pre class="src src-javascript"><span class="org-keyword">function</span> <span class="org-function-name">mapView</span>(<span class="org-variable-name">map</span>: <span class="org-variable-name">MapServiceProvider</span>) {
-  <span class="org-keyword">return</span> <span class="org-keyword">function</span> MapView({longitude, latitude}) {
-    <span class="org-keyword">const</span> [<span class="org-variable-name">mapUrl</span>, <span class="org-variable-name">setMapUrl</span>] = useState(<span class="org-constant">null</span>);
+<label class="org-src-name"><span class="listing-number">Listing 8: </span>Map component.</label><pre class="src src-javascript">function mapView(map: MapServiceProvider) {
+  return function MapView({longitude, latitude}) {
+    const [mapUrl, setMapUrl] = useState(null);
 
-    useEffect(<span class="org-keyword">async</span> () =&gt; {
-      setMapUrl(<span class="org-keyword">await</span> map.getImageUrl(longitude, latitude));
+    useEffect(async () =&gt; {
+      setMapUrl(await map.getImageUrl(longitude, latitude));
     }, [longitude, latitude]);
 
-    <span class="org-keyword">return</span> &lt;div&gt;{mapUrl ? &lt;img src={mapUrl}/&gt; : SOME_DEFAULT_MAP_IMAGE}&lt;/div&gt;;
+    return &lt;div&gt;{mapUrl ? &lt;img src={mapUrl}/&gt; : SOME_DEFAULT_MAP_IMAGE}&lt;/div&gt;;
   }
 }
 </pre>
 </div>
 
 <div class="org-src-container">
-<label class="org-src-name"><span class="listing-number">Listing 9: </span>App component.</label><pre class="src src-javascript"><span class="org-keyword">function</span> <span class="org-function-name">app</span>(<span class="org-variable-name">storage</span>, <span class="org-variable-name">MapView</span>) {
-  <span class="org-keyword">return</span> <span class="org-keyword">function</span> App() {
-    <span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
-    <span class="org-keyword">const</span> <span class="org-variable-name">coordinates</span> = storage.getCoordinates();
+<label class="org-src-name"><span class="listing-number">Listing 9: </span>App component.</label><pre class="src src-javascript">function app(storage, MapView) {
+  return function App() {
+    // ...
+    const coordinates = storage.getCoordinates();
 
-    <span class="org-keyword">return</span> (
+    return (
       &lt;div&gt;
-        <span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
-        &lt;MapView {...coordinates} /&gt;
-        <span class="org-comment-delimiter">// </span><span class="org-comment">...</span>
+	// ...
+	&lt;MapView {...coordinates} /&gt;
+	// ...
       &lt;/div&gt;
     );
   };
@@ -893,32 +791,19 @@ ReactDOM.render(&lt;App /&gt;, document.getElementById(... ));
 </div>
 </div>
 
-<div id="outline-container-org36a0014" class="outline-2">
-<h2 id="Epilogue"><a id="org36a0014"></a>Epilogue</h2>
+<div id="outline-container-Epilogue" class="outline-2">
+<h2 id="Epilogue">Epilogue</h2>
 <div class="outline-text-2" id="text-Epilogue">
 <p>
-After meditating on this blog post for some time I couldn't help but reflect and
-compare my experience with React and AngularJS. There's still a place in my
-heart for Angular's principled testable design, but it definitely loses by
-having overly complicated templating layer. And that is the part that front-end
-developers spend most of the time on.
+After meditating on this blog post for some time I couldn't help but reflect and compare my experience with React and AngularJS. There's still a place in my heart for Angular's principled testable design, but it definitely loses by having overly complicated templating layer. And that is the part front-end developers spend most of the time on.
 </p>
 
 <p>
-On the other hand, while it's very easy<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup> to start with React, unprincipled
-developers would soon find themselves in a mess of global state and monolithic
-untestable application. It's not React's fault, but, I guess, it missed out on
-pedagogical opportunity.
+On the other hand, while it's very easy<sup><a id="fnr.7" class="footref" href="#fn.7" role="doc-backlink">7</a></sup> to start with React, unprincipled developers would soon find themselves in a mess of global state and monolithic untestable application. It's not React's fault, but, I guess, it missed out on pedagogical opportunity.
 </p>
 
 <p>
-If you find yourself overwhelmed by multitude of state management solutions,
-latest React developments, or just general JavaScript fatigue, just know that
-you're not alone. I'm with you! We are two unique snowflakes, like
-two React codebases, vastly different because started on different weeks, when
-different libraries were trending. Trends will pass, but those 4 pitfalls we
-just learned about will still be there. Let's stay vigilant and keep our code
-testable and evolvable<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup>.
+If you find yourself overwhelmed by multitude of state management solutions, latest React developments, or just general JavaScript fatigue, just know that you're not alone. I'm with you! We are two unique snowflakes, like two React codebases, vastly different because started on different weeks. Trends will pass, but those 4 pitfalls we just learned about will still be there. Let's stay vigilant and keep our code testable and evolvable<sup><a id="fnr.8" class="footref" href="#fn.8" role="doc-backlink">8</a></sup>.
 </p>
 </div>
 </div>
@@ -926,31 +811,35 @@ testable and evolvable<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
 
-<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
 <a href="http://misko.hevery.com/code-reviewers-guide/">http://misko.hevery.com/code-reviewers-guide/</a>
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
 <a href="https://www.youtube.com/playlist?list=PLD0011D00849E1B79">https://www.youtube.com/playlist?list=PLD0011D00849E1B79</a>
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3" role="doc-backlink">3</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
 I switched to full front-end position in autumn of 2013.
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4" role="doc-backlink">4</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Object Oriented Programming.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5" role="doc-backlink">5</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
 <a href="https://github.com/thlorenz/proxyquire">https://github.com/thlorenz/proxyquire</a>
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6" role="doc-backlink">6</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
 <a href="https://github.com/lodash/lodash">https://github.com/lodash/lodash</a>
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7" role="doc-backlink">7</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
 Some would argue otherwise. Search for "JavaScript fatigue".
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.8" class="footnum" href="#fnr.8" role="doc-backlink">8</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
 Unless you rewrite everything every other month. In that case this post is not for you. Sorry if this was revealed only after reading all of it!
 </p></div></div>
 
@@ -959,10 +848,12 @@ Unless you rewrite everything every other month. In that case this post is not f
 </div></div>
 <div id="postamble" class="status">
 <nav id="navigation">
-  <button id="nav-menu">☰</button>
-  <button id="nav-close">&times;</button>
   <ul>
-    <li><a href="../index.html">Home</a></li>
+    <li><a href="../index.html">Posts</a></li><li><a href="../pages.html">Pages</a></li>
+    <li>&middot;</li>
+    <li><a href="https://github.com/dop">GitHub</a></li>
+    <li><a href="https://gitlab.com/setq">GitLab</a></li>
+    <li><a href="https://twitter.com/donatas_p">Twitter</a></li>
   </ul>
 </nav>
 </div>

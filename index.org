@@ -3,6 +3,7 @@
 #+OPTIONS: num:nil toc:nil
 
 * Posts
+** [[file:posts/tail-202001.org][TAIL: Two Pointers Technique]]
+Humble first day success.
 ** [[file:posts/testable-code.org][Writing Testable Code: JavaScript and React Edition]]
-Inspired by Miško Hevery's posts and talks on same topic. This is my summary and overview of
-important rules for testable code in context of JavaScript (TypeScript) and React. [[file:posts/testable-code.org][Read here]].
+Inspired by Miško Hevery's posts and talks on the same topic. This is my summary and overview of important rules for testable code in context of JavaScript (TypeScript) and React.

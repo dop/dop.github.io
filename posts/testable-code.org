@@ -7,41 +7,22 @@
 
 # Why did I write this article?
 
-I spend substantial amount of time writing tests and consequentially learning
-about software design in the process. I also learn best from my own mistakes as
-it's hard for me to understand abstract ideas unless presented with concrete and
-familiar examples. That is why video talks and articles in "Guide: Writing
-Testable Code"[fn:2] series from Miško Hevery of AngularJS fame resonated with
-me. It has a nice balance of theory and practical examples.
+I spend substantial amount of time writing tests and learning about software design in the process. Also, I find it hard to understand abstract ideas unless presented with concrete and familiar examples. It must be why talks and articles in "Guide: Writing Testable Code"[fn:2] series from Miško Hevery of AngularJS fame resonated with me. It has a nice balance of theory and examples.
 
-The reason why I read this pretty long document and watched Google Tech Talks on
-testable code[fn:1] is that my career as front-end developer started with
-AngularJS about 6[fn:8] years ago. The great thing with AngularJS was (and is)
-that it introduced architecture which encourage testable code. It took me a
-couple of years to appreciate what AngularJS offered and to really grasp it's
-potential. Guiding principles laid out in Miško's articles was what I
-lacked. Once understood, it became clear what constitutes testable code. It
-didn't become easy to write, though.
+I read this pretty long document and watched Google Tech Talks on testable code[fn:1] because my career as front-end developer started with AngularJS[fn:8]. The great thing about AngularJS is that it introduced architecture which encourage testable code. It took me a couple of years to appreciate what AngularJS offered and really grasp its potential. Guiding principles laid out in Miško's articles was what I lacked. Once understood, it became clear what constitutes testable code. It didn't become easy to write, though.
 
 # What is my goal with this article?
 
-My hope with this article is to channel Miško's ideas and give you, dear reader,
-cognitive tools for recognizing untestable code.
+My hope with this article is to channel Miško's ideas and give you, dear reader, cognitive tools to recognize untestable code.
 
-/Note/: In this article I will be using TypeScript and JavaScript code as
-examples, but rules are universal and can be applied to other languages. Even
-purely functional ones. But to be fair, purely functional languages, like Elm,
-makes it really hard to write untestable code.
+/Note/: In this article I will be using TypeScript and JavaScript code as examples, but rules are universal and can be applied to other languages. Even purely functional ones. But to be fair, purely functional languages, like Elm, makes it really hard to write untestable code.
 
 * Overview of "Guide: Writing Testable Code"
 :PROPERTIES:
 :CUSTOM_ID: Overview
 :END:
 
-"Guide: Writing Testable Code" was written as internal document at Google
-targeting Java code. Many of given examples are very much tied to Java and
-Dependency Injection framework Guice. But the underlying ideas are applicable to
-TypeScript and JavaScript nonetheless.
+"Guide: Writing Testable Code" was written as internal document at Google targeting Java code. Many of given examples are tied to Java and Dependency Injection framework Guice but the underlying ideas are applicable to both TypeScript and JavaScript nonetheless.
 
 Guide consists of 4 parts (flaws):
 1. "Constructor does Real Work"
@@ -49,27 +30,17 @@ Guide consists of 4 parts (flaws):
 3. "Brittle Global State & Singletons"
 4. "Class Does Too Much"
 
-Parts 2 to 4 are kind of obvious, but we will go through them anyway. While part
-1 is definitely a common sense one, I don't think I ever saw it mentioned and
-pointed out so clearly before. Making your constructors dumb is very important
-for objects to be testable. Moreover, it also has this nice consequence of
-forcing your app or module to have clearly separated initialization and
-execution phases.
+Parts 2 to 4 are obvious, but we will go through them anyway. While part 1 is definitely a common sense one, I don't think I ever saw it mentioned and pointed out so clearly before. Making your constructors dumb is important for objects to be testable. Moreover, it also has this nice consequence of forcing your app or module to have clearly separated initialization and execution phases.
 
-I would like to take you through these flaws from, subjectively, most obvious to
-least.
+I would like to take you through these flaws from, subjectively, most obvious to least.
 
 ** Global state
 :PROPERTIES:
 :CUSTOM_ID: GlobalState
 :END:
-Global state is sneaky. It might hide under multiple concepts: mutable
-variables, static methods, singleton objects, and any dependencies that are not
-passed as arguments. Global state is infectious. Single instance of it in small
-module will corrupt all of your application.
+Global state is sneaky. It hides under mutable variables, static methods, singleton objects, and any dependency that is not passed as an argument. Global state is infectious. Single instance of it in a small module will corrupt all of your application.
 
-Singleton pattern in OOP is well spread practice, so how come it is
-bad? Answer is that it's not bad, unless it is global.
+Singleton pattern in OOP[fn:5] is well spread practice, so how come it's bad? Answer is that, unless global, it is not.
 
 Let's take a look at small example of sneaky global state.
 
@@ -152,8 +123,6 @@ test('fetchPosts()', async (assert) => {
 });
 #+END_SRC
 
-Great success!?
-
 #+BEGIN_SRC sh :exports results :results output
 (node src/global-state/bad/fetch-posts.test.js | ./node_modules/.bin/tap-spec) 2>&1
 true
@@ -175,15 +144,11 @@ true
 
 #+end_example
 
-Not really. Even though tests have passed, we had to use proxyquire[fn:3] to tap
-into module system and override dependencies. This a neat trick, but ultimately
-it's a sign of global state issue. Modules are singletons, they're run only
-once. Even though it's pretty common to see such code in a wild, it's not
-testable or REPL friendly.
+Great success?
 
-There is another catch -- our tests are only accidentally successful. If they
-would run fast enough to produce the same timestamp, we would get data served
-from the cache, which is a singleton object for whole application.
+Not really. Even though tests have passed, we had to use proxyquire[fn:3] to tap into module system and override dependencies. This a neat trick, but ultimately it's a sign of global state issue. Modules are singletons, they're run only once. Even though it's pretty common to see such code in the wild, it's not testable or REPL friendly.
+
+There is another catch -- our tests are only accidentally successful. If they would run fast enough to produce the same timestamp, we would get data served from the cache, which is a singleton object for the whole application.
 
 What does testable code look like?
 
@@ -211,8 +176,7 @@ function Cache() {
 module.exports = Cache;
 #+END_SRC
 
-The same goes for utility to fetch posts. It's a repository object now, that can
-be configured with all it's dependencies.
+The same goes for utility to fetch posts. It's a repository object now and can be configured with all of dependencies.
 
 #+CAPTION: Posts repository object.
 #+BEGIN_SRC javascript :tangle "src/global-state/good/posts-repo.js"
@@ -241,8 +205,7 @@ function PostsRepo(BASE_URL, fetch, cache) {
 module.exports = PostsRepo;
 #+END_SRC
 
-As a result, we no longer need proxyquire. It's also painfully clear, that we
-have a cache, and we should be careful with it.
+As a result, we no longer need proxyquire. It's also painfully clear, that we have a cache, and we should be careful with it.
 
 #+CAPTION: Complicated but honest tests.
 #+BEGIN_SRC javascript :tangle "src/global-state/good/posts-repo.test.js"
@@ -308,31 +271,21 @@ true
 
 *** Caveats
 
-1. Not every dependency has to become a parameter. Constant values, value
-   objects, and pure functions can be used without worry. Good example is
-   lodash[fn:4].
-2. If global state is evil, how do we do singletons? Answer is realated to the
-   last part of this overview and the fact that you need to separate application
-   construction and execution time. Singletons are objects that get constructed
-   once in the former part and never in the latter.
+1. Not every dependency has to become a parameter. Constant values, value objects, and pure functions can be used without worry. Good example is lodash[fn:4].
+2. If global state is evil, how do we do singletons? Answer is related to the last part of this overview and the fact that you need to separate application construction and execution time. Singletons are objects that get constructed once in the former part and never in the latter.
 
 ** Digging into Collaborators
 :PROPERTIES:
 :CUSTOM_ID: DiggingIntoCollaborators
 :END:
 
-This one is very easy to spot. For example, if we see a second level access of
-property in your code like this
+This one is easy to spot. For example, if we see a second level access of property in your code like this
 
 #+BEGIN_SRC javascript
 this.session.getAccount().getNickname()
 #+END_SRC
 
-we have a problem. It will become clear when writing a test for it. We will have
-to either mock or construct =Account= in addition to =Session= in all places where
-=Session= is a dependency. Renaming a method of =Account= will impact places where
-direct dependency is =Session=, not =Account=. While most IDEs have no problem with
-renaming, your code repository history will become noisy.
+we have a problem. It will become clear when writing a test for it. We will have to either mock or construct =Account= in addition to =Session= in all places where =Session= is a dependency. Renaming a method of =Account= will impact places where direct dependency is =Session=, not =Account=. While most IDEs have no problem with renaming, your code repository history will become noisy.
 
 Let's take a look at the following example.
 
@@ -348,9 +301,7 @@ function App() {
 }
 #+END_SRC
 
-Instead of chains of method calls we have nested property access exhibiting the
-same issue. To avoid digging into =session=, we might introduce a selector
-=getAccountName= or pass only necessary data to child component.
+Instead of chains of method calls we have nested property access exhibiting the same issue. To avoid digging into =session=, we might introduce a selector =getAccountName= or pass only necessary data to child component.
 
 Here's how second solution might look.
 
@@ -366,19 +317,14 @@ function App() {
 }
 #+END_SRC
 
-Both of the solutions are related to separating concerns. To choose correct one,
-you need to answer a question of what exactly component needs to do its job.
+Both of the solutions are related to separating concerns. To choose correct one, you need to answer a question of what exactly does component need to do its job.
 
 ** Doing too much or too many things
 :PROPERTIES:
 :CUSTOM_ID: DoingTooMuch
 :END:
 
-Also known as a failure to maintain single responsibility principle. Usual rule
-of thumb is to look for names containing "and". But I find this problematic as
-some people are good (or bad) at naming. It is possible to name =PersistentCache=
-as =CacheAndSave=, but it does not mean that former is good and latter is
-bad. It's hard to come up with example that is not ridiculous, but here we go.
+Also known as a failure to maintain single responsibility principle. Usual rule of thumb is to look for names containing "and". But I find this problematic as some people are good (or bad) at naming. It is possible to name =PersistentCache= as =CacheAndSave=, but it does not mean that former is good and latter is bad. It's hard to come up with example that is not ridiculous, but here we go.
 
 #+BEGIN_SRC javascript
 function UserRepo(store, mailer) {
@@ -407,48 +353,23 @@ function UserRepo(store, mailer) {
 }
 #+END_SRC
 
-Besides the funky key value store, we have repository initiating email
-confirmation. On its own, this only feels wrong, but might be completely
-benign. Why does it feel wrong? First, =mailer= is used only in two of four
-methods. Maybe it would make sense to split =UserRepo= into reader and writer
-parts? Queries and commands? Invocation of confirmation flow also raises some
-questions. Since we are passing user ID, is =mailer= supposed to understand it's
-meaning? Will we have to encode confirmation link inside =mailer=? Does it mean
-that =mailer= will have to understand routing? Oh my... It seems that =mailer= is
-not supposed to be here, and its interface has to be different.
+Besides the funky key value store, we have repository initiating email confirmation. On its own, this only feels wrong, but might be completely benign. Why does it feel wrong? First, =mailer= is used only in two of four methods. Maybe it would make sense to split =UserRepo= into reader and writer parts? Queries and commands? Invocation of confirmation flow also raises some questions. Since we are passing user ID, is =mailer= supposed to understand it's meaning? Will we have to encode confirmation link inside =mailer=? Does it mean that =mailer= will have to understand routing? Oh my... It seems that =mailer= is not supposed to be here, and its interface has to be different.
 
-Where should we put it? Let's help ourselves by imagining that we also have
-account registration form, and profile view. Now, =mailer= makes sense in a
-registration form, but profile screen does not need it. So we are going to move
-=mailer= to registration handler (a.k.a. controller). It makes sense that request
-handler knows how to construct links, thus we can build email message with
-confirmation URL there. We'll pass it to =mailer= via generic interface, for
-example =mailer.send(recepients, subject, body)=.
+Where should we put it? Let's help ourselves by imagining that we also have account registration form, and profile view. Now, =mailer= makes sense in a registration form, but profile screen does not need it. So we are going to move =mailer= to registration handler (a.k.a. controller). It makes sense that request handler knows how to construct links, thus we can build email message with confirmation URL there. We'll pass it to =mailer= via generic interface, for example =mailer.send(recepients, subject, body)=.
 
-To solve this puzzle of responsibilities, we asked some questions and gave
-ourselves hypothetical answers. In real world, question will have real answers,
-which will lead to other solutions.
+To solve this puzzle of responsibilities, we asked some questions and gave ourselves hypothetical answers. In real world, question will have real answers, which will lead to other solutions.
 
 ** Business Logic in Constructors
 :PROPERTIES:
 :CUSTOM_ID: BusinessLogicInConstructors
 :END:
-This one is my favourite. Mostly because I've never seen it articulated and
-written down so clearly before.
+This one is my favourite. Mostly because I've never seen it articulated and written down so clearly before.
 
-It is also very powerful as it influences code structure in fundamental way and
-paves the road for the rest of testable design.
+It is also very powerful as it influences code structure in fundamental way and paves the road for the rest of testable design.
 
-The essence of the rule is to not have any logic in constructors besides setting
-instance variables. It follows that all your objects have to be constructed (and
-only constructed) at the start of your application. This phase could be
-understood as configuration part. Once everything is constructed and wired,
-execution part begins and business gets done. At this time only value (pure)
-objects can be created.
+The essence of the rule is to not have any logic in constructors besides setting instance variables. It follows that all your objects have to be constructed (and only constructed) at the start of your application. This phase could be understood as configuration part. Once everything is constructed and wired, execution part begins and business gets done. At this time only value (pure) objects can be created.
 
-Applying this rule to my React projects lead to unorthodox architectures which
-some people found off putting because of unfamiliar looks. The upside of it is
-that all of the components can be pure, easily [[https://storybook.js.org][storybookable]] and testable.
+Applying this rule to my React projects lead to unorthodox architectures which some people found off-putting because of unfamiliar looks. The upside of it is that all of the components can be pure, easily [[https://storybook.js.org][storybookable]] and testable.
 
 Following is an example of how it might look.
 
@@ -501,26 +422,14 @@ function app(storage, MapView) {
 :CUSTOM_ID: Epilogue
 :END:
 
-After meditating on this blog post for some time I couldn't help but reflect and
-compare my experience with React and AngularJS. There's still a place in my
-heart for Angular's principled testable design, but it definitely loses by
-having overly complicated templating layer. And that is the part that front-end
-developers spend most of the time on.
+After meditating on this blog post for some time I couldn't help but reflect and compare my experience with React and AngularJS. There's still a place in my heart for Angular's principled testable design, but it definitely loses by having overly complicated templating layer. And that is the part front-end developers spend most of the time on.
 
-On the other hand, while it's very easy[fn:7] to start with React, unprincipled
-developers would soon find themselves in a mess of global state and monolithic
-untestable application. It's not React's fault, but, I guess, it missed out on
-pedagogical opportunity.
+On the other hand, while it's very easy[fn:7] to start with React, unprincipled developers would soon find themselves in a mess of global state and monolithic untestable application. It's not React's fault, but, I guess, it missed out on pedagogical opportunity.
 
-If you find yourself overwhelmed by multitude of state management solutions,
-latest React developments, or just general JavaScript fatigue, just know that
-you're not alone. I'm with you! We are two unique snowflakes, like
-two React codebases, vastly different because started on different weeks, when
-different libraries were trending. Trends will pass, but those 4 pitfalls we
-just learned about will still be there. Let's stay vigilant and keep our code
-testable and evolvable[fn:10].
+If you find yourself overwhelmed by multitude of state management solutions, latest React developments, or just general JavaScript fatigue, just know that you're not alone. I'm with you! We are two unique snowflakes, like two React codebases, vastly different because started on different weeks. Trends will pass, but those 4 pitfalls we just learned about will still be there. Let's stay vigilant and keep our code testable and evolvable[fn:10].
 
 * Footnotes
+[fn:5] Object Oriented Programming.
 
 [fn:10] Unless you rewrite everything every other month. In that case this post is not for you. Sorry if this was revealed only after reading all of it!
 

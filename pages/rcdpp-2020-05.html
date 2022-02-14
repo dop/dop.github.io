@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-05-20 Wed 12:20 -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 2022-02-14 Mon 22:12 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Intro to React Component Driver</title>
-<meta name="generator" content="Org mode">
-<meta name="author" content="Donatas Petrauskas">
+<meta name="author" content="Donatas Petrauskas" />
+<meta name="generator" content="Org Mode" />
 <style type="text/css">.title  { text-align: center;
-          margin-bottom: .2em; }
+          margin-bottom: .2em;
+          line-height: 1;
+        }
 .subtitle { text-align: center;
             font-size: medium;
             font-weight: bold;
-            margin-top:0; }
+            margin-top:0;
+            display: inline-block;
+          }
 .todo   { font-family: monospace; color: red; }
 .done   { font-family: monospace; color: green; }
 .priority { font-family: monospace; color: orange; }
@@ -180,23 +184,26 @@ body {
   max-width: 800px;
   padding: 0 1em;
   font-size: 16pt;
-  font-family: Times, serif;
+  font-family: Georgia, Times, serif;
   line-height: 1.4;
-  /* background: #34363e; */
   color: #343637;
+  background: white;
+}
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
 
 code, pre {
   font-size: 10pt;
-  font-family: Monaco, Menlo, DejaVu Sans Mono, monospace;
+  font-family: monospace;
 }
 
 .title {
   margin-bottom: 3em;
-}
-
-p {
-  text-align: justify;
 }
 
 .org-src-name {
@@ -205,69 +212,42 @@ p {
 
 pre.src {
   padding: 1em;
-  border: 1px solid #eee;
-  border-radius: 2px;
 }
 
 #footnotes {
   font-size: 12pt;
 }
 
+#postamble {
+  font-size: 10pt;
+  font-family: Helvetica, sans-serif;
+  padding-top: 3em;
+}
+
 #navigation {
-  display: flex;
-  align-items: top;
-  position: fixed;
-  top: 16pt;
-  left: 0;
-  padding: 6pt 10pt;
-  font-size: 20pt;
-  background: black;
-  color: white;
-  border-top-right-radius: 6pt;
-  border-bottom-right-radius: 6pt;
+  color: black;
+  background: white;
+  padding: 2em 0;
+  border-top: 1px solid #eee;
 }
 
 #navigation a, #navigation a:active, #navigation a:visited {
-  color: white;
   text-decoration: none;
+  text-transform: uppercase;
 }
 
 #navigation ul {
-  padding: 0 0 0 10pt;
+  display: flex;
+  padding: 0;
   margin: 0;
   list-style: none;
 }
-
-#navigation button {
-  width: 20pt;
-  font-size: 20pt;
-  padding: 0;
+#navigation li {
+  padding: 0 1em 0 0;
   margin: 0;
-  background: transparent;
-  border: 0 none;
-  cursor: pointer;
-  line-height: 1;
-  height: 27pt;
-  color: white;
 }
 
-#navigation ul li {
-  line-height: 1em;
-  padding: .25em 0;
-}
-
-#navigation.closed ul {
-  display: none
-}
-#navigation.open ul {
-  display: block
-}
-
-#navigation #nav-menu { display: none }
-#navigation.closed #nav-close { display: none }
-#navigation.closed #nav-menu { display: block }
-
-code, blockquote {
+pre, code, blockquote {
   background: #eeeeec;
   padding: .2em;
   border-radius: 3pt;
@@ -276,65 +256,62 @@ code, blockquote {
 blockquote {
   margin: 0;
   padding: .2em 1em;
-  background: #eeeeec;
   font-style: italic;
 }
-</style><script>(function () {
-  window.addEventListener('DOMContentLoaded', initialize);
 
-  let nav;
-  let close;
-  let menu;
-
-  function initialize() {
-    nav = document.getElementById('navigation');
-    close = document.getElementById('nav-close');
-    menu = document.getElementById('nav-menu');
-
-    close.onclick = closeMenu;
-    menu.onclick = showMenu;
-
-    closeMenu();
+@media (prefers-color-scheme: dark) {
+  body, #navigation {
+    background: #343637;
+    color: #eeeeec;
   }
-
-  function closeMenu() {
-    nav.classList.add('closed');
+  pre, code, blockquote {
+    background: #545657;
+    color: #eeeeec;
   }
-
-  function showMenu() {
-    nav.classList.remove('closed');
+  pre, pre.src {
+    border-color: #646667;
+    box-shadow: none;
   }
-})();
-</script>
+  #navigation {
+    border-color: #646667;
+  }
+  a {
+    color: #00bfff;
+  }
+  a:visited {
+    color: #836fff;
+  }
+}
+</style>
 </head>
 <body>
-<div id="content">
+<div id="content" class="content">
 <h1 class="title">Intro to React Component Driver
 <br>
 <span class="subtitle">Prezentacija Praktikantams</span>
 </h1>
-<div id="table-of-contents">
+<div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
-<div id="text-table-of-contents">
+<div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgf2bd457">1. React Component Driver</a></li>
-<li><a href="#orgf28c452">2. Agenda</a></li>
-<li><a href="#orgdbd6409">3. Kas yra React Component Driver?</a></li>
-<li><a href="#org696c757">4. Panašūs įrankiai</a></li>
-<li><a href="#orgb82fff8">5. Istorija</a></li>
-<li><a href="#org55b7db4">6. Ko nedaro React Component Driver</a></li>
-<li><a href="#org9310beb">7. Demo: React Test Renderer</a></li>
-<li><a href="#org7ed6cba">8. Komponento Evoliucija</a></li>
-<li><a href="#org320cdec">9. Demo: React Component Driver</a></li>
-<li><a href="#org646611d">10. Ateities Vizija</a></li>
-<li><a href="#org1767d6d">11. Dokumentacija</a></li>
-<li><a href="#orgb97faa9">12. REPL</a></li>
+<li><a href="#org966b2c6">1. React Component Driver</a></li>
+<li><a href="#orgc9f02aa">2. Agenda</a></li>
+<li><a href="#orgf7d5428">3. Kas yra React Component Driver?</a></li>
+<li><a href="#org6779798">4. Panašūs įrankiai</a></li>
+<li><a href="#org4314210">5. Istorija</a></li>
+<li><a href="#orge2a500a">6. Ko nedaro React Component Driver</a></li>
+<li><a href="#orgb96903b">7. Demo: React Test Renderer</a></li>
+<li><a href="#org9d9869d">8. Komponento Evoliucija</a></li>
+<li><a href="#org58c6e66">9. Demo: React Component Driver</a></li>
+<li><a href="#org24d2f17">10. Ateities Vizija</a></li>
+<li><a href="#orgd0b0051">11. Dokumentacija</a></li>
+<li><a href="#orga30c652">12. REPL</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgf2bd457" class="outline-2">
-<h2 id="orgf2bd457"><span class="section-number-2">1</span> React Component Driver</h2>
+<div id="outline-container-org966b2c6" class="outline-2">
+<h2 id="org966b2c6"><span class="section-number-2">1.</span> React Component Driver</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 (╯°□°)╯︵ ┻━┻
@@ -342,8 +319,8 @@ blockquote {
 </div>
 </div>
 
-<div id="outline-container-orgf28c452" class="outline-2">
-<h2 id="orgf28c452"><span class="section-number-2">2</span> Agenda</h2>
+<div id="outline-container-orgc9f02aa" class="outline-2">
+<h2 id="orgc9f02aa"><span class="section-number-2">2.</span> Agenda</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li>Istorija</li>
@@ -357,8 +334,8 @@ blockquote {
 </div>
 </div>
 
-<div id="outline-container-orgdbd6409" class="outline-2">
-<h2 id="orgdbd6409"><span class="section-number-2">3</span> Kas yra React Component Driver?</h2>
+<div id="outline-container-orgf7d5428" class="outline-2">
+<h2 id="orgf7d5428"><span class="section-number-2">3.</span> Kas yra React Component Driver?</h2>
 <div class="outline-text-2" id="text-3">
 <ul class="org-ul">
 <li><a href="https://reactjs.org/docs/test-renderer.html">React Test Renderer</a> apvalkalas.</li>
@@ -382,8 +359,8 @@ blockquote {
 </div>
 </div>
 
-<div id="outline-container-org696c757" class="outline-2">
-<h2 id="org696c757"><span class="section-number-2">4</span> Panašūs įrankiai</h2>
+<div id="outline-container-org6779798" class="outline-2">
+<h2 id="org6779798"><span class="section-number-2">4.</span> Panašūs įrankiai</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li><a href="https://github.com/enzymejs/enzyme">Enzyme</a></li>
@@ -393,10 +370,10 @@ blockquote {
 </div>
 </div>
 
-<div id="outline-container-orgb82fff8" class="outline-2">
-<h2 id="orgb82fff8"><span class="section-number-2">5</span> Istorija</h2>
+<div id="outline-container-org4314210" class="outline-2">
+<h2 id="org4314210"><span class="section-number-2">5.</span> Istorija</h2>
 <div class="outline-text-2" id="text-5">
-<pre class="example">
+<pre class="example" id="org27d36fc">
 commit 93e02b2044d3f82ac7526449ec72ca7acd088840
 Author: Donatas Petrauskas &lt;donatasp@wix.com&gt;
 Date:   Mon Nov 21 16:17:19 2016 +0200
@@ -406,8 +383,8 @@ Date:   Mon Nov 21 16:17:19 2016 +0200
 </div>
 </div>
 
-<div id="outline-container-org55b7db4" class="outline-2">
-<h2 id="org55b7db4"><span class="section-number-2">6</span> Ko nedaro React Component Driver</h2>
+<div id="outline-container-orge2a500a" class="outline-2">
+<h2 id="orge2a500a"><span class="section-number-2">6.</span> Ko nedaro React Component Driver</h2>
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li>Nevykdo native kodo. Tam skirtas <a href="https://github.com/wix/detox">Detox</a>.</li>
@@ -417,8 +394,8 @@ Date:   Mon Nov 21 16:17:19 2016 +0200
 </div>
 </div>
 
-<div id="outline-container-org9310beb" class="outline-2">
-<h2 id="org9310beb"><span class="section-number-2">7</span> Demo: React Test Renderer</h2>
+<div id="outline-container-orgb96903b" class="outline-2">
+<h2 id="orgb96903b"><span class="section-number-2">7.</span> Demo: React Test Renderer</h2>
 <div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li>Importavimas</li>
@@ -432,21 +409,21 @@ Date:   Mon Nov 21 16:17:19 2016 +0200
 </div>
 </div>
 
-<div id="outline-container-org7ed6cba" class="outline-2">
-<h2 id="org7ed6cba"><span class="section-number-2">8</span> Komponento Evoliucija</h2>
+<div id="outline-container-org9d9869d" class="outline-2">
+<h2 id="org9d9869d"><span class="section-number-2">8.</span> Komponento Evoliucija</h2>
 <div class="outline-text-2" id="text-8">
 <div class="org-src-container">
-<pre class="src src-js"><span class="org-keyword">function</span> <span class="org-function-name">Counter</span>() {
-  <span class="org-keyword">const</span> [<span class="org-variable-name">count</span>, <span class="org-variable-name">setCount</span>] = React.useState(0);
-  <span class="org-keyword">return</span> (&lt;button onClick={() =&gt; setCount(count + 1)}&gt;Count is {count}&lt;/button&gt;);
+<pre class="src src-js">function Counter() {
+  const [count, setCount] = React.useState(0);
+  return (&lt;button onClick={() =&gt; setCount(count + 1)}&gt;Count is {count}&lt;/button&gt;);
 }
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org320cdec" class="outline-2">
-<h2 id="org320cdec"><span class="section-number-2">9</span> Demo: React Component Driver</h2>
+<div id="outline-container-org58c6e66" class="outline-2">
+<h2 id="org58c6e66"><span class="section-number-2">9.</span> Demo: React Component Driver</h2>
 <div class="outline-text-2" id="text-9">
 <ul class="org-ul">
 <li>Užklausos</li>
@@ -456,22 +433,22 @@ Date:   Mon Nov 21 16:17:19 2016 +0200
 </div>
 </div>
 
-<div id="outline-container-org646611d" class="outline-2">
-<h2 id="org646611d"><span class="section-number-2">10</span> Ateities Vizija</h2>
+<div id="outline-container-org24d2f17" class="outline-2">
+<h2 id="org24d2f17"><span class="section-number-2">10.</span> Ateities Vizija</h2>
 </div>
 
-<div id="outline-container-org1767d6d" class="outline-2">
-<h2 id="org1767d6d"><span class="section-number-2">11</span> Dokumentacija</h2>
+<div id="outline-container-orgd0b0051" class="outline-2">
+<h2 id="orgd0b0051"><span class="section-number-2">11.</span> Dokumentacija</h2>
 <div class="outline-text-2" id="text-11">
 <p>
 <a href="https://github.com/wix-incubator/react-component-driver/blob/master/react-component-driver/README.org">React Component Driver</a>
 </p>
 </div>
 </div>
-<div id="outline-container-orgb97faa9" class="outline-2">
-<h2 id="orgb97faa9"><span class="section-number-2">12</span> REPL</h2>
+<div id="outline-container-orga30c652" class="outline-2">
+<h2 id="orga30c652"><span class="section-number-2">12.</span> REPL</h2>
 <div class="outline-text-2" id="text-12">
-<pre class="example">
+<pre class="example" id="org102daf4">
 babel &gt; const React = require('react')
 undefined
 babel &gt; const {create} = require('react-test-renderer')
@@ -649,10 +626,12 @@ babel &gt;
 </div>
 <div id="postamble" class="status">
 <nav id="navigation">
-  <button id="nav-menu">☰</button>
-  <button id="nav-close">&times;</button>
   <ul>
-    <li><a href="../index.html">Home</a></li>
+    <li><a href="../index.html">Posts</a></li><li><a href="../pages.html">Pages</a></li>
+    <li>&middot;</li>
+    <li><a href="https://github.com/dop">GitHub</a></li>
+    <li><a href="https://gitlab.com/setq">GitLab</a></li>
+    <li><a href="https://twitter.com/donatas_p">Twitter</a></li>
   </ul>
 </nav>
 </div>
