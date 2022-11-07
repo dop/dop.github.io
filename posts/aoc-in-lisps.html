@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2022-11-07 Mon 22:54 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Advent of Code and Going of Lisps</title>
+<meta name="author" content="Donatas Petrauskas" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="../assets/css/styles.css" type="text/css">
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Advent of Code and Going of Lisps
+<br>
+<span class="subtitle">Wasting time with dying languages</span>
+</h1>
+
+<div id="outline-container-Falling-in-love-with-the-old-friend" class="outline-2">
+<h2 id="Falling-in-love-with-the-old-friend"><a href="#Falling-in-love-with-the-old-friend">Falling in love with the old friend</a></h2>
+<div class="outline-text-2" id="text-orgd018c67">
+<p>
+In recent years I discovered Lisp. It might sound strange, but I am using Emacs for more than a decade now and most of this time I regarded Emacs Lisp as unworthy of my attention. It did not look attractive. I would use it to get the job done and leave without any remorse or second thought<sup><a id="fnr.1" class="footref" href="#fn.1" role="doc-backlink">1</a></sup>.
+</p>
+
+<p>
+For the longest time, I was dabbling with statically and strongly typed languages in hope of finding my true love. It was Haskell, then OCaml, then Elm. Meanwhile my bills were paid by writing PHP, JavaScript, shell scripts, and&#x2026; Emacs Lisp.
+</p>
+
+<p>
+I was surprised when I realized that. I <i>did</i> get a lot of mundane tasks done with Emacs. This revelation inspired me to take a closer look at Lisps, a breed of languages that is refusing to die.
+</p>
+</div>
+</div>
+
+<div id="outline-container-Advent-of-Code" class="outline-2">
+<h2 id="Advent-of-Code"><a href="#Advent-of-Code">Advent of Code</a></h2>
+<div class="outline-text-2" id="text-orgf454a7e">
+<p>
+<a href="https://adventofcode.com">Advent of Code</a> is annual online coding competition held before Christmas. Each day a problem is revealed and a solution (usually a number) can be computed by any means. Unless you are competing for a top spot, such format is perfect to try new languages.
+</p>
+
+<p>
+So I did.
+</p>
+</div>
+
+<div id="outline-container-Common-Lisp" class="outline-3">
+<h3 id="Common-Lisp"><a href="#Common-Lisp">Common Lisp</a></h3>
+<div class="outline-text-3" id="text-orgb2ccd1c">
+<p>
+The first thing you learn about Common Lisp is that it is a standard, not an implementation. Luckily, most of online resources guides you to either SBCL or CCL. No headache here. Both worked fine for me.
+</p>
+
+<p>
+Development with Common Lisp using SLIME feels much like working with Emacs Lisp: immediate and transparent. I find Emacs to have better docstrings, but falling back to HyperSpec is nice too. For a "dead" language Common Lisp has decent amount of books and examples online and in print. Most popular systems have written documentation. I was pleasantly surprised.
+</p>
+
+<p>
+And the most surprising part was Quicklisp. It gave me zero problems fetching all those systems. And by zero, I mean I was thrown once or twice into a debugger. Careful inspection revealed that I was missing some shared libraries. I installed them and chose appropriate action to repeat the build step. It passed and installation continued. Felt like magic.
+</p>
+
+<p>
+It does not makes sense Common Lisp is not more popular. Oh, right. Too many parentheses.
+</p>
+</div>
+</div>
+
+<div id="outline-container-Clojure" class="outline-3">
+<h3 id="Clojure"><a href="#Clojure">Clojure</a></h3>
+<div class="outline-text-3" id="text-org720793b">
+<p>
+On the road to Clojure I got tripped by the smallest of things.
+</p>
+
+<p>
+In the beginning it was hard to choose JVM implementation. Turns out there are many. Care must be taken to not accidentally bind your soul to Oracle.
+</p>
+
+<p>
+I was overwhelmed by Leiningen. I assume that it builds on top of Java concepts which I lack understanding of. Luckily there's <a href="https://clojure.org/guides/deps_and_cli">deps.edn</a>. It worked just fine.
+</p>
+
+<p>
+Docstrings are lackluster, but standard API feels contemporary and extensive. Java interoperability is always there if anything is missing. Which I tried to use, but, as a Java and Clojure novice, failed.
+</p>
+
+<p>
+Clojure feels well prepared for contemporary programming style &#x2013; functional, immutable, permeated by pattern matching. It lacks tail recursion, but similarly to dreaded Java stack traces<sup><a id="fnr.2" class="footref" href="#fn.2" role="doc-backlink">2</a></sup>, I found it to be a non-issue.
+</p>
+
+<p>
+The last notable obstacle was reflection induced performance issues. Having had no such problems using Common Lisp, this surprised me the most. I assumed JVM to be a magical optimization powerhouse, but I guess everything has its limits. Sprinkling type annotations helped.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-Happily-ever-after" class="outline-2">
+<h2 id="Happily-ever-after"><a href="#Happily-ever-after">Happily ever after</a></h2>
+<div class="outline-text-2" id="text-org3e7f713">
+<p>
+By this time in my life, I have tried multitude of "better" languages, but all infatuations ended in estrangements. Likewise, I feel that honeymoon period with the "better" Lisps is ending.
+</p>
+
+<p>
+"This too shall pass." they say.
+</p>
+
+<p>
+I returned to Emacs Lisp, the language that gave me most value after all.
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1" role="doc-backlink">1</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Why have I even bothered with Emacs then? I've tried to answer it <a href="emacs.html">here</a>.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2" role="doc-backlink">2</a></sup> <div class="footpara" role="doc-footnote"><p class="footpara">
+Building your app from small and well named functions alleviates the pain.
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status">
+<nav id="navigation">
+  <ul>
+    <li><a href="../index.html">Index</a></li>
+    <li>&middot;</li>
+    <li><a href="https://github.com/dop">GitHub</a></li>
+    <li><a href="https://gitlab.com/setq">GitLab</a></li>
+    <li><a href="https://twitter.com/donatas_p">Twitter</a></li>
+  </ul>
+</nav>
+</div>
+</body>
+</html>

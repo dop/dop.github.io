@@ -1,26 +1,18 @@
 #+TITLE: Writing Testable Code
 #+SUBTITLE: TypeScript and JavaScript Edition
-#+AUTHOR: Donatas Petrauskas
 #+OPTIONS: num:nil
 
 /Reading time: up to 10 years/.
 
-# Why did I write this article?
+"Guide: Writing Testable Code"[fn:2] series from Miško Hevery of AngularJS fame resonated with me. It has a nice balance of theory and practice.
 
-I spend substantial amount of time writing tests and learning about software design in the process. Also, I find it hard to understand abstract ideas unless presented with concrete and familiar examples. It must be why talks and articles in "Guide: Writing Testable Code"[fn:2] series from Miško Hevery of AngularJS fame resonated with me. It has a nice balance of theory and examples.
-
-I read this pretty long document and watched Google Tech Talks on testable code[fn:1] because my career as front-end developer started with AngularJS[fn:8]. The great thing about AngularJS is that it introduced architecture which encourage testable code. It took me a couple of years to appreciate what AngularJS offered and really grasp its potential. Guiding principles laid out in Miško's articles was what I lacked. Once understood, it became clear what constitutes testable code. It didn't become easy to write, though.
-
-# What is my goal with this article?
+I read this pretty long document and watched Google Tech Talks on testable code[fn:1] because my career as front-end developer started with AngularJS[fn:8]. The great thing about it is the architecture which encourages testable code. It took me a couple of years to appreciate what AngularJS offered. The moment I started to really grasp its potential the world turned to React. Oh well. Luckily, guiding principles laid out in Miško's articles are universal.
 
 My hope with this article is to channel Miško's ideas and give you, dear reader, cognitive tools to recognize untestable code.
 
 /Note/: In this article I will be using TypeScript and JavaScript code as examples, but rules are universal and can be applied to other languages. Even purely functional ones. But to be fair, purely functional languages, like Elm, makes it really hard to write untestable code.
 
 * Overview of "Guide: Writing Testable Code"
-:PROPERTIES:
-:CUSTOM_ID: Overview
-:END:
 
 "Guide: Writing Testable Code" was written as internal document at Google targeting Java code. Many of given examples are tied to Java and Dependency Injection framework Guice but the underlying ideas are applicable to both TypeScript and JavaScript nonetheless.
 
@@ -32,15 +24,67 @@ Guide consists of 4 parts (flaws):
 
 Parts 2 to 4 are obvious, but we will go through them anyway. While part 1 is definitely a common sense one, I don't think I ever saw it mentioned and pointed out so clearly before. Making your constructors dumb is important for objects to be testable. Moreover, it also has this nice consequence of forcing your app or module to have clearly separated initialization and execution phases.
 
-I would like to take you through these flaws from, subjectively, most obvious to least.
+** Business Logic in Constructors
+
+This one is my favourite. Mostly because I've never seen it articulated and written down so clearly before.
+
+It is also very powerful as it influences code structure in fundamental way and paves the road for the rest of testable design.
+
+The essence of the rule is to not have any logic in constructors besides setting instance variables. It follows that all your objects have to be constructed (and only constructed) at the start of your application. This phase could be understood as configuration part. Once everything is constructed and wired, execution part begins and business gets done. At this time only value (pure) objects can be created.
+
+Applying this rule to my React projects lead to unorthodox architectures which some people found off-putting because of unfamiliar looks. The upside of it is that all of the components can be pure, easily [[https://storybook.js.org][storybookable]] and testable.
+
+Following is an example of how it might look.
+
+#+CAPTION: Initialization part.
+#+BEGIN_SRC javascript
+// ...
+const map = new GoogolMap();
+const MapView = mapView(map);
+// ...
+const App = app(storage, MapView, ...);
+
+ReactDOM.render(<App />, document.getElementById(... ));
+#+END_SRC
+
+#+CAPTION: Map component.
+#+BEGIN_SRC javascript
+function mapView(map: MapServiceProvider) {
+  return function MapView({longitude, latitude}) {
+    const [mapUrl, setMapUrl] = useState(null);
+
+    useEffect(async () => {
+      setMapUrl(await map.getImageUrl(longitude, latitude));
+    }, [longitude, latitude]);
+
+    return <div>{mapUrl ? <img src={mapUrl}/> : SOME_DEFAULT_MAP_IMAGE}</div>;
+  }
+}
+#+END_SRC
+
+#+CAPTION: App component.
+#+BEGIN_SRC javascript
+function app(storage, MapView) {
+  return function App() {
+    // ...
+    const coordinates = storage.getCoordinates();
+
+    return (
+      <div>
+        // ...
+        <MapView {...coordinates} />
+        // ...
+      </div>
+    );
+  };
+}
+#+END_SRC
 
 ** Global state
-:PROPERTIES:
-:CUSTOM_ID: GlobalState
-:END:
+
 Global state is sneaky. It hides under mutable variables, static methods, singleton objects, and any dependency that is not passed as an argument. Global state is infectious. Single instance of it in a small module will corrupt all of your application.
 
-Singleton pattern in OOP[fn:5] is well spread practice, so how come it's bad? Answer is that, unless global, it is not.
+Singleton pattern in OOP is well spread practice, so how come it's bad? Answer is that, unless global, it is not.
 
 Let's take a look at small example of sneaky global state.
 
@@ -272,12 +316,9 @@ true
 *** Caveats
 
 1. Not every dependency has to become a parameter. Constant values, value objects, and pure functions can be used without worry. Good example is lodash[fn:4].
-2. If global state is evil, how do we do singletons? Answer is related to the last part of this overview and the fact that you need to separate application construction and execution time. Singletons are objects that get constructed once in the former part and never in the latter.
+2. If global state is evil, how do we do singletons? Answer is related to the first part of this overview: you must separate the application into construction and execution phases. Singletons are objects that get constructed once in the former part and never in the latter.
 
 ** Digging into Collaborators
-:PROPERTIES:
-:CUSTOM_ID: DiggingIntoCollaborators
-:END:
 
 This one is easy to spot. For example, if we see a second level access of property in your code like this
 
@@ -320,9 +361,6 @@ function App() {
 Both of the solutions are related to separating concerns. To choose correct one, you need to answer a question of what exactly does component need to do its job.
 
 ** Doing too much or too many things
-:PROPERTIES:
-:CUSTOM_ID: DoingTooMuch
-:END:
 
 Also known as a failure to maintain single responsibility principle. Usual rule of thumb is to look for names containing "and". But I find this problematic as some people are good (or bad) at naming. It is possible to name =PersistentCache= as =CacheAndSave=, but it does not mean that former is good and latter is bad. It's hard to come up with example that is not ridiculous, but here we go.
 
@@ -359,68 +397,7 @@ Where should we put it? Let's help ourselves by imagining that we also have acco
 
 To solve this puzzle of responsibilities, we asked some questions and gave ourselves hypothetical answers. In real world, question will have real answers, which will lead to other solutions.
 
-** Business Logic in Constructors
-:PROPERTIES:
-:CUSTOM_ID: BusinessLogicInConstructors
-:END:
-This one is my favourite. Mostly because I've never seen it articulated and written down so clearly before.
-
-It is also very powerful as it influences code structure in fundamental way and paves the road for the rest of testable design.
-
-The essence of the rule is to not have any logic in constructors besides setting instance variables. It follows that all your objects have to be constructed (and only constructed) at the start of your application. This phase could be understood as configuration part. Once everything is constructed and wired, execution part begins and business gets done. At this time only value (pure) objects can be created.
-
-Applying this rule to my React projects lead to unorthodox architectures which some people found off-putting because of unfamiliar looks. The upside of it is that all of the components can be pure, easily [[https://storybook.js.org][storybookable]] and testable.
-
-Following is an example of how it might look.
-
-#+CAPTION: Initialization part.
-#+BEGIN_SRC javascript
-// ...
-const map = new GoogolMap();
-const MapView = mapView(map);
-// ...
-const App = app(storage, MapView, ...);
-
-ReactDOM.render(<App />, document.getElementById(... ));
-#+END_SRC
-
-#+CAPTION: Map component.
-#+BEGIN_SRC javascript
-function mapView(map: MapServiceProvider) {
-  return function MapView({longitude, latitude}) {
-    const [mapUrl, setMapUrl] = useState(null);
-
-    useEffect(async () => {
-      setMapUrl(await map.getImageUrl(longitude, latitude));
-    }, [longitude, latitude]);
-
-    return <div>{mapUrl ? <img src={mapUrl}/> : SOME_DEFAULT_MAP_IMAGE}</div>;
-  }
-}
-#+END_SRC
-
-#+CAPTION: App component.
-#+BEGIN_SRC javascript
-function app(storage, MapView) {
-  return function App() {
-    // ...
-    const coordinates = storage.getCoordinates();
-
-    return (
-      <div>
-        // ...
-        <MapView {...coordinates} />
-        // ...
-      </div>
-    );
-  };
-}
-#+END_SRC
-
 * Epilogue
-:PROPERTIES:
-:CUSTOM_ID: Epilogue
-:END:
 
 After meditating on this blog post for some time I couldn't help but reflect and compare my experience with React and AngularJS. There's still a place in my heart for Angular's principled testable design, but it definitely loses by having overly complicated templating layer. And that is the part front-end developers spend most of the time on.
 
@@ -429,8 +406,6 @@ On the other hand, while it's very easy[fn:7] to start with React, unprincipled 
 If you find yourself overwhelmed by multitude of state management solutions, latest React developments, or just general JavaScript fatigue, just know that you're not alone. I'm with you! We are two unique snowflakes, like two React codebases, vastly different because started on different weeks. Trends will pass, but those 4 pitfalls we just learned about will still be there. Let's stay vigilant and keep our code testable and evolvable[fn:10].
 
 * Footnotes
-[fn:5] Object Oriented Programming.
-
 [fn:10] Unless you rewrite everything every other month. In that case this post is not for you. Sorry if this was revealed only after reading all of it!
 
 [fn:9] https://storybook.js.org

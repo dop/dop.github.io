@@ -1,0 +1,8 @@
+#+TITLE: Fearless Coding
+#+SUBTITLE: Make sure manual QA is not the bottleneck.
+
+#+begin_quote
+I must not fear. Fear is the mind-killer.
+#+end_quote
+
+/TBD/.

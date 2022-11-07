@@ -1,0 +1,17 @@
+#+TITLE: Why I use Emacs
+
+#+begin_quote
+How do you tell if somebody's using Emacs?
+
+They'll let you know by writing an article about it. In Org Mode.
+#+end_quote
+
+There are many interesting and valid reasons people give to rationalise their love for and reliance on "archaic" and "exotic" software known as Emacs. I often hear[fn:1] mentions of some packages or extensibility as selling points. I watch videos full of complicated and beautiful Emacs configurations that does something really well. I read others' =init.el= files. And I wonder why my setup is so plain. Am I missing out? Why did I stay with Emacs for so long? I'm clearly unable to wield Emacs Lisp and transform this caterpillar to The Ultimate Integrated Computing Butterfly.
+
+The answer is simple: I don't want to. Extensibility and flexibility is nice to have and it's a prerequisite for having such a diverse and abundant package ecosystem. But in the end, I'm sticking to Emacs because it provides me with cohesive interface for my computing needs. Text based, more or less standard key bindings across, and most importantly immaculate and extensive integrated documentation.
+
+I changed technologies and operating systems throughout my professional career and it helped to have something as stable, reliable, and amendable as Emacs. And it's true, as everyone else says, it requires time investment. But so does any other skill.
+
+* Footnotes
+
+[fn:1] And by "hear" I mean "read". Never met another Emacs user in my life. Not that I tried.

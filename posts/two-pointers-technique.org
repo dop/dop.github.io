@@ -1,0 +1,14 @@
+#+TITLE: Two Pointers Technique
+#+OPTIONS: num:nil toc:nil
+
+* [[https://adventofcode.com/2020/day/1][Report Repair]]
+
+Goal was, given a list of numbers, to find a pair (part I) or a triplet (part II) that adds up to 2020.
+
+I did not expect anything complicated on the first day and implemented dumb $\mathcal{O}(n^2)$ and $\mathcal{O}(n^3)$ algorithms to compare every possible combination.
+
+Unsurprisingly, it was enough since input had mere 200 numbers. For part I, it gives upper bound of $\binom{200}{2} = 19\,900$ comparisons, and for part II -- $\binom{200}{3} = 1\,313\,400$. Both numbers are small enough for any modern machine. Especially when numbers are in random order which means that on average solution will be found in fewer steps.
+
+Speaking of random order -- I missed (now) obvious optimization. Sorted list of numbers requires only a single pass to find the solution! Walking from both sides of a list and narrowing range depending on whether current sum is smaller or bigger than target, would give solution in $\mathcal{O}(n)$ time.
+
+So first day was a success as I learned about [[https://www.geeksforgeeks.org/two-pointers-technique/][Two Pointers Technique]]!

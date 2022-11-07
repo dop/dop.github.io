@@ -1,0 +1,77 @@
+#+TITLE: Advent of Code: Quick & Dirty Parsing
+#+OPTIONS: num:nil toc:nil
+#+PROPERTY: header-args :exports both :results scalar :noweb yes
+
+* [[https://adventofcode.com/2020/day/2][Password Philosophy]]
+After a couple of AoCs I have an impression that quick and dirty parsing is usually the best approach: choosing correct separator for string splitting and converting strings to numbers covers most of the requirements.
+
+#+begin_src lisp
+(destructuring-bind (i j c password)
+    (cl-ppcre:split "[- ]" "17-18 z: bzzzzxtzcxzjvzzlzbn")
+  (list (parse-integer i) (parse-integer j) (char c 0) password))
+#+end_src
+
+#+RESULTS:
+: (17 18 #\z "bzzzzxtzcxzjvzzlzbn")
+
+* [[https://adventofcode.com/2020/day/7][Handy Haversacks]]
+Even if input seems very human language like, I found regular expressions, or, even better, a well placed string split to be more than enough.
+
+#+name: chatty-input
+#+begin_src text
+dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+light red bags contain 1 bright white bag.
+faded blue bags contain no other bags.
+#+end_src
+
+When I saw this "chatty input", it was very tempting to use recursive pattern matching...  So I did.
+
+#+begin_src lisp :session chatty-input
+  (defpackage :chatty-input-example
+    (:use :cl :str :trivia)
+    (:import-from :alexandria :compose))
+
+  (in-package :chatty-input-example)
+
+  (defun parse-chatty-words (words)
+    (match words
+      ((list* a b "bags" "contain" rest)
+       (cons (list a b) (parse-chatty-words rest)))
+      ((list* (read n) a b bags rest)
+       (cons (cons (list a b) n)
+             (when (ends-with-p "," bags)
+               (parse-chatty-words rest))))
+      ;; "no" "bags." and nil cases skipped.
+      ))
+
+  (mapcar (compose #'parse-chatty-words #'words)
+          (lines "<<chatty-input>>"))
+#+end_src
+
+#+RESULTS:
+: ((("dark" "orange") (("bright" "white") . 3) (("muted" "yellow") . 4))
+:  (("light" "red") (("bright" "white") . 1)) (("faded" "blue")))
+
+Unnecessary complicated. Recursion is too powerful here. A start of LL parsing? It's easier to split on "bags contain".
+
+#+begin_src lisp :session chatty-input
+  (in-package :chatty-input-example)
+
+  (defun parse-n-bags (text)
+    (multiple-value-bind (n end) (parse-integer text :junk-allowed t)
+      (cons (subseq text (1+ end)) n)))
+
+  (defun parse-chatty-line (line)
+    (destructuring-bind (l r) (split " bags contain " line)
+      (cons l (unless (starts-with-p "no" r)
+                (mapcar #'parse-n-bags (cl-ppcre:split " bags?(.|, )" r))))))
+
+  (mapcar #'parse-chatty-line
+          (lines "<<chatty-input>>"))
+#+end_src
+
+#+RESULTS:
+: (("dark orange" ("bright white" . 3) ("muted yellow" . 4))
+:  ("light red" ("bright white" . 1)) ("faded blue"))
+
+So let it be a reminder for myself to not overthink input parsing in online competitions.

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2022-11-07 Mon 21:28 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Advent of Code: Quick &amp; Dirty Parsing</title>
+<meta name="author" content="Donatas Petrauskas" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="../assets/css/styles.css" type="text/css">
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Advent of Code: Quick &amp; Dirty Parsing</h1>
+
+<div id="outline-container-Password-Philosophy" class="outline-2">
+<h2 id="Password-Philosophy"><a href="#Password-Philosophy"><a href="https://adventofcode.com/2020/day/2">Password Philosophy</a></a></h2>
+<div class="outline-text-2" id="text-orgb9ef06c">
+<p>
+After a couple of AoCs I have an impression that quick and dirty parsing is usually the best approach: choosing correct separator for string splitting and converting strings to numbers covers most of the requirements.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(destructuring-bind (i j c password)
+    (cl-ppcre:split "[- ]" "17-18 z: bzzzzxtzcxzjvzzlzbn")
+  (list (parse-integer i) (parse-integer j) (char c 0) password))
+</pre>
+</div>
+
+<pre class="example">
+(17 18 #\z "bzzzzxtzcxzjvzzlzbn")
+</pre>
+</div>
+</div>
+
+<div id="outline-container-Handy-Haversacks" class="outline-2">
+<h2 id="Handy-Haversacks"><a href="#Handy-Haversacks"><a href="https://adventofcode.com/2020/day/7">Handy Haversacks</a></a></h2>
+<div class="outline-text-2" id="text-org3c6e720">
+<p>
+Even if input seems very human language like, I found regular expressions, or, even better, a well placed string split to be more than enough.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text" id="orgf082e84">dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+light red bags contain 1 bright white bag.
+faded blue bags contain no other bags.
+</pre>
+</div>
+
+<p>
+When I saw this "chatty input", it was very tempting to use recursive pattern matching&#x2026;  So I did.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(defpackage :chatty-input-example
+  (:use :cl :str :trivia)
+  (:import-from :alexandria :compose))
+
+(in-package :chatty-input-example)
+
+(defun parse-chatty-words (words)
+  (match words
+    ((list* a b "bags" "contain" rest)
+     (cons (list a b) (parse-chatty-words rest)))
+    ((list* (read n) a b bags rest)
+     (cons (cons (list a b) n)
+	   (when (ends-with-p "," bags)
+	     (parse-chatty-words rest))))
+    ;; "no" "bags." and nil cases skipped.
+    ))
+
+(mapcar (compose #'parse-chatty-words #'words)
+	(lines "dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+light red bags contain 1 bright white bag.
+faded blue bags contain no other bags."))
+</pre>
+</div>
+
+<pre class="example">
+((("dark" "orange") (("bright" "white") . 3) (("muted" "yellow") . 4))
+ (("light" "red") (("bright" "white") . 1)) (("faded" "blue")))
+</pre>
+
+
+<p>
+Unnecessary complicated. Recursion is too powerful here. A start of LL parsing? It's easier to split on "bags contain".
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(in-package :chatty-input-example)
+
+(defun parse-n-bags (text)
+  (multiple-value-bind (n end) (parse-integer text :junk-allowed t)
+    (cons (subseq text (1+ end)) n)))
+
+(defun parse-chatty-line (line)
+  (destructuring-bind (l r) (split " bags contain " line)
+    (cons l (unless (starts-with-p "no" r)
+	      (mapcar #'parse-n-bags (cl-ppcre:split " bags?(.|, )" r))))))
+
+(mapcar #'parse-chatty-line
+	(lines "dark orange bags contain 3 bright white bags, 4 muted yellow bags.
+light red bags contain 1 bright white bag.
+faded blue bags contain no other bags."))
+</pre>
+</div>
+
+<pre class="example">
+(("dark orange" ("bright white" . 3) ("muted yellow" . 4))
+ ("light red" ("bright white" . 1)) ("faded blue"))
+</pre>
+
+
+<p>
+So let it be a reminder for myself to not overthink input parsing in online competitions.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<nav id="navigation">
+  <ul>
+    <li><a href="../index.html">Index</a></li>
+    <li>&middot;</li>
+    <li><a href="https://github.com/dop">GitHub</a></li>
+    <li><a href="https://gitlab.com/setq">GitLab</a></li>
+    <li><a href="https://twitter.com/donatas_p">Twitter</a></li>
+  </ul>
+</nav>
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<svg
+   width="18.074654mm"
+   height="81.375763mm"
+   viewBox="0 0 18.074654 81.375763"
+   version="1.1"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg">
+  <g
+     id="layer1"
+     transform="translate(-82.873453,-41.420317)">
+    <path
+       style="fill:none;stroke-width:0.701377;stroke-dasharray:none;stroke-opacity:1"
+       d="M 92.250251,112.79101 91.964937,41.421719"
+       class="spider-web" />
+    <g
+       id="g2147"
+       transform="matrix(0.63657928,0,0,0.63657928,33.486497,43.683839)">
+      <circle
+         style="fill-opacity:1;stroke:#000000;stroke-width:1.465;stroke-dasharray:none;stroke-opacity:1"
+         class="spider-body"
+         cx="92.396782"
+         cy="111.48345"
+         r="5.350049" />
+      <path
+         style="fill:none;stroke-width:1;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 90.926019,94.492546 c -6.362221,5.205456 1.036979,17.713874 1.036979,17.713874 l -11.856864,-8.38656"
+         class="spider-legs" />
+      <path
+         style="fill:none;stroke-width:1;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 78.08179,115.09834 c 2.891918,-6.07303 12.43525,-3.18111 12.43525,-3.18111 0,0 -8.217158,2.74006 -3.055304,11.85988"
+         class="spider-legs" />
+      <path
+         style="fill:none;stroke-width:1;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 93.121628,100.11601 c 7.998132,2.75158 -0.321266,12.09041 -0.321266,12.09041 L 105.47519,105.967"
+         class="spider-legs" />
+      <path
+         style="fill:none;stroke-width:1;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 104.53443,115.60956 c -1.86947,-6.78874 -10.28811,-3.69233 -10.28811,-3.69233 0,0 7.80818,2.02435 6.9406,10.12172"
+         class="spider-legs" />
+      <circle
+         style="fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         class="spider-eye"
+         cx="90.915115"
+         cy="113.35867"
+         r="1.0121714" />
+      <circle
+         style="fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         class="spider-eye"
+         cx="-93.876549"
+         cy="113.38863"
+         r="1.0121714"
+         transform="scale(-1,1)" />
+    </g>
+  </g>
+</svg>

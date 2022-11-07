@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2022-11-07 Mon 22:54 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Monkeylib HTML</title>
+<meta name="author" content="Donatas Petrauskas" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="../assets/css/styles.css" type="text/css">
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Monkeylib HTML
+<br>
+<span class="subtitle"><a href="https://github.com/gigamonkey/monkeylib-html">https://github.com/gigamonkey/monkeylib-html</a></span>
+</h1>
+<p>
+<a href="https://github.com/gigamonkey/monkeylib-html">monleylib-html</a> is a library from Peter Seibel of <a href="https://gigamonkeys.com/book/">Practical Common Lisp</a> fame. It seems to be an implementation of HTML generation library described in the last two chapters of "Practical Common Lisp".
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(ql:quickload '(:monkeylib-html :parenscript))
+
+(defpackage monkeylib-examples
+  (:use :cl :monkeylib-html))
+</pre>
+</div>
+
+<p>
+Emit HTML to standard output:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(with-html-output (*standard-output*)
+  (html
+    ((:body :id "a" :onclick "javascript: alert(1)")
+     (:h1 "Hello"))))
+</pre>
+</div>
+
+<pre class="example">
+&lt;body id='a' onclick='javascript: alert(1)'&gt;
+    &lt;h1&gt;Hello&lt;/h1&gt;
+&lt;/body&gt;
+</pre>
+
+
+<p>
+Helpers for standard output and string:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-lisp">(defmacro htmlout (&amp;body body)
+  `(with-html-output (*standard-output* :pretty t)
+     (html ,@body)))
+
+(defmacro htmlstr (&amp;body body)
+  `(with-output-to-string (out)
+     (with-html-output (out :pretty t)
+       (html ,@body))))
+</pre>
+</div>
+
+<div id="outline-container-HTML5-preamble" class="outline-2">
+<h2 id="HTML5-preamble"><a href="#HTML5-preamble">HTML5 preamble</a></h2>
+<div class="outline-text-2" id="text-org93a50f5">
+<div class="org-src-container">
+<pre class="src src-lisp">(define-html-macro :html5 (&amp;attributes attrs &amp;body body)
+  `(:progn
+     (:noescape (:format "&lt;!DOCTYPE html&gt;"))
+     (:newline)
+     ((:html ,@attrs)
+       ,@body)))
+
+(htmlout
+  ((:html5 :lang "en")
+   (:h1 "Yay! HTML5")))
+</pre>
+</div>
+
+<pre class="example">
+&lt;!DOCTYPE html&gt;
+&lt;html lang='en'&gt;
+    &lt;h1&gt;Yay! HTML5&lt;/h1&gt;
+&lt;/html&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-Parenscript" class="outline-2">
+<h2 id="Parenscript"><a href="#Parenscript">Parenscript</a></h2>
+<div class="outline-text-2" id="text-org6bffafd">
+<div class="org-src-container">
+<pre class="src src-lisp">(define-html-macro :ps (&amp;body body)
+  `(:noescape (:print (ps:ps ,@body))))
+
+(htmlout
+  (:html5
+   (:head
+    (:script
+     (:ps (defun greet () (alert "Hello, world!")))))
+   (:body
+    ((:button :onclick (:ps (greet))) "Click me!"))))
+</pre>
+</div>
+
+<pre class="example" id="orge1f08dc">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;script&gt;function greet() {
+    __PS_MV_REG = [];
+    return alert('Hello, world!');
+};&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;button onclick='greet();'&gt;Click me!&lt;/button&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-Components" class="outline-2">
+<h2 id="Components"><a href="#Components">Components</a></h2>
+<div class="outline-text-2" id="text-orgff6218a">
+<p>
+<i>TODO</i>.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<nav id="navigation">
+  <ul>
+    <li><a href="../index.html">Index</a></li>
+    <li>&middot;</li>
+    <li><a href="https://github.com/dop">GitHub</a></li>
+    <li><a href="https://gitlab.com/setq">GitLab</a></li>
+    <li><a href="https://twitter.com/donatas_p">Twitter</a></li>
+  </ul>
+</nav>
+</div>
+</body>
+</html>

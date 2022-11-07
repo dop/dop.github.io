@@ -83,7 +83,7 @@ Number.prototype.times = function (fn) {
 #+begin_src js
 (4).times((i) => i * 2) // => [ 0, 2, 4, 6 ]
 #+end_src
-* OO: built-in functionality #2
+* OO: built-in functionality #1
 #+begin_src js
 class DigitalClock {
   constructor(h, m, s) {

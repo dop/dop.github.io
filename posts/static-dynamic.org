@@ -1,0 +1,3 @@
+#+TITLE: Static Guarantees In a Dynamic World
+
+Striving for quick assurance that code is correct.

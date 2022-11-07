@@ -1,0 +1,179 @@
+#+TITLE: Donatas Petrauskas
+#+SUBTITLE: Web Developer
+#+OPTIONS: num:nil toc:nil html-style:nil
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="resume.css" />
+
+#+HTML: <img id="me" aria-hidden="true" src="me.png">
+
+#+BEGIN_EXPORT html
+<svg
+   width="18.074654mm"
+   height="81.375763mm"
+   viewBox="0 0 18.074654 81.375763"
+   version="1.1"
+   id="spider"
+   xmlns="http://www.w3.org/2000/svg">
+  <g
+     id="layer1"
+     transform="translate(-82.873453,-41.420317)">
+    <path
+       style="fill:none;stroke-width:0.701377;stroke-dasharray:none;stroke-opacity:1"
+       d="M 92.250251,112.79101 91.964937,41.421719"
+       class="spider-web" />
+    <g
+       id="g2147"
+       transform="matrix(0.63657928,0,0,0.63657928,33.486497,43.683839)">
+      <circle
+         style="fill-opacity:1;stroke:#000000;stroke-width:1.465;stroke-dasharray:none;stroke-opacity:1"
+         class="spider-body"
+         cx="92.396782"
+         cy="111.48345"
+         r="5.350049" />
+      <path
+         style="fill:none;stroke-width:1;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 90.926019,94.492546 c -6.362221,5.205456 1.036979,17.713874 1.036979,17.713874 l -11.856864,-8.38656"
+         class="spider-legs" />
+      <path
+         style="fill:none;stroke-width:1;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 78.08179,115.09834 c 2.891918,-6.07303 12.43525,-3.18111 12.43525,-3.18111 0,0 -8.217158,2.74006 -3.055304,11.85988"
+         class="spider-legs" />
+      <path
+         style="fill:none;stroke-width:1;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 93.121628,100.11601 c 7.998132,2.75158 -0.321266,12.09041 -0.321266,12.09041 L 105.47519,105.967"
+         class="spider-legs" />
+      <path
+         style="fill:none;stroke-width:1;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         d="m 104.53443,115.60956 c -1.86947,-6.78874 -10.28811,-3.69233 -10.28811,-3.69233 0,0 7.80818,2.02435 6.9406,10.12172"
+         class="spider-legs" />
+      <circle
+         style="fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         class="spider-eye"
+         cx="90.915115"
+         cy="113.35867"
+         r="1.0121714" />
+      <circle
+         style="fill-opacity:1;stroke:none;stroke-width:2;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+         class="spider-eye"
+         cx="-93.876549"
+         cy="113.38863"
+         r="1.0121714"
+         transform="scale(-1,1)" />
+    </g>
+  </g>
+</svg>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<script type="text/javascript">
+  we = (fn) => {
+    var [p, v] = fn();
+    return (e) => {
+      e.preventDefault();
+      e.target.onclick = null;
+      e.target.innerHTML = v;
+      e.target.href = p + ':' + v;
+    };
+  };
+
+  pn = we(() =>
+    [String.fromCharCode(116, 101, 108), '+' + (3741919 * 127 * 13 * 3 * 2 - 1)]);
+
+  ea = we(() => {
+    var a = [54,65,64,51,70,51,69,0,66,55,70,68,18,57,63,51,59,62,0,53,65,63];
+    return [
+      String.fromCharCode(109, 97, 105, 108, 116, 111),
+      String.fromCharCode.apply(null, a.map(n => n + 46)),
+    ];
+  });
+</script>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<div id="contacts">
+  <a href="https://lt.linkedin.com/in/donatas-petrauskas-01116061" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" height="32" width="32" viewBox="0 0 27 27">
+      <path d="M1.91 0h22.363a1.91 1.91 0 011.909 1.91v22.363a1.91 1.91 0 01-1.91 1.909H1.91A1.91 1.91 0 010 24.272V1.91A1.91 1.91 0 011.91 0zm1.908 22.364h3.818V9.818H3.818zM8.182 5.727a2.455 2.455 0 10-4.91 0 2.455 2.455 0 004.91 0zm2.182 4.091v12.546h3.818v-6.077c0-2.037.75-3.332 2.553-3.332 1.3 0 1.81 1.201 1.81 3.332v6.077h3.819v-6.93c0-3.74-.895-5.78-4.667-5.78-1.967 0-3.277.921-3.788 1.946V9.818z" fill-rule="evenodd"></path>
+    </svg>
+  </a>
+  <a href="https://github.com/dop" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 0 16 16" version="1.1" width="32">
+      <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+    </svg>
+  </a>
+  <a href="#" onclick="javascript:pn(event)">phone</a>
+  <a href="#" onclick="javascript:ea(event)">email</a>
+</div>
+#+END_EXPORT
+
+* About me
+
+I value *simplicity* and directness both in everyday life and software. I enjoy *interactive* workflow and immediate feedback, hence my natural inclination towards *TDD* and *frontend* technologies. I strive to achieve a [[../posts/fearless-coding.org][fearless coding]] environment for myself and my teammates.
+
+My two favourite pieces of technology are *Unix* and *Emacs*.
+
+* TL;DR
+
+Experienced full stack developer with strong JavaScript, TypeScript, and automated testing skills.
+
+* Experience
+** Wix.com: frontend, React Native, and fullstack
+
+/2013--Present/
+
+*TDD* with *JavaScript* and *TypeScript* on browser, server, and mobile. *React*, React Native, Node.js.
+
+Wix has great culture to grow not only as an engineer or programmer but as a person. Everyday tasks involve a lot of communication, collaboration, and coordination both in spoken and written form. I enjoyed working on user facing products, having time to do it properly, and release it as soon as I'm done thanks to continuous delivery system.
+
+*** Wix Pricing Plans
+
+/2019--Present/
+
+Applied my extensive experience to rewrite and update mission critical parts of the application. Helped to grow frontend team, oversaw technical excellence.
+
+*** Wix Mobile App
+
+/2016--2019/
+
+Developed various modules related to app's invitation system, bookings, contacts, members and memberships. Pioneered and supported [[https://github.com/wix-incubator/react-component-driver][component testing framework]] for mobile app modules.
+
+*** Wix Hotels
+
+/2014--2016/
+
+Learned and mastered *JavaScript* and *angularjs*, which had strong influence on [[../posts/testable-code.org][my testing views]].
+
+Led exploration of integrating Hotels into WordPress as [[https://wordpress.org/plugins/wix-hotels/][a plugin]].
+
+*** Wix Labs
+
+/2013/
+
+As a introductory task I developed and deployed third party application for Wix App Market. Used angularjs, Node.js, MongoDB, and Heroku.
+
+** Freelance web developer
+
+/2011--2013/
+
+- *Drupal* 6 and 7.
+- Used my *SQL* skills.
+- Improved *PHP* knowledge.
+- Started learning *JavaScript*.
+
+** National Health Insurance Fund of Lithuania: PL/SQL developer
+
+/2008--2011/
+
+- Development and maintenance of *PL/SQL codebase*.
+- During *economic recession* of 2009-2010 I improved employment data integration sub-system to handle growing datasets and correctly calculate insurance periods.
+- Implemented *PHP tools* to integrate data from schools, colleges, and universities for student insurance.
+
+* Education
+
+** Vilnius University, BSc of Informatics, 2005-2009
+
+* Interests
+- Graphics design
+- Lisp
+- Traditional art
+- Rollerblading
+- Sourdough

@@ -1,0 +1,50 @@
+#+TITLE: Advent of Code and Going of Lisps
+#+SUBTITLE: Wasting time with dying languages
+#+OPTIONS: num:nil toc:nil
+#+PROPERTY: header-args :exports both :results scalar :noweb yes
+
+* Falling in love with the old friend
+In recent years I discovered Lisp. It might sound strange, but I am using Emacs for more than a decade now and most of this time I regarded Emacs Lisp as unworthy of my attention. It did not look attractive. I would use it to get the job done and leave without any remorse or second thought[fn:1].
+
+For the longest time, I was dabbling with statically and strongly typed languages in hope of finding my true love. It was Haskell, then OCaml, then Elm. Meanwhile my bills were paid by writing PHP, JavaScript, shell scripts, and... Emacs Lisp.
+
+I was surprised when I realized that. I /did/ get a lot of mundane tasks done with Emacs. This revelation inspired me to take a closer look at Lisps, a breed of languages that is refusing to die.
+
+* Advent of Code
+[[https://adventofcode.com][Advent of Code]] is annual online coding competition held before Christmas. Each day a problem is revealed and a solution (usually a number) can be computed by any means. Unless you are competing for a top spot, such format is perfect to try new languages.
+
+So I did.
+
+** Common Lisp
+The first thing you learn about Common Lisp is that it is a standard, not an implementation. Luckily, most of online resources guides you to either SBCL or CCL. No headache here. Both worked fine for me.
+
+Development with Common Lisp using SLIME feels much like working with Emacs Lisp: immediate and transparent. I find Emacs to have better docstrings, but falling back to HyperSpec is nice too. For a "dead" language Common Lisp has decent amount of books and examples online and in print. Most popular systems have written documentation. I was pleasantly surprised.
+
+And the most surprising part was Quicklisp. It gave me zero problems fetching all those systems. And by zero, I mean I was thrown once or twice into a debugger. Careful inspection revealed that I was missing some shared libraries. I installed them and chose appropriate action to repeat the build step. It passed and installation continued. Felt like magic.
+
+It does not makes sense Common Lisp is not more popular. Oh, right. Too many parentheses.
+
+** Clojure
+On the road to Clojure I got tripped by the smallest of things.
+
+In the beginning it was hard to choose JVM implementation. Turns out there are many. Care must be taken to not accidentally bind your soul to Oracle.
+
+I was overwhelmed by Leiningen. I assume that it builds on top of Java concepts which I lack understanding of. Luckily there's [[https://clojure.org/guides/deps_and_cli][deps.edn]]. It worked just fine.
+
+Docstrings are lackluster, but standard API feels contemporary and extensive. Java interoperability is always there if anything is missing. Which I tried to use, but, as a Java and Clojure novice, failed.
+
+Clojure feels well prepared for contemporary programming style -- functional, immutable, permeated by pattern matching. It lacks tail recursion, but similarly to dreaded Java stack traces[fn:2], I found it to be a non-issue.
+
+The last notable obstacle was reflection induced performance issues. Having had no such problems using Common Lisp, this surprised me the most. I assumed JVM to be a magical optimization powerhouse, but I guess everything has its limits. Sprinkling type annotations helped.
+
+* Happily ever after
+By this time in my life, I have tried multitude of "better" languages, but all infatuations ended in estrangements. Likewise, I feel that honeymoon period with the "better" Lisps is ending.
+
+"This too shall pass." they say.
+
+I returned to Emacs Lisp, the language that gave me most value after all.
+
+* Footnotes
+[fn:2] Building your app from small and well named functions alleviates the pain.
+
+[fn:1] Why have I even bothered with Emacs then? I've tried to answer it [[file:emacs.org][here]].

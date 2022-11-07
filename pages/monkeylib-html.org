@@ -1,0 +1,96 @@
+#+TITLE: Monkeylib HTML
+#+SUBTITLE: https://github.com/gigamonkey/monkeylib-html
+#+OPTIONS: num:nil toc:nil
+#+PROPERTY: header-args:lisp :exports both :package monkeylib-examples :results output
+
+[[https://github.com/gigamonkey/monkeylib-html][monleylib-html]] is a library from Peter Seibel of [[https://gigamonkeys.com/book/][Practical Common Lisp]] fame. It seems to be an implementation of HTML generation library described in the last two chapters of "Practical Common Lisp".
+
+#+begin_src lisp :results silent :package cl-user
+  (ql:quickload '(:monkeylib-html :parenscript))
+
+  (defpackage monkeylib-examples
+    (:use :cl :monkeylib-html))
+#+end_src
+
+Emit HTML to standard output:
+
+#+begin_src lisp
+  (with-html-output (*standard-output*)
+    (html
+      ((:body :id "a" :onclick "javascript: alert(1)")
+       (:h1 "Hello"))))
+#+end_src
+
+#+RESULTS:
+: <body id='a' onclick='javascript: alert(1)'>
+:     <h1>Hello</h1>
+: </body>
+
+Helpers for standard output and string:
+
+#+begin_src lisp :results silent
+  (defmacro htmlout (&body body)
+    `(with-html-output (*standard-output* :pretty t)
+       (html ,@body)))
+
+  (defmacro htmlstr (&body body)
+    `(with-output-to-string (out)
+       (with-html-output (out :pretty t)
+         (html ,@body))))
+#+end_src
+
+* HTML5 preamble
+
+#+begin_src lisp
+  (define-html-macro :html5 (&attributes attrs &body body)
+    `(:progn
+       (:noescape (:format "<!DOCTYPE html>"))
+       (:newline)
+       ((:html ,@attrs)
+         ,@body)))
+
+  (htmlout
+    ((:html5 :lang "en")
+     (:h1 "Yay! HTML5")))
+#+end_src
+
+#+RESULTS:
+: <!DOCTYPE html>
+: <html lang='en'>
+:     <h1>Yay! HTML5</h1>
+: </html>
+
+* Parenscript
+
+#+begin_src lisp
+  (define-html-macro :ps (&body body)
+    `(:noescape (:print (ps:ps ,@body))))
+
+  (htmlout
+    (:html5
+     (:head
+      (:script
+       (:ps (defun greet () (alert "Hello, world!")))))
+     (:body
+      ((:button :onclick (:ps (greet))) "Click me!"))))
+#+end_src
+
+#+RESULTS:
+#+begin_example
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>function greet() {
+    __PS_MV_REG = [];
+    return alert('Hello, world!');
+};</script>
+    </head>
+    <body>
+        <button onclick='greet();'>Click me!</button>
+    </body>
+</html>
+#+end_example
+
+* Components
+
+/TODO/.
