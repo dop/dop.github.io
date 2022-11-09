@@ -74,7 +74,7 @@ body {
   margin: 10em auto 1em;
   max-width: 800px;
   padding: 0 1em;
-  font-size: 16pt;
+  font-size: 14pt;
   line-height: 1.4;
   color: #343637;
   background: white;
@@ -189,6 +189,15 @@ blockquote:before {
   right: .1em;
   color: #fafafa;
   z-index: 0;
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 12pt;
+  }
+  #footnotes {
+    font-size: 11pt;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
