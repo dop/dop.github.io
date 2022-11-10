@@ -78,6 +78,10 @@ h2, h3, h4, h5, h6 {
   flex-wrap: wrap;
 }
 
+#contacts svg {
+  display: block;
+}
+
 #contacts a {
   margin: 0 .25em;
 }
