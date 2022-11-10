@@ -1,7 +1,7 @@
 libs := $(wildcard lib/*.el)
 partials := $(wildcard _partials/*)
 # styles := $(wildcard assets/css/*)
-bin := /Applications/MacPorts/EmacsMac.app/Contents/MacOS/Emacs
+bin := /Applications/Emacs.app/Contents/MacOS/Emacs
 emacs := $(bin) -batch -Q $(foreach lib,$(libs),-l $(lib))
 
 posts := $(wildcard posts/*.org)
