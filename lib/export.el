@@ -4,9 +4,6 @@
 (require 'org)
 (require 'ox-html)
 
-(defvar *export-inlined* nil
-  "Whether to inline scripts and styles. NIL is useful for development.")
-
 (defun export-file (filename &optional head postamble)
   (with-current-buffer (find-file-literally filename)
     (let ((org-html-doctype "html5")
@@ -55,9 +52,7 @@
                   (org-file-contents "_partials/postamble.html")))
 
 (defun export-page (filename)
-  (let ((head (if *export-inlined*
-                  (concat "<style type=\"text/css\">" (org-file-contents "assets/css/styles.css") "</style>")
-                (concat "<link rel=\"stylesheet\" href=\"" (partial-url filename "assets/css/styles.css") "\" type=\"text/css\">"))))
+  (let ((head (concat "<link rel=\"stylesheet\" href=\"" (partial-url filename "assets/css/styles.css") "\" type=\"text/css\">")))
     (export-file filename head
                  (navigation-html filename))))
 
