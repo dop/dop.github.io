@@ -1,9 +1,9 @@
 #+TITLE: Donatas Petrauskas
 #+SUBTITLE: Web Developer
 #+OPTIONS: num:nil toc:nil html-style:nil
-#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="resume.css" />
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="resume/resume.css" />
 
-#+HTML: <img id="me" aria-hidden="true" src="me.png">
+#+HTML: <img id="me" aria-hidden="true" src="resume/me.png">
 
 #+BEGIN_EXPORT html
 <svg

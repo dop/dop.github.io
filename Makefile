@@ -1,20 +1,21 @@
 libs := $(wildcard lib/*.el)
 partials := $(wildcard _partials/*)
-# styles := $(wildcard assets/css/*)
-bin := /Applications/Emacs.app/Contents/MacOS/Emacs
-emacs := $(bin) -batch -Q $(foreach lib,$(libs),-l $(lib))
+emacs := /Applications/Emacs.app/Contents/MacOS/Emacs
+build := $(emacs) -batch -Q $(foreach lib,$(libs),-l $(lib))
 
 posts := $(wildcard posts/*.org)
 pages := $(wildcard pages/*.org)
-htmls := $(posts:org=html) $(pages:org=html)
+htmls := index.html $(posts:org=html) $(pages:org=html)
 
-all: index.html $(htmls)
+all: $(htmls)
 
 %.html: %.org $(partials) $(libs)
-	$(emacs) -eval "(export-page \"$<\")"
+	$(build) -eval "(export-page \"$<\")"
 
 .PHONEY: clean
 
 clean:
 	rm -f $(htmls) $(htmls:html:html~)
-	rm -f index.html index.html~
+
+watch:
+	fswatch -0 -e .* -Ei '(\.org|Makefile|\.el)$$' . | xargs -0 -I {} make

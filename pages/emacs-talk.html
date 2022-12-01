@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 2022-11-29 Tue 00:07 -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emacs</title>
+<meta name="author" content="Donatas Petrauskas &lt;donatasp@wix.com&gt;" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" href="../assets/css/styles.css" type="text/css">
+<link rel="stylesheet" type="text/css" href="emacs/presentation.css" />
+<script src="emacs/presentation.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Emacs
+<br>
+<span class="subtitle">editor macros gone wild</span>
+</h1>
+
+<div id="outline-container-Agenda" class="outline-2">
+<h2 id="Agenda"><a href="#Agenda">Agenda</a></h2>
+<div class="outline-text-2" id="text-orgebbee11">
+<ol class="org-ol">
+<li>Trumpai apie ilgą istoriją.</li>
+<li>Kodėl? Kodėl? Kodėl?</li>
+</ol>
+
+<div class="note" id="org9317d57">
+<p>
+Šį pasakojimą išskaidžiau į dvi dalis. Iš pradžių susipažinsime su Emacs istorija, kad galėtume suprasti, kodėl šis redaktorius yra toks, koks yra. Vėliau pabandysiu atsakyti į keletą "kodėl": kodėl aš naudoju Emacs, kodėl kiti jį naudoja, kodėl tai vis dar aktuali programa.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-Guido-van-Rossum" class="outline-2">
+<h2 id="Guido-van-Rossum"><a href="#Guido-van-Rossum">Guido van Rossum</a></h2>
+<div class="outline-text-2" id="text-org396a448">
+<div class="note" id="org53d1c26">
+<p>
+Prieš žengiant laiku atgal, pradėkime nuo įdomių Guido van Rossum, Python kalbos autoriaus ir ilgamečio Emacs naudotojo, įžvalgų.
+</p>
+
+</div>
+
+<video controls width="1280">
+  <source src="emacs/guido-on-emacs.mp4" type="video/mp4">
+</video>
+
+<div class="note" id="orga67b699">
+<p>
+Prie šių įžvalgų grįšime dar vėliau.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-Prie-istor" class="outline-2">
+<h2 id="Prie-istor"><a href="#Prie-istor">Priešistorė</a></h2>
+<div class="outline-text-2" id="text-orgbef17c9">
+<p>
+Paremta tikrais faktais
+</p>
+</div>
+</div>
+
+<div id="outline-container-1962" class="outline-2">
+<h2 id="1962"><a href="#1962">1962</a></h2>
+<div class="outline-text-2" id="text-org93df8ac">
+<div class="note" id="orgdee6b78">
+<p>
+Pradėsime nuo 1962-ųjų. Tai oficialūs TECO gimimo metai. Text Editor &amp; Corrector užima ypatingą vietą žilabarzdžių hakerių kultūroje.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-TECO" class="outline-2">
+<h2 id="TECO"><a href="#TECO">TECO</a></h2>
+<div class="outline-text-2" id="text-orgf121d56">
+<blockquote>
+<p>
+Real programmers don't want "what you see is what you get", they want "you asked for it, you got it".  They want editors that are terse, powerful, cryptic, and unforgiving.  In a word, Teco.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-TECO" class="outline-2">
+<h2 id="TECO"><a href="#TECO">TECO</a></h2>
+<div class="outline-text-2" id="text-orgb1b9482">
+<div class="note" id="org0478951">
+<p>
+TECO skirtas labai efektyviai redaguoti tekstą. Jo išskirtinumas &#x2013;  programavimo galimybė. Vartotojas galėjo vykdyti savo sukurtas macrokomandas. TECO programavimo kalba buvo vaizdžiai lyginama su "triukšmu" (ang. line noise).
+</p>
+
+</div>
+
+<p>
+[0+0U0Q0"E1U0'Q0"&gt;Q0&lt;&lt;0A"R0;'D&gt;&lt;0A"R|0;'D&gt;&gt;|-Q0&lt;&lt;-A"R0;'-D&gt;&lt;-A"R|0;'-D&gt;&gt;']0
+</p>
+
+<p>
+! delete n words forward  !
+</p>
+</div>
+</div>
+
+<div id="outline-container-TECO-Demo" class="outline-2">
+<h2 id="TECO-Demo"><a href="#TECO-Demo">TECO Demo</a></h2>
+<div class="outline-text-2" id="text-org69f4a54">
+<div class="note" id="org44f596b">
+<p>
+ebREADME.md   edit with backup
+y             read next page
+sTECO         search
+v             see current line
+l             go to the next line
+lv            go to the next line and see it
+-1ex          exit without saving
+</p>
+
+<p>
+open with -scroll:5, 5 lines for commands
+</p>
+
+<p>
+ebREADME.md
+y
+sMacros
+-s $$
+6d
+iMACROS
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-MIT-AI-laboratorija" class="outline-2">
+<h2 id="MIT-AI-laboratorija"><a href="#MIT-AI-laboratorija">MIT AI laboratorija</a></h2>
+<div class="outline-text-2" id="text-orgf6984ec">
+
+<div id="org2616937" class="figure">
+<p><img src="emacs/McCarthy.jpg" alt="McCarthy.jpg">
+</p>
+</div>
+
+<p>
+John McCarthy kuria dirbtinį intelektą (kad išgelbėtų pasaulį (nuo skliaustelių (turbūt))).
+</p>
+
+<div class="note" id="org784f956">
+<p>
+TECO buvo naudojamas MIT dirbtinio intelekto laboratorijoje, kurioje dirbo John McCarthy, Lisp kalbos autorius.
+</p>
+
+<p>
+Įdomus faktas: John McCarthy neturėjo tikslo sustoti ties pirma, skliaustelių kupina, Lisp sintakse. Bet praktikoje ji buvo labai populiari dėl meta-programavimo įgalinimo. Šiandien Lisp meta-programavimas labiausiai siejamas su <b>macro</b> funkcijomis.
+</p>
+
+<p>
+Lisp, meta-programavimo ir macro tema labai persipynusi šioje istorijoje. Panašu, kad Emacs, tokiam koks yra dabar, buvo tiesiog lemta atsirasti.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-Richard-Stallman" class="outline-2">
+<h2 id="Richard-Stallman"><a href="#Richard-Stallman">Richard Stallman</a></h2>
+<div class="outline-text-2" id="text-org0235b69">
+
+<div id="orgbe88ca6" class="figure">
+<p><img src="emacs/richard-stallman.jpg" alt="richard-stallman.jpg">
+</p>
+</div>
+
+<p>
+Sužino, kad Windows inkorporavo GNU/Linux.
+</p>
+
+<div class="note" id="org9365cf6">
+<p>
+Kitas svarbus istorijos veikėjas yra Richard Stallman. Jis labiau žinomas kaip laisvos programinės įrangos judėjimo pradininkas ir GNU sistemos autorius.
+</p>
+
+<p>
+Inspiruotas WYSIWYG redaktoriaus, su kuriuo susipažino Standfordo AI laboratorijoje, prideda naują funkcionalumą TECO: realaus laiko teksto perpiešimą ir macro sistemą, kuri leidžia vykdymo metu konfigūruoti, kas įvyks spaudžiant tam tikrą klavišą.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-Guy-Steele" class="outline-2">
+<h2 id="Guy-Steele"><a href="#Guy-Steele">Guy Steele</a></h2>
+<div class="outline-text-2" id="text-org9495468">
+
+<div id="orge4ca22a" class="figure">
+<p><img src="emacs/guysteele.jpg" alt="guysteele.jpg">
+</p>
+</div>
+
+<p>
+Nemoka įsijungti kompiuterio.
+</p>
+
+<div class="note" id="orgc9c62ff">
+<p>
+Vienintelis švariai nusiskutęs šios istorijos veikėjas yra Guy Steele. Jis inicijavo macro komandų standartizacijos procesą, po to kai buvo pastebėta, kad bendradarbiavimas tarp komandos narių darosi komplikuotas. Kiekvienas buvo apsibrėžęs skirtingas komandas ir negalėjo vienu metu rašyti programų.
+</p>
+
+<p>
+Vėliau Guy Steele taps žymiu programavimo kalbų tyrėju ir autoriumi. Sukurs Scheme, ir prisidės prie C, Fortran, ECMAScript, bei Common Lisp standartizacijos.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-Macro-standartizacija-EMACS" class="outline-2">
+<h2 id="Macro-standartizacija-EMACS"><a href="#Macro-standartizacija-EMACS">Macro standartizacija: EMACS</a></h2>
+<div class="outline-text-2" id="text-orgcf48e8f">
+<p>
+🄴ditor 🄼🄰🄲ro🅂
+</p>
+
+<div class="note" id="org7b0ef05">
+<p>
+EMCAS standartizacija truko 2 metus, o sėkmingas rezultatas pasklinda už MIT AI laboratorijos ribų, bet implementacijos vienaip ar kitaip yra susijusios su Lisp kalba ir egzotiškomis operacinėmis sistemomis.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-Lisp-Machines" class="outline-2">
+<h2 id="Lisp-Machines"><a href="#Lisp-Machines">Lisp Machines</a></h2>
+<div class="outline-text-2" id="text-orgfa40177">
+
+<div id="org3fbcabd" class="figure">
+<p><img src="emacs/lisp-machines.jpg" alt="lisp-machines.jpg">
+</p>
+</div>
+
+<div class="note" id="org7c49d00">
+<p>
+Viena iš šių sistemų buvo Lisp mašinos &#x2013; speciali kompiuterinė įranga skirta Lisp kalbai.
+</p>
+
+<p>
+Deja, devintame dešimtmetyje užėjus "dirbtinio intelekto žiemai" ir, išsekus finansavimui, bei komerciniam susidomėjimui, visos sistemos išnyks, į užmarštį nusinešdamos ir įdomias EMACS atmainas.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-EINE-ZWEI-SINE-Zmacs" class="outline-2">
+<h2 id="EINE-ZWEI-SINE-Zmacs"><a href="#EINE-ZWEI-SINE-Zmacs">EINE, ZWEI, SINE, Zmacs</a></h2>
+<div class="outline-text-2" id="text-org7ef5480">
+
+<div id="orgd150f92" class="figure">
+<p><img src="emacs/zmacs.png" alt="zmacs.png">
+</p>
+</div>
+
+<div class="note" id="org56350f6">
+<ul class="org-ul">
+<li>EINE is not Emacs</li>
+<li>ZWEI was EINE initially</li>
+<li>SINE is not EINE</li>
+</ul>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-Gosling-Emacs" class="outline-2">
+<h2 id="Gosling-Emacs"><a href="#Gosling-Emacs">Gosling Emacs</a></h2>
+<div class="outline-text-2" id="text-orga441922">
+<div class="note" id="orgd7f0569">
+<p>
+Emacs persikelia į Unix. James Gosling, būsimas Java autorius, matydamas Emacs populiarumą sukuria Gosling Emacs.
+</p>
+
+<p>
+Ši versija parašyta C kalba ir neturi Lisp kalbos plėtiniams rašyti, bet tas netrukdo jos sėkmei. Panašu, kad tuo metu EMACS vardas turėjo komercinės vertės ir žmonėms patiko WYSIWYG funkcionalumas.
+</p>
+
+</div>
+
+
+<div id="org1a3d8b1" class="figure">
+<p><img src="emacs/gosling-emacs.jpg" alt="gosling-emacs.jpg">
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-GNU-Emacs" class="outline-2">
+<h2 id="GNU-Emacs"><a href="#GNU-Emacs">GNU Emacs</a></h2>
+<div class="outline-text-2" id="text-org4796138">
+
+<div id="org2d91df4" class="figure">
+<p><img src="emacs/richard-stallman-creates-emacs.jpg" alt="richard-stallman-creates-emacs.jpg">
+</p>
+</div>
+
+<div class="note" id="orgb1a77e4">
+<p>
+Richard Stallman nebuvo patenkintas mokamos Gosling Emacs populiarumu ir pradėjo rašyti savo versiją &#x2013; GNU Emacs (1984).
+</p>
+
+<p>
+Šiuo metu, po kone 40 metų, tai yra populiariausia Emacs versija.
+</p>
+
+<p>
+Kodėl tokio senumo sistema aktuali šiandien? Kodėl ji vis dar aktyviai vystoma?
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-Kas-yra-GNU-Emacs" class="outline-2">
+<h2 id="Kas-yra-GNU-Emacs"><a href="#Kas-yra-GNU-Emacs">Kas yra GNU Emacs?</a></h2>
+<div class="outline-text-2" id="text-org55b2c0f">
+
+<div id="org34f6fc2" class="figure">
+<p><img src="emacs/rs-rides-gnu.jpg" alt="rs-rides-gnu.jpg">
+</p>
+</div>
+
+<div class="note" id="org561cbd8">
+<p>
+Kad galėtume atsakyti į šiuos klausimus, noriu pasitelkti šiek tiek folkloro.
+</p>
+
+<p>
+Konkurencija tarp vi ir Emacs yra tokia pat sena, kaip ir patys redaktoriai. Visi žinome apie pokštą, kad iš vi sunku išeiti. Pažiūrėkime į kelis šmaikščius Emacs apibūdinimus, turėdami omeny, kad po kiekvienu juoku, slepiasi dalis tiesos.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-Great-operating-system-lacking-only-a-decent-editor" class="outline-2">
+<h2 id="Great-operating-system-lacking-only-a-decent-editor"><a href="#Great-operating-system-lacking-only-a-decent-editor">Great operating system, lacking only a decent editor</a></h2>
+<div class="outline-text-2" id="text-org0583f6b">
+
+<div id="org91650b9" class="figure">
+<p><img src="emacs/bellcurvememe.jpg" alt="bellcurvememe.jpg">
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-GNU-Readline" class="outline-2">
+<h2 id="GNU-Readline"><a href="#GNU-Readline">GNU Readline</a></h2>
+</div>
+
+<div id="outline-container-Kod-l-a-naudoju-Emacs" class="outline-2">
+<h2 id="Kod-l-a-naudoju-Emacs"><a href="#Kod-l-a-naudoju-Emacs">Kodėl aš naudoju Emacs</a></h2>
+</div>
+
+<div id="outline-container-1-Emacs-ra-ymui" class="outline-2">
+<h2 id="1-Emacs-ra-ymui"><a href="#1-Emacs-ra-ymui">1. Emacs rašymui</a></h2>
+<div class="outline-text-2" id="text-org162dff0">
+<p>
+Vim → Emacs
+</p>
+</div>
+</div>
+
+<div id="outline-container-2-Emacs-kaip-shell" class="outline-2">
+<h2 id="2-Emacs-kaip-shell"><a href="#2-Emacs-kaip-shell">2. Emacs kaip shell</a></h2>
+<div class="outline-text-2" id="text-orge54851e">
+<p>
+Interaktyvus tekstas
+</p>
+</div>
+</div>
+
+<div id="outline-container-3-Emacs-dokumentacija" class="outline-2">
+<h2 id="3-Emacs-dokumentacija"><a href="#3-Emacs-dokumentacija">3. Emacs dokumentacija</a></h2>
+</div>
+
+
+
+<div id="outline-container-Kod-l-tu-nor-tum-i-bandyti-Emacs" class="outline-2">
+<h2 id="Kod-l-tu-nor-tum-i-bandyti-Emacs"><a href="#Kod-l-tu-nor-tum-i-bandyti-Emacs">Kodėl tu norėtum išbandyti Emacs</a></h2>
+<div class="outline-text-2" id="text-org819c0aa">
+<ul class="org-ul">
+<li>Lisp</li>
+<li><a href="https://emacsforosx.com/">emacsforosx.org</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-Kod-l-kiti-naudoja-Emacs" class="outline-2">
+<h2 id="Kod-l-kiti-naudoja-Emacs"><a href="#Kod-l-kiti-naudoja-Emacs">Kodėl kiti naudoja Emacs</a></h2>
+<div class="outline-text-2" id="text-org4dc6455">
+<ul class="org-ul">
+<li>Org mode</li>
+<li>Magit</li>
+<li><a href="http://xahlee.info/emacs/misc/famous_emacs_users.html">Famous Emacs users</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-Fin" class="outline-2">
+<h2 id="Fin"><a href="#Fin">Fin</a></h2>
+<div class="outline-text-2" id="text-org52acb7b">
+<p>
+Klausimai?
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<nav id="navigation">
+  <ul>
+    <li><a href="../index.html">Index</a></li>
+    <li>&middot;</li>
+    <li><a href="https://github.com/dop">GitHub</a></li>
+    <li><a href="https://gitlab.com/setq">GitLab</a></li>
+    <li><a href="https://twitter.com/donatas_p">Twitter</a></li>
+  </ul>
+</nav>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SLMC8MREG7"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SLMC8MREG7');
+</script>
+</div>
+</body>
+</html>

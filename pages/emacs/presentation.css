@@ -1,0 +1,91 @@
+:root {
+  --dark: black;
+  --light-dark: #232425;
+  --lighter-dark: #333435;
+
+  --light: white;
+  --dark-light: #fafafa;
+  --darker-light: #eeeeec;
+
+  --font-size: 4vmin;
+}
+
+html, body {
+  margin: 0 auto;
+  padding: 0;
+  font-size: var(--font-size);
+  font-weight: 600;
+  text-align: center;
+  max-width: none;
+
+  --foreground: var(--light);
+  --background: var(--dark);
+  --dim: var(--lighter-dark);
+  --dimmer: var(--light-dark);
+}
+
+a {
+  color: var(--foreground);
+}
+
+body.light {
+  --foreground: var(--dark);
+  --background: var(--light);
+  --dim: var(--darker-light);
+  --dimmer: var(--dark-light);
+}
+
+body.light a {
+  color: var(--dark);
+}
+
+ol, ul {
+  text-align: left;
+  max-width: 50vw;
+  margin: 1em auto 0;
+}
+
+img, video {
+  max-height: 60vh;
+  max-width: 60vw;
+}
+
+.subtitle, body, h2 {
+  font-family: Source Code Pro;
+}
+
+.title {
+  font-size: 4.0em;
+}
+.subtitle {
+  font-size: .28em;
+  margin-top: 1em;
+}
+h2 {
+  font-size: 2em;
+}
+
+h2, h3, h4, h5, h6, .figure {
+  padding: 0;
+  margin: 0;
+}
+
+#content {
+  display: flex;
+  flex-direction: column;
+  margin: 0 .5em;
+}
+
+#content > * {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.note {
+  display: none;
+}

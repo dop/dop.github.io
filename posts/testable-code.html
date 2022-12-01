@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2022-11-10 Thu 22:35 -->
+<!-- 2022-11-24 Thu 02:22 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Writing Testable Code</title>
@@ -57,7 +57,7 @@ My hope with this article is to channel Miško's ideas and give you, dear reader
 
 <div id="outline-container-Overview-of-Guide-Writing-Testable-Code" class="outline-2">
 <h2 id="Overview-of-Guide-Writing-Testable-Code"><a href="#Overview-of-Guide-Writing-Testable-Code">Overview of "Guide: Writing Testable Code"</a></h2>
-<div class="outline-text-2" id="text-org11c1486">
+<div class="outline-text-2" id="text-org058632b">
 <p>
 "Guide: Writing Testable Code" was written as internal document at Google targeting Java code. Many of given examples are tied to Java and Dependency Injection framework Guice but the underlying ideas are applicable to both TypeScript and JavaScript nonetheless.
 </p>
@@ -79,7 +79,7 @@ Parts 2 to 4 are obvious, but we will go through them anyway. While part 1 is de
 
 <div id="outline-container-Business-Logic-in-Constructors" class="outline-3">
 <h3 id="Business-Logic-in-Constructors"><a href="#Business-Logic-in-Constructors">Business Logic in Constructors</a></h3>
-<div class="outline-text-3" id="text-org9a4d212">
+<div class="outline-text-3" id="text-org1389bb7">
 <p>
 This one is my favourite. Mostly because I've never seen it articulated and written down so clearly before.
 </p>
@@ -148,7 +148,7 @@ ReactDOM.render(&lt;App /&gt;, document.getElementById(... ));
 
 <div id="outline-container-Global-state" class="outline-3">
 <h3 id="Global-state"><a href="#Global-state">Global state</a></h3>
-<div class="outline-text-3" id="text-org2356bb0">
+<div class="outline-text-3" id="text-orgad9c819">
 <p>
 Global state is sneaky. It hides under mutable variables, static methods, singleton objects, and any dependency that is not passed as an argument. Global state is infectious. Single instance of it in a small module will corrupt all of your application.
 </p>
@@ -240,7 +240,7 @@ test('fetchPosts()', async (assert) =&gt; {
 </pre>
 </div>
 
-<pre class="example" id="org35933e4">
+<pre class="example" id="org739129c">
 
 fetchPosts()
 
@@ -372,7 +372,7 @@ test('PostsRepo', (assert) =&gt; {
 Nice consequence of ditching proxyquire is that our tests run faster.
 </p>
 
-<pre class="example" id="orge9550fa">
+<pre class="example" id="org3c9d849">
 
 PostsRepo
 
@@ -393,7 +393,7 @@ duration:  11ms
 
 <div id="outline-container-Caveats" class="outline-4">
 <h4 id="Caveats"><a href="#Caveats">Caveats</a></h4>
-<div class="outline-text-4" id="text-org21e8d89">
+<div class="outline-text-4" id="text-org404e473">
 <ol class="org-ol">
 <li>Not every dependency has to become a parameter. Constant values, value objects, and pure functions can be used without worry. Good example is lodash<sup><a id="fnr.5" class="footref" href="#fn.5" role="doc-backlink">5</a></sup>.</li>
 <li>If global state is evil, how do we do singletons? Answer is related to the first part of this overview: you must separate the application into construction and execution phases. Singletons are objects that get constructed once in the former part and never in the latter.</li>
@@ -404,7 +404,7 @@ duration:  11ms
 
 <div id="outline-container-Digging-into-Collaborators" class="outline-3">
 <h3 id="Digging-into-Collaborators"><a href="#Digging-into-Collaborators">Digging into Collaborators</a></h3>
-<div class="outline-text-3" id="text-orgbe2bea1">
+<div class="outline-text-3" id="text-org160f90b">
 <p>
 This one is easy to spot. For example, if we see a second level access of property in your code like this
 </p>
@@ -464,7 +464,7 @@ Both of the solutions are related to separating concerns. To choose correct one,
 
 <div id="outline-container-Doing-too-much-or-too-many-things" class="outline-3">
 <h3 id="Doing-too-much-or-too-many-things"><a href="#Doing-too-much-or-too-many-things">Doing too much or too many things</a></h3>
-<div class="outline-text-3" id="text-orgbd702d4">
+<div class="outline-text-3" id="text-org7b0c4c8">
 <p>
 Also known as a failure to maintain single responsibility principle. Usual rule of thumb is to look for names containing "and". But I find this problematic as some people are good (or bad) at naming. It is possible to name <code>PersistentCache</code> as <code>CacheAndSave</code>, but it does not mean that former is good and latter is bad. It's hard to come up with example that is not ridiculous, but here we go.
 </p>
@@ -514,7 +514,7 @@ To solve this puzzle of responsibilities, we asked some questions and gave ourse
 
 <div id="outline-container-Epilogue" class="outline-2">
 <h2 id="Epilogue"><a href="#Epilogue">Epilogue</a></h2>
-<div class="outline-text-2" id="text-org92759c9">
+<div class="outline-text-2" id="text-orgf109b7e">
 <p>
 After meditating on this blog post for some time I couldn't help but reflect and compare my experience with React and AngularJS. There's still a place in my heart for Angular's principled testable design, but it definitely loses by having overly complicated templating layer. And that is the part front-end developers spend most of the time on.
 </p>

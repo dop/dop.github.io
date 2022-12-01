@@ -1,3 +1,7 @@
+body, html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 body, h1, h2, h3, h4, h5 {
   font-family: Helvetica, sans-serif;
 }
@@ -70,14 +74,21 @@ textarea { overflow-x: auto; }
 { background-color: #ffff00; color: #000000; font-weight: bold; }
 .org-svg { width: 90%; }
 
+:root {
+  --foreground: #343637;
+  --background: white;
+  --dim: #eeeeec;
+  --dimmer: #fafafa;
+}
+
 body {
   margin: 10em auto 1em;
   max-width: 800px;
   padding: 0 1em;
   font-size: 14pt;
   line-height: 1.4;
-  color: #343637;
-  background: white;
+  color: var(--foreground);
+  background: var(--background);
 }
 #table-of-contents ul,
 #table-of-contents li {
@@ -99,7 +110,7 @@ h2 a[href^="#"],
 h3 a[href^="#"],
 h4 a[href^="#"],
 h5 a[href^="#"] {
-  color: #343637;
+  color: var(--foreground);
 }
 h1 a[href^="#"]:hover,
 h2 a[href^="#"]:hover,
@@ -133,10 +144,8 @@ code, pre {
 }
 
 #navigation {
-  color: black;
-  background: white;
   padding: 2em 0;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--dim);
 }
 
 #navigation a, #navigation a:active, #navigation a:visited {
@@ -156,8 +165,10 @@ code, pre {
 }
 
 pre, code, blockquote {
-  background: #eeeeec;
+  background: var(--dimmer);
+  border-color: var(--dim);
   border-radius: 3pt;
+  box-shadow: none;
 }
 code {
   padding: .2em;
@@ -175,8 +186,8 @@ blockquote {
   padding: .2em 1em;
   font-style: italic;
   position: relative;
-  background: linear-gradient(#eeeeec, #fafafa);
-  border-bottom: 1px solid #eeeeec;
+  background: linear-gradient(var(--dim), var(--dimmer));
+  border-bottom: 1px solid var(--dim);
 }
 blockquote:before {
   content: ',,';
@@ -187,7 +198,7 @@ blockquote:before {
   line-height: 1;
   top: -.6em;
   right: .1em;
-  color: #fafafa;
+  color: var(--dimmer);
   z-index: 0;
 }
 
@@ -201,27 +212,11 @@ blockquote:before {
 }
 
 @media (prefers-color-scheme: dark) {
-  body, #navigation {
-    background: #343637;
-    color: #eeeeec;
-  }
-  pre, code, blockquote {
-    background: #545657;
-    color: #eeeeec;
-  }
-  blockquote {
-    background: linear-gradient(#545657, #444647);
-    border-bottom: 1px solid #545657;
-  }
-  blockquote:before {
-    color: #444647;
-  }
-  pre, pre.src {
-    border-color: #646667;
-    box-shadow: none;
-  }
-  #navigation {
-    border-color: #646667;
+  :root {
+    --background: #343637;
+    --foreground: white;
+    --dim: #545657;
+    --dimmer: #444647;
   }
   a {
     color: #00bfff;
@@ -234,7 +229,7 @@ blockquote:before {
   h3 a[href^="#"],
   h4 a[href^="#"],
   h5 a[href^="#"] {
-    color: #eeeeec;
+    color: var(--foreground);
   }
   h1 a[href^="#"]:hover,
   h2 a[href^="#"]:hover,

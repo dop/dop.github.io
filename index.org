@@ -3,15 +3,21 @@
 #+OPTIONS: num:nil toc:nil
 
 * Thoughts
+
 - [[file:posts/testable-code.org][Writing Testable Code: JavaScript and React Edition]]
 - [[file:posts/aoc-in-lisps.org][Advent of Code and Going of Lisps]]
 - [[file:posts/emacs.org][Why I use Emacs]]
 - [[file:posts/fearless-coding.org][Fearless Coding]]
+
 * Notes
+
 - [[file:posts/aoc-quick-n-dirty-parsing.org][Advent of Code: Quick & Dirty Parsing]]
 - [[file:posts/two-pointers-technique.org][Two Pointers Technique]]
+
 * Miscellaneous
+
 - [[file:pages/monkeylib-html.org][Monkeylib HTML]]
 - [[file:pages/resume.org][Resumé]]
 - [[file:pages/berlin-clock-kata.org][Berlin Clock Kata]]
 - [[file:pages/rcdpp-2020-05.org][React Component Driver prezentacija]]
+- [[file:pages/emacs-talk.org][Emacs talk]]

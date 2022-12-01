@@ -1,0 +1,220 @@
+#+TITLE: Emacs
+#+SUBTITLE: editor macros gone wild
+#+DATE: <2022-11-21 Mon>
+#+AUTHOR: Donatas Petrauskas <donatasp@wix.com>
+#+OPTIONS: toc:nil num:nil
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="emacs/presentation.css" />
+#+HTML_HEAD_EXTRA: <script src="emacs/presentation.js"></script>
+
+* Agenda
+
+1. Trumpai apie ilgą istoriją.
+2. Kodėl? Kodėl? Kodėl?
+
+#+begin_note
+Šį pasakojimą išskaidžiau į dvi dalis. Iš pradžių susipažinsime su Emacs istorija, kad galėtume suprasti, kodėl šis redaktorius yra toks, koks yra. Vėliau pabandysiu atsakyti į keletą "kodėl": kodėl aš naudoju Emacs, kodėl kiti jį naudoja, kodėl tai vis dar aktuali programa.
+#+end_note
+
+* Guido van Rossum
+
+#+begin_note
+Prieš žengiant laiku atgal, pradėkime nuo įdomių Guido van Rossum, Python kalbos autoriaus ir ilgamečio Emacs naudotojo, įžvalgų.
+#+end_note
+
+#+begin_export html
+<video controls width="1280">
+  <source src="emacs/guido-on-emacs.mp4" type="video/mp4">
+</video>
+#+end_export
+
+#+begin_note
+Prie šių įžvalgų grįšime dar vėliau.
+#+end_note
+
+* Priešistorė
+
+Paremta tikrais faktais
+
+* 1962
+
+#+begin_note
+Pradėsime nuo 1962-ųjų. Tai oficialūs TECO gimimo metai. Text Editor & Corrector užima ypatingą vietą žilabarzdžių hakerių kultūroje.
+#+end_note
+
+* TECO
+
+#+begin_quote
+Real programmers don't want "what you see is what you get", they want "you asked for it, you got it".  They want editors that are terse, powerful, cryptic, and unforgiving.  In a word, Teco.
+#+end_quote
+
+* TECO
+
+#+begin_note
+TECO skirtas labai efektyviai redaguoti tekstą. Jo išskirtinumas --  programavimo galimybė. Vartotojas galėjo vykdyti savo sukurtas macrokomandas. TECO programavimo kalba buvo vaizdžiai lyginama su "triukšmu" (ang. line noise).
+#+end_note
+
+[0+0U0Q0"E1U0'Q0">Q0<<0A"R0;'D><0A"R|0;'D>>|-Q0<<-A"R0;'-D><-A"R|0;'-D>>']0
+
+! delete n words forward  !
+
+* TECO Demo
+
+#+begin_note
+ebREADME.md   edit with backup
+y             read next page
+sTECO         search
+v             see current line
+l             go to the next line
+lv            go to the next line and see it
+-1ex          exit without saving
+
+open with -scroll:5, 5 lines for commands
+
+ebREADME.md
+y
+sMacros
+-s $$
+6d
+iMACROS
+#+end_note
+
+* Dan Murphy :noexport:
+
+#+HTML: <iframe width="800" height="450" src="https://www.youtube-nocookie.com/embed/FGiMarNz96c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+* MIT AI laboratorija
+
+[[file:emacs/McCarthy.jpg]]
+
+John McCarthy kuria dirbtinį intelektą (kad išgelbėtų pasaulį (nuo skliaustelių (turbūt))).
+
+#+begin_note
+TECO buvo naudojamas MIT dirbtinio intelekto laboratorijoje, kurioje dirbo John McCarthy, Lisp kalbos autorius.
+
+Įdomus faktas: John McCarthy neturėjo tikslo sustoti ties pirma, skliaustelių kupina, Lisp sintakse. Bet praktikoje ji buvo labai populiari dėl meta-programavimo įgalinimo. Šiandien Lisp meta-programavimas labiausiai siejamas su *macro* funkcijomis.
+
+Lisp, meta-programavimo ir macro tema labai persipynusi šioje istorijoje. Panašu, kad Emacs, tokiam koks yra dabar, buvo tiesiog lemta atsirasti.
+#+end_note
+
+* Richard Stallman
+
+[[file:emacs/richard-stallman.jpg]]
+
+Sužino, kad Windows inkorporavo GNU/Linux.
+
+#+begin_note
+Kitas svarbus istorijos veikėjas yra Richard Stallman. Jis labiau žinomas kaip laisvos programinės įrangos judėjimo pradininkas ir GNU sistemos autorius.
+
+Inspiruotas WYSIWYG redaktoriaus, su kuriuo susipažino Standfordo AI laboratorijoje, prideda naują funkcionalumą TECO: realaus laiko teksto perpiešimą ir macro sistemą, kuri leidžia vykdymo metu konfigūruoti, kas įvyks spaudžiant tam tikrą klavišą.
+#+end_note
+
+* Guy Steele
+
+[[file:emacs/guysteele.jpg]]
+
+Nemoka įsijungti kompiuterio.
+
+#+begin_note
+Vienintelis švariai nusiskutęs šios istorijos veikėjas yra Guy Steele. Jis inicijavo macro komandų standartizacijos procesą, po to kai buvo pastebėta, kad bendradarbiavimas tarp komandos narių darosi komplikuotas. Kiekvienas buvo apsibrėžęs skirtingas komandas ir negalėjo vienu metu rašyti programų.
+
+Vėliau Guy Steele taps žymiu programavimo kalbų tyrėju ir autoriumi. Sukurs Scheme, ir prisidės prie C, Fortran, ECMAScript, bei Common Lisp standartizacijos.
+#+end_note
+
+* Macro standartizacija: EMACS
+
+🄴ditor 🄼🄰🄲ro🅂
+
+#+begin_note
+EMCAS standartizacija truko 2 metus, o sėkmingas rezultatas pasklinda už MIT AI laboratorijos ribų, bet implementacijos vienaip ar kitaip yra susijusios su Lisp kalba ir egzotiškomis operacinėmis sistemomis.
+#+end_note
+
+* Lisp Machines
+
+[[file:emacs/lisp-machines.jpg]]
+
+#+begin_note
+Viena iš šių sistemų buvo Lisp mašinos -- speciali kompiuterinė įranga skirta Lisp kalbai.
+
+Deja, devintame dešimtmetyje užėjus "dirbtinio intelekto žiemai" ir, išsekus finansavimui, bei komerciniam susidomėjimui, visos sistemos išnyks, į užmarštį nusinešdamos ir įdomias EMACS atmainas.
+#+end_note
+
+* EINE, ZWEI, SINE, Zmacs
+
+[[file:emacs/zmacs.png]]
+
+#+begin_note
+- EINE is not Emacs
+- ZWEI was EINE initially
+- SINE is not EINE
+#+end_note
+
+* Gosling Emacs
+
+#+begin_note
+Emacs persikelia į Unix. James Gosling, būsimas Java autorius, matydamas Emacs populiarumą sukuria Gosling Emacs.
+
+Ši versija parašyta C kalba ir neturi Lisp kalbos plėtiniams rašyti, bet tas netrukdo jos sėkmei. Panašu, kad tuo metu EMACS vardas turėjo komercinės vertės ir žmonėms patiko WYSIWYG funkcionalumas.
+#+end_note
+
+file:emacs/gosling-emacs.jpg
+
+* James Gosling kalba apie Emacs                                   :noexport:
+
+#+HTML: <iframe width="800" height="450" src="https://www.youtube-nocookie.com/embed/wA7aB-oxjVc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+* GNU Emacs
+
+file:emacs/richard-stallman-creates-emacs.jpg
+
+#+begin_note
+Richard Stallman nebuvo patenkintas mokamos Gosling Emacs populiarumu ir pradėjo rašyti savo versiją -- GNU Emacs (1984).
+
+Šiuo metu, po kone 40 metų, tai yra populiariausia Emacs versija.
+
+Kodėl tokio senumo sistema aktuali šiandien? Kodėl ji vis dar aktyviai vystoma?
+#+end_note
+
+* Kas yra GNU Emacs?
+
+[[file:emacs/rs-rides-gnu.jpg]]
+
+#+begin_note
+Kad galėtume atsakyti į šiuos klausimus, noriu pasitelkti šiek tiek folkloro.
+
+Konkurencija tarp vi ir Emacs yra tokia pat sena, kaip ir patys redaktoriai. Visi žinome apie pokštą, kad iš vi sunku išeiti. Pažiūrėkime į kelis šmaikščius Emacs apibūdinimus, turėdami omeny, kad po kiekvienu juoku, slepiasi dalis tiesos.
+#+end_note
+
+* Great operating system, lacking only a decent editor
+
+file:emacs/bellcurvememe.jpg
+
+* GNU Readline
+
+* Kodėl aš naudoju Emacs
+
+* 1. Emacs rašymui
+
+Vim → Emacs
+
+* 2. Emacs kaip shell
+
+Interaktyvus tekstas
+
+* 3. Emacs dokumentacija
+
+
+
+* Kodėl tu norėtum išbandyti Emacs
+
+- Lisp
+- [[https://emacsforosx.com/][emacsforosx.org]]
+
+* Kodėl kiti naudoja Emacs
+
+- Org mode
+- Magit
+- [[http://xahlee.info/emacs/misc/famous_emacs_users.html][Famous Emacs users]]
+
+* Fin
+
+Klausimai?
