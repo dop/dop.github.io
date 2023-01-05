@@ -202,6 +202,15 @@ blockquote:before {
   z-index: 0;
 }
 
+img, image, video {
+  max-width: 100%;
+}
+
+.note {
+  padding: 0 1em;
+  border-left: 2px solid var(--dim);
+}
+
 @media (max-width: 480px) {
   body {
     font-size: 12pt;
