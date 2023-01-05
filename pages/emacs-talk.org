@@ -9,16 +9,19 @@
 * Agenda
 
 1. Trumpai apie ilgą istoriją.
-2. Kodėl? Kodėl? Kodėl?
+2. 3 × Kodėl
 
 #+begin_note
-Šį pasakojimą išskaidžiau į dvi dalis. Iš pradžių susipažinsime su Emacs istorija, kad galėtume suprasti, kodėl šis redaktorius yra toks, koks yra. Vėliau pabandysiu atsakyti į keletą "kodėl": kodėl aš naudoju Emacs, kodėl kiti jį naudoja, kodėl tai vis dar aktuali programa.
+Šį pasakojimą išskaidžiau į dvi dalis. Iš pradžių susipažinsime su Emacs istorija. Tai padės suprasti šio redaktorius archaiškumus. Vėliau pabandysiu atsakyti į tris "kodėl":
+1) kodėl aš naudoju Emacs,
+2) kodėl kiti jį naudoja, ir
+3) kodėl Emacs vis dar aktualus.
 #+end_note
 
 * Guido van Rossum
 
 #+begin_note
-Prieš žengiant laiku atgal, pradėkime nuo įdomių Guido van Rossum, Python kalbos autoriaus ir ilgamečio Emacs naudotojo, įžvalgų.
+Prieš pradedant kelionę laiku atgal, pradėkime nuo įdomių Guido van Rossum, Python kalbos autoriaus ir ilgamečio Emacs naudotojo, įžvalgų.
 #+end_note
 
 #+begin_export html
@@ -27,7 +30,11 @@ Prieš žengiant laiku atgal, pradėkime nuo įdomių Guido van Rossum, Python k
 </video>
 #+end_export
 
+Ištrauka iš [[https://www.youtube.com/watch?v=-DVyjdw4t9I][Guido van Rossum: Python and the Future of Programming | Lex Fridman Podcast #341]].
+
 #+begin_note
+"I actually ended up giving VS Code a very tentative try when I started out at MS and really liking it. It took me a while before I realized why that was. And I think that actually the founders of VS Code may not necessarily agree with me on this, but to me VS Code is a spiritual successor of Emacs."
+
 Prie šių įžvalgų grįšime dar vėliau.
 #+end_note
 
@@ -54,8 +61,6 @@ TECO skirtas labai efektyviai redaguoti tekstą. Jo išskirtinumas --  programav
 #+end_note
 
 [0+0U0Q0"E1U0'Q0">Q0<<0A"R0;'D><0A"R|0;'D>>|-Q0<<-A"R0;'-D><-A"R|0;'-D>>']0
-
-! delete n words forward  !
 
 * TECO Demo
 
@@ -86,7 +91,7 @@ iMACROS
 
 [[file:emacs/McCarthy.jpg]]
 
-John McCarthy kuria dirbtinį intelektą (kad išgelbėtų pasaulį (nuo skliaustelių (turbūt))).
+John McCarthy kuria dirbtinį intelektą.
 
 #+begin_note
 TECO buvo naudojamas MIT dirbtinio intelekto laboratorijoje, kurioje dirbo John McCarthy, Lisp kalbos autorius.
@@ -115,7 +120,7 @@ Inspiruotas WYSIWYG redaktoriaus, su kuriuo susipažino Standfordo AI laboratori
 Nemoka įsijungti kompiuterio.
 
 #+begin_note
-Vienintelis švariai nusiskutęs šios istorijos veikėjas yra Guy Steele. Jis inicijavo macro komandų standartizacijos procesą, po to kai buvo pastebėta, kad bendradarbiavimas tarp komandos narių darosi komplikuotas. Kiekvienas buvo apsibrėžęs skirtingas komandas ir negalėjo vienu metu rašyti programų.
+Vienintelis švariai nusiskutęs šios istorijos veikėjas yra Guy Steele. Jis inicijavo macro komandų standartizacijos procesą, po to kai buvo pastebėta, kad bendradarbiavimas tarp komandos narių darosi komplikuotas. Prisėdus prie kito redaktoriaus, tekdavo mokytis jo konfigūracijos subtilybių. Kaip bebūtų keista, Emacs šią problemą turi iki šiol. Tai yra kultūros dalis.
 
 Vėliau Guy Steele taps žymiu programavimo kalbų tyrėju ir autoriumi. Sukurs Scheme, ir prisidės prie C, Fortran, ECMAScript, bei Common Lisp standartizacijos.
 #+end_note
@@ -158,7 +163,11 @@ Emacs persikelia į Unix. James Gosling, būsimas Java autorius, matydamas Emacs
 
 file:emacs/gosling-emacs.jpg
 
-* James Gosling kalba apie Emacs                                   :noexport:
+#+begin_note
+"The famous multi-window full-screen editor. Edit several files at once. Interprocess communication on UNIX and VMS. Extensible via macros and built-in compiled MPLISP language."
+#+end_note
+
+* James Gosling apie Emacs                                   :noexport:
 
 #+HTML: <iframe width="800" height="450" src="https://www.youtube-nocookie.com/embed/wA7aB-oxjVc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -169,7 +178,7 @@ file:emacs/richard-stallman-creates-emacs.jpg
 #+begin_note
 Richard Stallman nebuvo patenkintas mokamos Gosling Emacs populiarumu ir pradėjo rašyti savo versiją -- GNU Emacs (1984).
 
-Šiuo metu, po kone 40 metų, tai yra populiariausia Emacs versija.
+Šiuo metu, po kone 40 metų, tai yra populiariausia Emacs atmaina.
 
 Kodėl tokio senumo sistema aktuali šiandien? Kodėl ji vis dar aktyviai vystoma?
 #+end_note
@@ -184,11 +193,23 @@ Kad galėtume atsakyti į šiuos klausimus, noriu pasitelkti šiek tiek folkloro
 Konkurencija tarp vi ir Emacs yra tokia pat sena, kaip ir patys redaktoriai. Visi žinome apie pokštą, kad iš vi sunku išeiti. Pažiūrėkime į kelis šmaikščius Emacs apibūdinimus, turėdami omeny, kad po kiekvienu juoku, slepiasi dalis tiesos.
 #+end_note
 
-* Great operating system, lacking only a decent editor
+* Escape Meta Alt Control Shift
+
+* Eight Megabytes And Constantly Swapping
+
+EMACS Makes Any Computer Slow
+
+Eventually Munches All Computer Storage
+
+* Great operating system, lacking a decent editor
 
 file:emacs/bellcurvememe.jpg
 
 * GNU Readline
+
+* Emacs? 2023-aisiais? 🤣
+
+[[https://orgmode.org/][Org Mode]]
 
 * Kodėl aš naudoju Emacs
 
@@ -202,18 +223,15 @@ Interaktyvus tekstas
 
 * 3. Emacs dokumentacija
 
-
+#+begin_quote
+Emacs is the advanced, extensible, customizable, self-documenting
+editor.
+#+end_quote
 
 * Kodėl tu norėtum išbandyti Emacs
 
 - Lisp
 - [[https://emacsforosx.com/][emacsforosx.org]]
-
-* Kodėl kiti naudoja Emacs
-
-- Org mode
-- Magit
-- [[http://xahlee.info/emacs/misc/famous_emacs_users.html][Famous Emacs users]]
 
 * Fin
 
