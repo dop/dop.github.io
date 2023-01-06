@@ -3,8 +3,8 @@
 #+DATE: <2022-11-21 Mon>
 #+AUTHOR: Donatas Petrauskas <donatasp@wix.com>
 #+OPTIONS: toc:nil num:nil
-#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="emacs/presentation.css" />
-#+HTML_HEAD_EXTRA: <script src="emacs/presentation.js"></script>
+# #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="emacs/presentation.css" />
+# #+HTML_HEAD_EXTRA: <script src="emacs/presentation.js"></script>
 
 * Agenda
 
@@ -65,22 +65,35 @@ TECO skirtas labai efektyviai redaguoti tekstą. Jo išskirtinumas --  programav
 * TECO Demo
 
 #+begin_note
-ebREADME.md   edit with backup
-y             read next page
-sTECO         search
-v             see current line
-l             go to the next line
-lv            go to the next line and see it
--1ex          exit without saving
+  ebREADME.md ! edit with backup !
 
-open with -scroll:5, 5 lines for commands
+  y ! read next page !
 
-ebREADME.md
-y
-sMacros
--s $$
-6d
-iMACROS
+  sTECO ! search !
+
+  v ! see current line !
+
+  l ! go to the next line !
+
+  lv ! go to the next line and see it !
+
+  -1ex ! exit without saving !
+#+end_note
+
+#+begin_note
+  ! open with -scroll:5, 5 lines for commands !
+
+  ebREADME.md
+
+  y
+
+  sMacros
+
+  -s $$
+
+  6d
+
+  iMACROS
 #+end_note
 
 * Dan Murphy :noexport:
