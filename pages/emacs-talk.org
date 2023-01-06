@@ -3,8 +3,8 @@
 #+DATE: <2022-11-21 Mon>
 #+AUTHOR: Donatas Petrauskas <donatasp@wix.com>
 #+OPTIONS: toc:nil num:nil
-# #+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="emacs/presentation.css" />
-# #+HTML_HEAD_EXTRA: <script src="emacs/presentation.js"></script>
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" type="text/css" href="emacs/presentation.css" />
+#+HTML_HEAD_EXTRA: <script src="emacs/presentation.js"></script>
 
 * Agenda
 
