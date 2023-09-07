@@ -14,7 +14,7 @@ html, body {
   margin: 0 auto;
   padding: 0;
   font-size: var(--font-size);
-  font-weight: 600;
+  font-weight: 500;
   text-align: center;
   max-width: none;
 
@@ -22,6 +22,11 @@ html, body {
   --background: var(--dark);
   --dim: var(--lighter-dark);
   --dimmer: var(--light-dark);
+}
+
+code, pre {
+  font-size: inherit;
+  text-align: left;
 }
 
 a {

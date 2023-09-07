@@ -1,59 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2022-11-24 Thu 02:22 -->
+<!-- 2023-09-07 Thu 23:30 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Berlin Clock Kata</title>
 <meta name="author" content="Donatas Petrauskas &lt;donatasp@wix.com&gt;" />
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="../assets/css/styles.css" type="text/css">
+<link id="presentation-stylesheet" rel="stylesheet" type="text/css" href="emacs/presentation.css" />
+<script src="emacs/presentation.js"></script>
 </head>
 <body>
 <div id="content" class="content">
 <h1 class="title">Berlin Clock Kata
 <br>
-<span class="subtitle">Wix Grow: Weekly Session Vol. 10</span>
+<span class="subtitle">Wix Grow Activity</span>
 </h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#Berlin-Clock">1. Berlin Clock</a></li>
-<li><a href="#Kata">2. Kata</a></li>
-<li><a href="#Functional-constraints">3. Functional: constraints</a></li>
-<li><a href="#Functional-destruction-construction">4. Functional: destruction &amp; construction</a></li>
-<li><a href="#Functional-allowed-built-ins">5. Functional: allowed built-ins</a></li>
-<li><a href="#Functional-recursion-example">6. Functional: recursion example</a></li>
-<li><a href="#OO-constraints">7. OO: constraints</a></li>
-<li><a href="#OO-no-naked-operators">8. OO: no naked operators</a></li>
-<li><a href="#OO-extend-built-ins">9. OO: extend built-ins.</a></li>
-<li><a href="#OO-built-in-functionality-1">10. OO: built-in functionality #1</a></li>
-<li><a href="#OO-built-in-functionality-2">11. OO: built-in functionality #2</a></li>
-<li><a href="#Specification">12. Specification</a></li>
-<li><a href="#Template">13. Template</a></li>
-</ul>
-</div>
-</div>
 
 <div id="outline-container-Berlin-Clock" class="outline-2">
-<h2 id="Berlin-Clock"><span class="section-number-2">1.</span> <a href="#Berlin-Clock">Berlin Clock</a></h2>
-<div class="outline-text-2" id="text-1">
+<h2 id="Berlin-Clock"><a href="#Berlin-Clock">Berlin Clock</a></h2>
+<div class="outline-text-2" id="text-orga815726">
 <p>
 <a href="https://en.wikipedia.org/wiki/Mengenlehreuhr">https://en.wikipedia.org/wiki/Mengenlehreuhr</a>
 </p>
 
 
-<div id="orgc7e143f" class="figure">
+<div id="org03ae237" class="figure">
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Berlin-Uhr-1650-1705.gif" alt="Berlin-Uhr-1650-1705.gif">
 </p>
 </div>
 </div>
 </div>
 
+<div id="outline-container-Berlin-Clock" class="outline-2">
+<h2 id="Berlin-Clock"><a href="#Berlin-Clock">Berlin Clock</a></h2>
+<div class="outline-text-2" id="text-org8d812f9">
+
+<div id="orgd2d852e" class="figure">
+<p><img src="images/20230907-220442_screenshot.png" alt="20230907-220442_screenshot.png">
+</p>
+</div>
+
+<ul class="org-ul">
+<li>Round light blinks to denote odd (on) or even (off) seconds.</li>
+<li>1st row denotes five full hours each. 2nd row denotes one hour each.</li>
+<li>3rd row eleven lights, which denote five full minutes each.</li>
+<li>4th row indicates one full.</li>
+</ul>
+</div>
+</div>
+
 <div id="outline-container-Kata" class="outline-2">
-<h2 id="Kata"><span class="section-number-2">2.</span> <a href="#Kata">Kata</a></h2>
-<div class="outline-text-2" id="text-2">
+<h2 id="Kata"><a href="#Kata">Kata</a></h2>
+<div class="outline-text-2" id="text-org17aca10">
 <blockquote>
 <p>
 A code kata is an exercise in programming which helps programmers hone their skills through practice and repetition.
@@ -62,170 +62,132 @@ A code kata is an exercise in programming which helps programmers hone their ski
 </div>
 </div>
 
-<div id="outline-container-Functional-constraints" class="outline-2">
-<h2 id="Functional-constraints"><span class="section-number-2">3.</span> <a href="#Functional-constraints">Functional: constraints</a></h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-Theme-of-the-day" class="outline-2">
+<h2 id="Theme-of-the-day"><a href="#Theme-of-the-day">Theme of the day</a></h2>
+<div class="outline-text-2" id="text-orgcbbe851">
+<p>
+Purely functional style.
+</p>
+</div>
+</div>
+
+<div id="outline-container-Constraints" class="outline-2">
+<h2 id="Constraints"><a href="#Constraints">Constraints</a></h2>
+<div class="outline-text-2" id="text-org0fc8760">
 <ul class="org-ul">
 <li>Only <code>const</code>, no <code>let</code>.</li>
-<li>No re-assignment.</li>
+<li>No re-assignment or mutation.</li>
 <li>Recursion for iteration.</li>
-<li>No built-ins.</li>
+<li>Avoid built-ins.</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-Functional-destruction-construction" class="outline-2">
-<h2 id="Functional-destruction-construction"><span class="section-number-2">4.</span> <a href="#Functional-destruction-construction">Functional: destruction &amp; construction</a></h2>
-<div class="outline-text-2" id="text-4">
-<p>
-No.
-</p>
+
+<div id="outline-container-No-re-assignment" class="outline-2">
+<h2 id="No-re-assignment"><a href="#No-re-assignment">No re-assignment</a></h2>
+<div class="outline-text-2" id="text-org437a21b">
 <div class="org-src-container">
 <pre class="src src-javascript">array[0] = 1;
 object.x = 2;
 </pre>
 </div>
+</div>
+</div>
+
+<div id="outline-container-No-mutation" class="outline-2">
+<h2 id="No-mutation"><a href="#No-mutation">No mutation</a></h2>
+<div class="outline-text-2" id="text-org6eb29b2">
 <p>
-Yes.
+Given this
 </p>
 <div class="org-src-container">
-<pre class="src src-javascript">function f(array) {
-  const [a, ...rest] = array;
-  return [1, ...rest];
-}
+<pre class="src src-javascript">const a = [1, 2, 3];
 </pre>
 </div>
+
 <p>
-No.
+None of this
 </p>
 <div class="org-src-container">
-<pre class="src src-javascript">[1].concat(array.slice(1))
+<pre class="src src-javascript">a.push(4);
+a.reverse();
+a.sort()
+a.splice(1, 3);
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-Functional-allowed-built-ins" class="outline-2">
-<h2 id="Functional-allowed-built-ins"><span class="section-number-2">5.</span> <a href="#Functional-allowed-built-ins">Functional: allowed built-ins</a></h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-Destruct-construct" class="outline-2">
+<h2 id="Destruct-construct"><a href="#Destruct-construct">Destruct &amp; construct</a></h2>
+<div class="outline-text-2" id="text-org3c941cd">
 <div class="org-src-container">
-<pre class="src src-javascript">array.map((x) =&gt; x + 1);
-array.filter(isOdd);
-array.reduce((acc, x) =&gt; acc + x);
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-Functional-recursion-example" class="outline-2">
-<h2 id="Functional-recursion-example"><span class="section-number-2">6.</span> <a href="#Functional-recursion-example">Functional: recursion example</a></h2>
-<div class="outline-text-2" id="text-6">
-<div class="org-src-container">
-<pre class="src src-javascript">function repeat(x, count) {
-  return count &gt; 0 ? [x, ...repeat(x, count - 1)] : [];
+<pre class="src src-javascript">function withFirst(x, array) {
+  const [_, ...rest] = array;
+  return [x, ...rest];
 }
 
-repeat(1, 3) // =&gt; [1, 1, 1]
+function withKey(object, key, value) {
+  return { ...object, [key]: value };
+}
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-OO-constraints" class="outline-2">
-<h2 id="OO-constraints"><span class="section-number-2">7.</span> <a href="#OO-constraints">OO: constraints</a></h2>
-<div class="outline-text-2" id="text-7">
-<ul class="org-ul">
-<li>No naked operators.</li>
-<li>Extend built-in objects.</li>
-<li>Take advantage of built-in object functionality.</li>
-</ul>
-</div>
-</div>
-<div id="outline-container-OO-no-naked-operators" class="outline-2">
-<h2 id="OO-no-naked-operators"><span class="section-number-2">8.</span> <a href="#OO-no-naked-operators">OO: no naked operators</a></h2>
-<div class="outline-text-2" id="text-8">
+
+<div id="outline-container-Recursion-to-iterate" class="outline-2">
+<h2 id="Recursion-to-iterate"><a href="#Recursion-to-iterate">Recursion to iterate</a></h2>
+<div class="outline-text-2" id="text-org8e9cf4f">
 <p>
-No.
+No <code>for</code>, <code>while</code>, or <code>.forEach</code>.
 </p>
+
 <div class="org-src-container">
-<pre class="src src-js">const x = a + 1;
-const y = z % 5;
-</pre>
-</div>
-<p>
-Yes.
-</p>
-<div class="org-src-container">
-<pre class="src src-js">const x = a.inc();
-const y = z.mod(5);
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-OO-extend-built-ins" class="outline-2">
-<h2 id="OO-extend-built-ins"><span class="section-number-2">9.</span> <a href="#OO-extend-built-ins">OO: extend built-ins.</a></h2>
-<div class="outline-text-2" id="text-9">
-<div class="org-src-container">
-<pre class="src src-js">Number.prototype.mod = function (number) {
-  return this % number;
-};
-Number.prototype.times = function (fn) {
-  const r = [];
-  for (let i = 0; i &lt; this; i++) {
-    r.push(fn(i));
-  }
-  return r;
-};
-</pre>
-</div>
-<div class="org-src-container">
-<pre class="src src-js">(4).times((i) =&gt; i * 2) // =&gt; [ 0, 2, 4, 6 ]
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-OO-built-in-functionality-1" class="outline-2">
-<h2 id="OO-built-in-functionality-1"><span class="section-number-2">10.</span> <a href="#OO-built-in-functionality-1">OO: built-in functionality #1</a></h2>
-<div class="outline-text-2" id="text-10">
-<div class="org-src-container">
-<pre class="src src-js">class DigitalClock {
-  constructor(h, m, s) {
-    this.hours = h;
-    this.minutes = m;
-    this.seconds = s;
-  }
+<pre class="src src-javascript">a.map(n =&gt; n + 1);
+a.filter(n =&gt; n % 2);
+a.reduce((acc, n) =&gt; acc + n);
+
+function range(n, m) {
+  return new Array(m - n)
+    .fill(0)
+    .map((_, index) =&gt; n + index);
 }
-DigitalClock.prototype.toString = function () {
-  return this.hours.asDigitalTime() + ':' +
-    this.minutes.asDigitalTime() + ':' +
-    this.seconds.asDigitalTime();
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-Bonus-avoid-built-ins" class="outline-2">
+<h2 id="Bonus-avoid-built-ins"><a href="#Bonus-avoid-built-ins">Bonus: avoid built-ins</a></h2>
+<div class="outline-text-2" id="text-org78a6fc2">
+<div class="org-src-container">
+<pre class="src src-javascript">function range(n, m) {
+  return n &lt; m ? [n, ...range(n + 1, m)] : [];
 }
 
-"Time is " + new DigitalClock(12, 5, 1) // =&gt; Time is 12:05:01
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-OO-built-in-functionality-2" class="outline-2">
-<h2 id="OO-built-in-functionality-2"><span class="section-number-2">11.</span> <a href="#OO-built-in-functionality-2">OO: built-in functionality #2</a></h2>
-<div class="outline-text-2" id="text-11">
-<div class="org-src-container">
-<pre class="src src-js">class Time extends Number {
-  toString() { return super.toString().padStart(2, '0') }
+function tail(xs) {
+  const [, ...rest] = xs;
+  return rest;
 }
 
-class Seconds extends Time {}
-class Minutes extends Time {}
-class Hours extends Time {}
+function reduce(fn, xs, acc) {
+  return xs.length &gt; 0
+    ? reduce(fn, tail(xs), fn(acc, xs[0]))
+    : acc;
+}
 
-new Second(10).mod(3) // =&gt; 1
-[new Hours(12), new Minutes(5), new Seconds(1)].join(':') // =&gt; 12:05:01
-new Minutes(5) + ':' + new Seconds(1) // =&gt; 5:1
+function map(fn, xs) {
+  return reduce((acc, x) =&gt; [...acc, fn(x)], xs, []);
+}
 </pre>
 </div>
 </div>
 </div>
+
 <div id="outline-container-Specification" class="outline-2">
-<h2 id="Specification"><span class="section-number-2">12.</span> <a href="#Specification">Specification</a></h2>
-<div class="outline-text-2" id="text-12">
-<pre class="example" id="orgf6a7bcd">
+<h2 id="Specification"><a href="#Specification">Specification</a></h2>
+<div class="outline-text-2" id="text-org290ea7e">
+<pre class="example" id="org2b896b4">
           S H×5  H    M×5         M
 00:00:00  . .... .... ........... ....
 00:00:01  X .... .... ........... ....
@@ -235,8 +197,8 @@ new Minutes(5) + ':' + new Seconds(1) // =&gt; 5:1
 </div>
 
 <div id="outline-container-Template" class="outline-2">
-<h2 id="Template"><span class="section-number-2">13.</span> <a href="#Template">Template</a></h2>
-<div class="outline-text-2" id="text-13">
+<h2 id="Template"><a href="#Template">Template</a></h2>
+<div class="outline-text-2" id="text-org6eea24b">
 <div class="org-src-container">
 <pre class="src src-javascript">require('readline')
   .createInterface({ input: process.stdin })

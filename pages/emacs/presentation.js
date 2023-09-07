@@ -60,6 +60,12 @@ function zoom0() {
   setFontZoom();
 }
 
+function exitPresentation() {
+  const sheet = document.querySelector('#presentation-stylesheet');
+  sheet.disabled = true;
+  destroyPresentation();
+}
+
 const commands = {
   // Next
   n: next,
@@ -84,6 +90,9 @@ const commands = {
   '-': zoomOut,
   '=': zoomIn,
   '0': zoom0,
+
+  x: exitPresentation,
+  X: exitPresentation,
 }
 
 function setFontZoom() {
@@ -95,6 +104,13 @@ function initializePresentation() {
   initializeSlides();
   initializeKeyBindings();
   initializeMouseEvents();
+}
+
+function destroyPresentation() {
+  window.removeEventListener('resize', showCurrentSlide);
+  document.body.removeEventListener('click', next);
+  window.removeEventListener('keydown', runPresentation);
+  localStorage.removeItem('presentation');
 }
 
 function initializeSlides() {
@@ -112,18 +128,20 @@ function initializeSlides() {
   window.addEventListener('resize', showCurrentSlide);
 }
 
+function runPresentation(event) {
+  const command = commands[event.key];
+  if (command) {
+    event.preventDefault();
+    command();
+    localStorage.setItem('presentation', JSON.stringify({current, colorClassName, fontZoom}));
+    return false;
+  } else {
+    console.log(event);
+  }
+}
+
 function initializeKeyBindings() {
-  window.addEventListener('keydown', function (event) {
-    const command = commands[event.key];
-    if (command) {
-      event.preventDefault();
-      command();
-      localStorage.setItem('presentation', JSON.stringify({current, colorClassName, fontZoom}));
-      return false;
-    } else {
-      console.log(event);
-    }
-  });
+  window.addEventListener('keydown', runPresentation);
 }
 
 function initializeMouseEvents() {

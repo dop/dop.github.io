@@ -1,7 +1,10 @@
 #+TITLE: Berlin Clock Kata
-#+SUBTITLE: Wix Grow: Weekly Session Vol. 10
+#+SUBTITLE: Wix Grow Activity
 #+DATE: <2021-08-27 Fri>
 #+AUTHOR: Donatas Petrauskas <donatasp@wix.com>
+#+HTML_HEAD_EXTRA: <link id="presentation-stylesheet" rel="stylesheet" type="text/css" href="emacs/presentation.css" />
+#+HTML_HEAD_EXTRA: <script src="emacs/presentation.js"></script>
+#+OPTIONS: toc:nil num:nil
 
 * Berlin Clock
 
@@ -9,54 +12,111 @@ https://en.wikipedia.org/wiki/Mengenlehreuhr
 
 [[https://upload.wikimedia.org/wikipedia/commons/4/4f/Berlin-Uhr-1650-1705.gif]]
 
+* Berlin Clock
+
+#+DOWNLOADED: screenshot @ 2023-09-07 22:04:42
+[[file:images/20230907-220442_screenshot.png]]
+
+- Round light blinks to denote odd (on) or even (off) seconds.
+- 1st row denotes five full hours each. 2nd row denotes one hour each.
+- 3rd row eleven lights, which denote five full minutes each.
+- 4th row indicates one full.
+
 * Kata
 
 #+begin_quote
 A code kata is an exercise in programming which helps programmers hone their skills through practice and repetition.
 #+end_quote
 
-* Functional: constraints
+* Theme of the day
+
+Purely functional style.
+
+* Constraints
 - Only =const=, no =let=.
-- No re-assignment.
+- No re-assignment or mutation.
 - Recursion for iteration.
-- No built-ins.
-* Functional: destruction & construction
-No.
+- Avoid built-ins.
+
+* No re-assignment
+
 #+begin_src javascript
-array[0] = 1;
-object.x = 2;
-#+end_src
-Yes.
-#+begin_src javascript
-function f(array) {
-  const [a, ...rest] = array;
-  return [1, ...rest];
-}
-#+end_src
-No.
-#+begin_src javascript
-[1].concat(array.slice(1))
+  array[0] = 1;
+  object.x = 2;
 #+end_src
 
-* Functional: allowed built-ins
-#+begin_src javascript
-array.map((x) => x + 1);
-array.filter(isOdd);
-array.reduce((acc, x) => acc + x);
-#+end_src
-* Functional: recursion example
-#+begin_src javascript
-function repeat(x, count) {
-  return count > 0 ? [x, ...repeat(x, count - 1)] : [];
-}
+* No mutation
 
-repeat(1, 3) // => [1, 1, 1]
+Given this
+#+begin_src javascript
+  const a = [1, 2, 3];
 #+end_src
-* OO: constraints
+
+None of this
+#+begin_src javascript
+  a.push(4);
+  a.reverse();
+  a.sort()
+  a.splice(1, 3);
+#+end_src
+
+* Destruct & construct
+
+#+begin_src javascript
+  function withFirst(x, array) {
+    const [_, ...rest] = array;
+    return [x, ...rest];
+  }
+
+  function withKey(object, key, value) {
+    return { ...object, [key]: value };
+  }
+#+end_src
+
+* Recursion to iterate
+
+No =for=, =while=, or =.forEach=.
+
+#+begin_src javascript
+  a.map(n => n + 1);
+  a.filter(n => n % 2);
+  a.reduce((acc, n) => acc + n);
+
+  function range(n, m) {
+    return new Array(m - n)
+      .fill(0)
+      .map((_, index) => n + index);
+  }
+#+end_src
+
+* Bonus: avoid built-ins
+
+#+begin_src javascript
+  function range(n, m) {
+    return n < m ? [n, ...range(n + 1, m)] : [];
+  }
+
+  function tail(xs) {
+    const [, ...rest] = xs;
+    return rest;
+  }
+
+  function reduce(fn, xs, acc) {
+    return xs.length > 0
+      ? reduce(fn, tail(xs), fn(acc, xs[0]))
+      : acc;
+  }
+
+  function map(fn, xs) {
+    return reduce((acc, x) => [...acc, fn(x)], xs, []);
+  }
+#+end_src
+
+* OO: constraints :noexport:
 - No naked operators.
 - Extend built-in objects.
 - Take advantage of built-in object functionality.
-* OO: no naked operators
+* OO: no naked operators :noexport:
 No.
 #+begin_src js
 const x = a + 1;
@@ -67,7 +127,7 @@ Yes.
 const x = a.inc();
 const y = z.mod(5);
 #+end_src
-* OO: extend built-ins.
+* OO: extend built-ins. :noexport:
 #+begin_src js
 Number.prototype.mod = function (number) {
   return this % number;
@@ -83,7 +143,7 @@ Number.prototype.times = function (fn) {
 #+begin_src js
 (4).times((i) => i * 2) // => [ 0, 2, 4, 6 ]
 #+end_src
-* OO: built-in functionality #1
+* OO: built-in functionality #1 :noexport:
 #+begin_src js
 class DigitalClock {
   constructor(h, m, s) {
@@ -100,7 +160,7 @@ DigitalClock.prototype.toString = function () {
 
 "Time is " + new DigitalClock(12, 5, 1) // => Time is 12:05:01
 #+end_src
-* OO: built-in functionality #2
+* OO: built-in functionality #2 :noexport:
 #+begin_src js
 class Time extends Number {
   toString() { return super.toString().padStart(2, '0') }
