@@ -108,7 +108,7 @@ function initializePresentation() {
 
 function destroyPresentation() {
   window.removeEventListener('resize', showCurrentSlide);
-  document.body.removeEventListener('click', next);
+  // document.body.removeEventListener('click', next);
   window.removeEventListener('keydown', runPresentation);
   localStorage.removeItem('presentation');
 }
@@ -145,5 +145,5 @@ function initializeKeyBindings() {
 }
 
 function initializeMouseEvents() {
-  document.body.addEventListener('click', next);
+  // document.body.addEventListener('click', next);
 }

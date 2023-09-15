@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2023-09-08 Fri 09:58 -->
+<!-- 2023-09-15 Fri 08:51 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Berlin Clock Kata</title>
@@ -20,35 +20,41 @@
 
 <div id="outline-container-Before-we-begin" class="outline-2">
 <h2 id="Before-we-begin"><a href="#Before-we-begin">Before we begin</a></h2>
-<div class="outline-text-2" id="text-org97b1ae4">
+<div class="outline-text-2" id="text-orgc15cc23">
 <ul class="org-ul">
 <li>Join #berlin-clock-kata-2023.</li>
 <li>Prepare single JavaScript file.</li>
 <li>Prepare to execute your file using <code>node</code> in terminal.</li>
+<li>Controls:
+<ul class="org-ul">
+<li><code>N, right, down</code> - next slide,</li>
+<li><code>P, left, top</code> - previous slide,</li>
+<li><code>X</code> exit presentation mode.</li>
+</ul></li>
 </ul>
 </div>
 </div>
 
 <div id="outline-container-Berlin-Clock" class="outline-2">
 <h2 id="Berlin-Clock"><a href="#Berlin-Clock">Berlin Clock</a></h2>
-<div class="outline-text-2" id="text-orgb668d1b">
+<div class="outline-text-2" id="text-orgd71370e">
 <p>
 <a href="https://en.wikipedia.org/wiki/Mengenlehreuhr">https://en.wikipedia.org/wiki/Mengenlehreuhr</a>
 </p>
 
 
-<div id="orgd8b8ae7" class="figure">
+<div id="org63f6f1c" class="figure">
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Berlin-Uhr-1650-1705.gif" alt="Berlin-Uhr-1650-1705.gif">
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-Berlin-Clock" class="outline-2">
-<h2 id="Berlin-Clock"><a href="#Berlin-Clock">Berlin Clock</a></h2>
-<div class="outline-text-2" id="text-org56c8285">
+<div id="outline-container-Berlin-Clock-cont" class="outline-2">
+<h2 id="Berlin-Clock-cont"><a href="#Berlin-Clock-cont">Berlin Clock (cont.)</a></h2>
+<div class="outline-text-2" id="text-org65df4eb">
 
-<div id="orgd95b16a" class="figure">
+<div id="org626794e" class="figure">
 <p><img src="images/20230907-220442_screenshot.png" alt="20230907-220442_screenshot.png">
 </p>
 </div>
@@ -64,7 +70,7 @@
 
 <div id="outline-container-Kata" class="outline-2">
 <h2 id="Kata"><a href="#Kata">Kata</a></h2>
-<div class="outline-text-2" id="text-org3624b78">
+<div class="outline-text-2" id="text-org2b8dca9">
 <blockquote>
 <p>
 A code kata is an exercise in programming which helps programmers hone their skills through practice and repetition.
@@ -72,7 +78,7 @@ A code kata is an exercise in programming which helps programmers hone their ski
 </blockquote>
 
 
-<div id="orga9fb466" class="figure">
+<div id="org8b552b8" class="figure">
 <p><img src="images/karate-girl-karate-kick.gif" alt="karate-girl-karate-kick.gif">
 </p>
 </div>
@@ -81,7 +87,7 @@ A code kata is an exercise in programming which helps programmers hone their ski
 
 <div id="outline-container-Theme-of-the-day" class="outline-2">
 <h2 id="Theme-of-the-day"><a href="#Theme-of-the-day">Theme of the day</a></h2>
-<div class="outline-text-2" id="text-org0fb22d9">
+<div class="outline-text-2" id="text-org317c1eb">
 <p>
 Purely functional style.
 </p>
@@ -90,7 +96,7 @@ Purely functional style.
 
 <div id="outline-container-Constraints" class="outline-2">
 <h2 id="Constraints"><a href="#Constraints">Constraints</a></h2>
-<div class="outline-text-2" id="text-orgdbc24cf">
+<div class="outline-text-2" id="text-org52362a8">
 <ul class="org-ul">
 <li>Only <code>const</code>, no <code>let</code>.</li>
 <li>No re-assignment or mutation.</li>
@@ -102,7 +108,7 @@ Purely functional style.
 
 <div id="outline-container-No-re-assignment" class="outline-2">
 <h2 id="No-re-assignment"><a href="#No-re-assignment">No re-assignment</a></h2>
-<div class="outline-text-2" id="text-orgab4d466">
+<div class="outline-text-2" id="text-org0540074">
 <div class="org-src-container">
 <pre class="src src-javascript">array[0] = 1;
 object.x = 2;
@@ -113,7 +119,7 @@ object.x = 2;
 
 <div id="outline-container-No-mutation" class="outline-2">
 <h2 id="No-mutation"><a href="#No-mutation">No mutation</a></h2>
-<div class="outline-text-2" id="text-org8a908d7">
+<div class="outline-text-2" id="text-org667aa30">
 <p>
 Given this
 </p>
@@ -137,7 +143,7 @@ a.splice(1, 3);
 
 <div id="outline-container-Destruct-construct" class="outline-2">
 <h2 id="Destruct-construct"><a href="#Destruct-construct">Destruct &amp; construct</a></h2>
-<div class="outline-text-2" id="text-org99704ee">
+<div class="outline-text-2" id="text-org619a98a">
 <div class="org-src-container">
 <pre class="src src-javascript">function withFirst(x, array) {
   const [_, ...rest] = array;
@@ -154,7 +160,7 @@ function withKey(object, key, value) {
 
 <div id="outline-container-Recursion-to-iterate" class="outline-2">
 <h2 id="Recursion-to-iterate"><a href="#Recursion-to-iterate">Recursion to iterate</a></h2>
-<div class="outline-text-2" id="text-org62708e0">
+<div class="outline-text-2" id="text-org8cd4207">
 <p>
 No <code>for</code>, <code>while</code>, or <code>.forEach</code>.
 </p>
@@ -176,7 +182,7 @@ function range(n, m) {
 
 <div id="outline-container-Bonus-avoid-built-ins" class="outline-2">
 <h2 id="Bonus-avoid-built-ins"><a href="#Bonus-avoid-built-ins">Bonus: avoid built-ins</a></h2>
-<div class="outline-text-2" id="text-orge9050b8">
+<div class="outline-text-2" id="text-org704d1d9">
 <div class="org-src-container">
 <pre class="src src-javascript">function range(n, m) {
   return n &lt; m ? [n, ...range(n + 1, m)] : [];
@@ -201,10 +207,204 @@ function map(fn, xs) {
 </div>
 </div>
 
+<div id="outline-container-Ideas" class="outline-2">
+<h2 id="Ideas"><a href="#Ideas">Ideas</a></h2>
+<div class="outline-text-2" id="text-org4cc8a85">
+<ul class="org-ul">
+<li>Higher order functions</li>
+<li><p>
+Composition
+</p>
+<div class="org-src-container">
+<pre class="src src-js">join(' ',
+     zipWith(call,
+	     [secondsBlock,
+	      minutesBlock,
+	      hoursBlock],
+	     reverse(parseTime(line))))
+</pre>
+</div></li>
+<li><p>
+Currying
+</p>
+<div class="org-src-container">
+<pre class="src src-js">thread(line,
+  parseTime,
+  zipWith(call, [secondsBlock,
+		 minutesBlock,
+		 hoursBlock]),
+  join(' '))
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-Theme-of-the-day-2" class="outline-2">
+<h2 id="Theme-of-the-day-2"><a href="#Theme-of-the-day-2">Theme of the day 2</a></h2>
+<div class="outline-text-2" id="text-org2e8eec3">
+<p>
+Object Oriented style.
+</p>
+</div>
+</div>
+<div id="outline-container-Guidelines" class="outline-2">
+<h2 id="Guidelines"><a href="#Guidelines">Guidelines</a></h2>
+<div class="outline-text-2" id="text-org8711660">
+<ul class="org-ul">
+<li>No naked operators.</li>
+<li>Extend built-in objects.</li>
+<li>Use built-in functionality.</li>
+<li>Replace built-in control flow.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-No-naked-operators" class="outline-2">
+<h2 id="No-naked-operators"><a href="#No-naked-operators">No naked operators</a></h2>
+<div class="outline-text-2" id="text-org81a0a3d">
+<p>
+No.
+</p>
+<div class="org-src-container">
+<pre class="src src-js">const x = a + 2;
+const y = z % 5;
+</pre>
+</div>
+<p>
+Yes.
+</p>
+<div class="org-src-container">
+<pre class="src src-js">const x = a.add(2);
+const y = z.mod(5);
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-Extend-built-ins" class="outline-2">
+<h2 id="Extend-built-ins"><a href="#Extend-built-ins">Extend built-ins.</a></h2>
+<div class="outline-text-2" id="text-org4ce9e44">
+<div class="org-src-container">
+<pre class="src src-js">Number.prototype.add = function (number) {
+  return this + number;
+};
+Number.prototype.times = function (fn) {
+  const r = [];
+  for (let i = 0; i &lt; this; i++) {
+    r.push(fn(i));
+  }
+  return r;
+};
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-js">(4).times((i) =&gt; i * 2) // =&gt; [ 0, 2, 4, 6 ]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-Use-built-in-functionality" class="outline-2">
+<h2 id="Use-built-in-functionality"><a href="#Use-built-in-functionality">Use built-in functionality</a></h2>
+<div class="outline-text-2" id="text-orga784bf7">
+<div class="org-src-container">
+<pre class="src src-js">class Time {
+  constructor(h, m, s) {
+    this.hours = h;
+    this.minutes = m;
+    this.seconds = s;
+  }
+
+  toString() {
+    return [this.hours, this.minutes, this.seconds]
+      .map(number =&gt; number.toString().padStart(2, '0'))
+      .join(':')
+  }
+}
+
+"Time is " + new Time(12, 5, 1) // =&gt; Time is 12:05:01
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-Replace-built-in-control-flow-if" class="outline-2">
+<h2 id="Replace-built-in-control-flow-if"><a href="#Replace-built-in-control-flow-if">Replace built-in control flow: if</a></h2>
+<div class="outline-text-2" id="text-org10e8c83">
+<div class="org-src-container">
+<pre class="src src-js">Number.prototype.lessThan = function (n) {
+  return this &lt; n;
+}
+
+Boolean.prototype.if = function (yes, no) {
+  return this.valueOf() ? yes() : no();
+}
+
+(5).lessThan(4).if(() =&gt; 'yay', () =&gt; 'ney')
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-Replace-built-in-control-flow-for-while" class="outline-2">
+<h2 id="Replace-built-in-control-flow-for-while"><a href="#Replace-built-in-control-flow-for-while">Replace built-in control flow: for, while</a></h2>
+<div class="outline-text-2" id="text-org5ef3190">
+<div class="org-src-container">
+<pre class="src src-js">// instead of for
+(5).upTo(10, (i) =&gt; console.log(i))
+(5).downTo(1, (i) =&gt; console.log(i))
+
+// while ?
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-Million-bonus-points" class="outline-2">
+<h2 id="Million-bonus-points"><a href="#Million-bonus-points">Million bonus points</a></h2>
+<div class="outline-text-2" id="text-orgaebfefd">
+<p>
+Think about the domain.
+</p>
+
+<ul class="org-ul">
+<li>Clock, Lights, Rows of Lights, Hours Rows, Minutes Rows, etc.</li>
+<li>Light can shine with <code>X</code> or <code>|</code>.</li>
+<li>Clock can receive time, tell seconds, minutes, and hours to corresponding modules.</li>
+<li>Modules can choose which lights to turn on or off.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-Example" class="outline-2">
+<h2 id="Example"><a href="#Example">Example</a></h2>
+<div class="outline-text-2" id="text-orgcc42a7f">
+<div class="org-src-container">
+<pre class="src src-js">class MinutesBlock {
+  row1 = (11).times((i) =&gt; (i).mod(3).eq(2).if(() =&gt; new PipeLight(), () =&gt; new XLight()))
+  row2 = (4).times(i =&gt; new XLight())
+
+  setMinutes(minutes) {
+    this.row1.forEach(light =&gt; light.off())
+    this.row2.forEach(light =&gt; light.off())
+    minutes.div(5).times((i) =&gt; this.row1[i].on())
+    minutes.mod(5).times((i) =&gt; this.row2[i].on())
+  }
+
+  toString() {
+    return this.row1.join('') + ' ' + this.row2.join('')
+  }
+}
+
+const mb = new MinutesBlock()
+mb.setMinutes(33)
+mb.toString() // =&gt; 'XX|XX|..... XXX.'
+</pre>
+</div>
+</div>
+</div>
+
 <div id="outline-container-Specification" class="outline-2">
 <h2 id="Specification"><a href="#Specification">Specification</a></h2>
-<div class="outline-text-2" id="text-orgba2c57b">
-<pre class="example" id="orgae9f1f3">
+<div class="outline-text-2" id="text-org4c1bb04">
+<pre class="example" id="org0fa40dc">
           S H×5  H    M×5         M
 00:00:00  . .... .... ........... ....
 00:00:01  X .... .... ........... ....
@@ -215,7 +415,7 @@ function map(fn, xs) {
 
 <div id="outline-container-Template" class="outline-2">
 <h2 id="Template"><a href="#Template">Template</a></h2>
-<div class="outline-text-2" id="text-org893c895">
+<div class="outline-text-2" id="text-org6c4e3cb">
 <div class="org-src-container">
 <pre class="src src-javascript">require('readline')
   .createInterface({ input: process.stdin })
@@ -227,7 +427,7 @@ function toBerlinClock(line) {
 </pre>
 </div>
 
-<pre class="example" id="org99306ac">
+<pre class="example" id="orgc4b713b">
 $ echo 10:15:00 | node main.js
 10:15:00 =&gt; . XX.. .... XX|........ ....
 $ node main.js &lt; example.txt

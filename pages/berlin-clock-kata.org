@@ -6,27 +6,39 @@
 #+HTML_HEAD_EXTRA: <script src="emacs/presentation.js"></script>
 #+OPTIONS: toc:nil num:nil
 
+* Before we begin
+
+- Join #berlin-clock-kata-2023.
+- Prepare single JavaScript file.
+- Prepare to execute your file using =node= in terminal.
+- Controls:
+  - =N, right, down= - next slide,
+  - =P, left, top= - previous slide,
+  - =X= exit presentation mode.
+
 * Berlin Clock
 
 https://en.wikipedia.org/wiki/Mengenlehreuhr
 
 [[https://upload.wikimedia.org/wikipedia/commons/4/4f/Berlin-Uhr-1650-1705.gif]]
 
-* Berlin Clock
+* Berlin Clock (cont.)
 
 #+DOWNLOADED: screenshot @ 2023-09-07 22:04:42
 [[file:images/20230907-220442_screenshot.png]]
 
 - Round light blinks to denote odd (on) or even (off) seconds.
-- 1st row denotes five full hours each. 2nd row denotes one hour each.
-- 3rd row eleven lights, which denote five full minutes each.
-- 4th row indicates one full.
+- *1st* row denotes five full hours each. *2nd* row denotes one hour each.
+- *3rd* row eleven lights, which denote five full minutes each.
+- *4th* row indicates one full.
 
 * Kata
 
 #+begin_quote
 A code kata is an exercise in programming which helps programmers hone their skills through practice and repetition.
 #+end_quote
+
+file:images/karate-girl-karate-kick.gif
 
 * Theme of the day
 
@@ -90,7 +102,6 @@ No =for=, =while=, or =.forEach=.
 #+end_src
 
 * Bonus: avoid built-ins
-
 #+begin_src javascript
   function range(n, m) {
     return n < m ? [n, ...range(n + 1, m)] : [];
@@ -112,68 +123,133 @@ No =for=, =while=, or =.forEach=.
   }
 #+end_src
 
-* OO: constraints :noexport:
+* Ideas
+- Higher order functions
+- Composition
+  #+begin_src js
+    join(' ',
+         zipWith(call,
+                 [secondsBlock,
+                  minutesBlock,
+                  hoursBlock],
+                 reverse(parseTime(line))))
+  #+end_src
+- Currying
+  #+begin_src js
+    thread(line,
+      parseTime,
+      zipWith(call, [secondsBlock,
+                     minutesBlock,
+                     hoursBlock]),
+      join(' '))
+  #+end_src
+
+* Theme of the day 2
+Object Oriented style.
+* Guidelines
 - No naked operators.
 - Extend built-in objects.
-- Take advantage of built-in object functionality.
-* OO: no naked operators :noexport:
+- Use built-in functionality.
+- Replace built-in control flow.
+* No naked operators
 No.
 #+begin_src js
-const x = a + 1;
+const x = a + 2;
 const y = z % 5;
 #+end_src
 Yes.
 #+begin_src js
-const x = a.inc();
+const x = a.add(2);
 const y = z.mod(5);
 #+end_src
-* OO: extend built-ins. :noexport:
+* Extend built-ins.
 #+begin_src js
-Number.prototype.mod = function (number) {
-  return this % number;
-};
-Number.prototype.times = function (fn) {
-  const r = [];
-  for (let i = 0; i < this; i++) {
-    r.push(fn(i));
-  }
-  return r;
-};
+  Number.prototype.add = function (number) {
+    return this + number;
+  };
+  Number.prototype.times = function (fn) {
+    const r = [];
+    for (let i = 0; i < this; i++) {
+      r.push(fn(i));
+    }
+    return r;
+  };
 #+end_src
 #+begin_src js
 (4).times((i) => i * 2) // => [ 0, 2, 4, 6 ]
 #+end_src
-* OO: built-in functionality #1 :noexport:
+* Use built-in functionality
 #+begin_src js
-class DigitalClock {
-  constructor(h, m, s) {
-    this.hours = h;
-    this.minutes = m;
-    this.seconds = s;
+  class Time {
+    constructor(h, m, s) {
+      this.hours = h;
+      this.minutes = m;
+      this.seconds = s;
+    }
+
+    toString() {
+      return [this.hours, this.minutes, this.seconds]
+        .map(number => number.toString().padStart(2, '0'))
+        .join(':')
+    }
   }
-}
-DigitalClock.prototype.toString = function () {
-  return this.hours.asDigitalTime() + ':' +
-    this.minutes.asDigitalTime() + ':' +
-    this.seconds.asDigitalTime();
-}
 
-"Time is " + new DigitalClock(12, 5, 1) // => Time is 12:05:01
+  "Time is " + new Time(12, 5, 1) // => Time is 12:05:01
 #+end_src
-* OO: built-in functionality #2 :noexport:
+* Replace built-in control flow: if
 #+begin_src js
-class Time extends Number {
-  toString() { return super.toString().padStart(2, '0') }
-}
+  Number.prototype.lessThan = function (n) {
+    return this < n;
+  }
 
-class Seconds extends Time {}
-class Minutes extends Time {}
-class Hours extends Time {}
+  Boolean.prototype.if = function (yes, no) {
+    return this.valueOf() ? yes() : no();
+  }
 
-new Second(10).mod(3) // => 1
-[new Hours(12), new Minutes(5), new Seconds(1)].join(':') // => 12:05:01
-new Minutes(5) + ':' + new Seconds(1) // => 5:1
+  (5).lessThan(4).if(() => 'yay', () => 'ney')
 #+end_src
+
+* Replace built-in control flow: for, while
+#+begin_src js
+  // instead of for
+  (5).upTo(10, (i) => console.log(i))
+  (5).downTo(1, (i) => console.log(i))
+
+  // while ?
+#+end_src
+
+* Million bonus points
+Think about the domain.
+
+- Clock, Lights, Rows of Lights, Hours Rows, Minutes Rows, etc.
+- Light can shine with =X= or =|=.
+- Clock can receive time, tell seconds, minutes, and hours to corresponding modules.
+- Modules can choose which lights to turn on or off.
+
+* Example
+
+#+begin_src js
+  class MinutesBlock {
+    row1 = (11).times((i) => (i).mod(3).eq(2).if(() => new PipeLight(), () => new XLight()))
+    row2 = (4).times(i => new XLight())
+
+    setMinutes(minutes) {
+      this.row1.forEach(light => light.off())
+      this.row2.forEach(light => light.off())
+      minutes.div(5).times((i) => this.row1[i].on())
+      minutes.mod(5).times((i) => this.row2[i].on())
+    }
+
+    toString() {
+      return this.row1.join('') + ' ' + this.row2.join('')
+    }
+  }
+
+  const mb = new MinutesBlock()
+  mb.setMinutes(33)
+  mb.toString() // => 'XX|XX|..... XXX.'
+#+end_src
+
 * Specification
 
 #+begin_example
@@ -194,3 +270,12 @@ function toBerlinClock(line) {
   return '. .... .... ........... ....';
 }
 #+end_src
+
+#+begin_example
+  $ echo 10:15:00 | node main.js
+  10:15:00 => . XX.. .... XX|........ ....
+  $ node main.js < example.txt
+  00:00:00 => . .... .... ........... ....
+  23:59:59 => X XXXX XXX. XX|XX|XX|XX XXXX
+  18:48:02 => . XXX. XXX. XX|XX|XX|.. XXX.
+#+end_example
