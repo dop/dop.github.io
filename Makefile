@@ -12,7 +12,7 @@ all: $(htmls)
 %.html: %.org $(partials) $(libs)
 	$(build) -eval "(export-page \"$<\")"
 
-.PHONEY: clean
+.PHONEY: clean watch
 
 clean:
 	rm -f $(htmls) $(htmls:html:html~)
