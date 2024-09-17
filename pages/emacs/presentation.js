@@ -28,6 +28,16 @@ function previous() {
   showCurrentSlide({animate: true})
 }
 
+function firstSlide() {
+  current = 0;
+  showCurrentSlide();
+}
+
+function lastSlide() {
+  current = slides.length - 1;
+  showCurrentSlide();
+}
+
 function toggleFullscreen() {
   if (!document.fullscreenElement) {
     document.documentElement.requestFullscreen();
@@ -80,6 +90,10 @@ const commands = {
   ArrowUp: previous,
   ArrowLeft: previous,
   Backspace: previous,
+  b: firstSlide,
+  B: firstSlide,
+  e: lastSlide,
+  E: lastSlide,
 
   f: toggleFullscreen,
   F: toggleFullscreen,
