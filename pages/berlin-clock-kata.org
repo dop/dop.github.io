@@ -2,19 +2,7 @@
 #+SUBTITLE: Wix Grow Activity
 #+DATE: <2021-08-27 Fri>
 #+AUTHOR: Donatas Petrauskas <donatasp@wix.com>
-#+HTML_HEAD_EXTRA: <link id="presentation-stylesheet" rel="stylesheet" type="text/css" href="emacs/presentation.css" />
-#+HTML_HEAD_EXTRA: <script src="emacs/presentation.js"></script>
 #+OPTIONS: toc:nil num:nil
-
-* Before we begin
-
-- Join #berlin-clock-kata-2023.
-- Prepare single JavaScript file.
-- Prepare to execute your file using =node= in terminal.
-- Controls:
-  - =N, right, down= - next slide,
-  - =P, left, top= - previous slide,
-  - =X= exit presentation mode.
 
 * Berlin Clock
 
@@ -95,18 +83,16 @@ No =for=, =while=, or =.forEach=.
   a.reduce((acc, n) => acc + n);
 
   function range(n, m) {
-    return new Array(m - n)
-      .fill(0)
+    return Array.from({length: m - n})
       .map((_, index) => n + index);
   }
 #+end_src
 
 * Bonus: avoid built-ins
-#+begin_src javascript
-  function range(n, m) {
-    return n < m ? [n, ...range(n + 1, m)] : [];
-  }
 
+Replace =.map=, =.reduce=, =.slice(1)=.
+
+#+begin_src javascript
   function tail(xs) {
     const [, ...rest] = xs;
     return rest;
@@ -123,35 +109,22 @@ No =for=, =while=, or =.forEach=.
   }
 #+end_src
 
-* Ideas
-- Higher order functions
-- Composition
-  #+begin_src js
-    join(' ',
-         zipWith(call,
-                 [secondsBlock,
-                  minutesBlock,
-                  hoursBlock],
-                 reverse(parseTime(line))))
-  #+end_src
-- Currying
-  #+begin_src js
-    thread(line,
-      parseTime,
-      zipWith(call, [secondsBlock,
-                     minutesBlock,
-                     hoursBlock]),
-      join(' '))
-  #+end_src
+Without =Array.from=.
 
-* Theme of the day 2
+#+begin_src
+  function range(n, m) {
+    return n < m ? [n, ...range(n + 1, m)] : [];
+  }
+#+end_src
+
+* Theme of the day 2 :noexport:
 Object Oriented style.
-* Guidelines
+* Guidelines :noexport:
 - No naked operators.
 - Extend built-in objects.
 - Use built-in functionality.
 - Replace built-in control flow.
-* No naked operators
+* No naked operators :noexport:
 No.
 #+begin_src js
 const x = a + 2;
@@ -162,7 +135,7 @@ Yes.
 const x = a.add(2);
 const y = z.mod(5);
 #+end_src
-* Extend built-ins.
+* Extend built-ins. :noexport:
 #+begin_src js
   Number.prototype.add = function (number) {
     return this + number;
@@ -178,7 +151,7 @@ const y = z.mod(5);
 #+begin_src js
 (4).times((i) => i * 2) // => [ 0, 2, 4, 6 ]
 #+end_src
-* Use built-in functionality
+* Use built-in functionality :noexport:
 #+begin_src js
   class Time {
     constructor(h, m, s) {
@@ -196,7 +169,7 @@ const y = z.mod(5);
 
   "Time is " + new Time(12, 5, 1) // => Time is 12:05:01
 #+end_src
-* Replace built-in control flow: if
+* Replace built-in control flow: if :noexport:
 #+begin_src js
   Number.prototype.lessThan = function (n) {
     return this < n;
@@ -209,7 +182,7 @@ const y = z.mod(5);
   (5).lessThan(4).if(() => 'yay', () => 'ney')
 #+end_src
 
-* Replace built-in control flow: for, while
+* Replace built-in control flow: for, while :noexport:
 #+begin_src js
   // instead of for
   (5).upTo(10, (i) => console.log(i))
@@ -218,7 +191,7 @@ const y = z.mod(5);
   // while ?
 #+end_src
 
-* Million bonus points
+* Million bonus points :noexport:
 Think about the domain.
 
 - Clock, Lights, Rows of Lights, Hours Rows, Minutes Rows, etc.
@@ -226,7 +199,7 @@ Think about the domain.
 - Clock can receive time, tell seconds, minutes, and hours to corresponding modules.
 - Modules can choose which lights to turn on or off.
 
-* Example
+* Example :noexport:
 
 #+begin_src js
   class MinutesBlock {
@@ -250,6 +223,7 @@ Think about the domain.
   mb.toString() // => 'XX|XX|..... XXX.'
 #+end_src
 
+
 * Specification
 
 #+begin_example
@@ -262,13 +236,13 @@ Think about the domain.
 * Template
 
 #+begin_src javascript
-require('readline')
-  .createInterface({ input: process.stdin })
-  .on('line', line => console.log(line + ' => ' + toBerlinClock(line)));
+  require('readline')
+    .createInterface({ input: process.stdin })
+    .on('line', line => console.log(`${line} => ${toBerlinClock(line)}`));
 
-function toBerlinClock(line) {
-  return '. .... .... ........... ....';
-}
+  function toBerlinClock(line) {
+    return '. .... .... ........... ....';
+  }
 #+end_src
 
 #+begin_example
