@@ -13,6 +13,7 @@
 
 - [[file:posts/aoc-quick-n-dirty-parsing.org][Advent of Code: Quick & Dirty Parsing]]
 - [[file:posts/two-pointers-technique.org][Two Pointers Technique]]
+- [[file:posts/why-does-vc-setup-buffer-kills-local-variables.org][Why does =vc-setup-buffer= kills local variables?]]
 
 * Miscellaneous
 
