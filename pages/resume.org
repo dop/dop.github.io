@@ -172,8 +172,9 @@ As a introductory task I developed and deployed third party application for Wix 
 ** Vilnius University, BSc of Informatics, 2005-2009
 
 * Interests
-- Graphics design
 - Lisp
-- Traditional art
 - Rollerblading
 - Sourdough
+- Coffee
+- Graphics design
+- Traditional art

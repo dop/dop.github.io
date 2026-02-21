@@ -71,9 +71,11 @@ function zoom0() {
 }
 
 function exitPresentation() {
-  const sheet = document.querySelector('#presentation-stylesheet');
-  sheet.disabled = true;
-  destroyPresentation();
+  const sheet = document.querySelector('[rel="stylesheet"][href*="presentation"]');
+  if (sheet) {
+    sheet.disabled = true;
+    destroyPresentation();
+  }
 }
 
 const commands = {
@@ -122,8 +124,8 @@ function initializePresentation() {
 
 function destroyPresentation() {
   window.removeEventListener('resize', showCurrentSlide);
-  // document.body.removeEventListener('click', next);
   window.removeEventListener('keydown', runPresentation);
+  window.removeEventListener('click', navigate);
   localStorage.removeItem('presentation');
 }
 
@@ -149,9 +151,10 @@ function runPresentation(event) {
     command();
     localStorage.setItem('presentation', JSON.stringify({current, colorClassName, fontZoom}));
     return false;
-  } else {
-    console.log(event);
   }
+  // else {
+  //   console.log(event);
+  // }
 }
 
 function initializeKeyBindings() {
@@ -159,5 +162,22 @@ function initializeKeyBindings() {
 }
 
 function initializeMouseEvents() {
-  // document.body.addEventListener('click', next);
+  window.addEventListener('click', navigate);
+}
+
+function navigate(event) {
+  const {x, y} = event;
+  const {clientHeight: height, clientWidth: width} = document.documentElement;
+  if (y < height * 0.25) {
+    previous();
+  }
+  else if (y > height * 0.75) {
+    next();
+  }
+  else if (x < width * 0.25) {
+    previous();
+  }
+  else if (x > width * 0.75) {
+    next();
+  }
 }

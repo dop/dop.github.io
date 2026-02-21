@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Run code in a macOS Sandbox | myByways</title>
+<link rel="icon" type="image/png" href="/user/themes/my22/images/favicon.png" />
+<link rel="canonical" href="https://mybyways.com/blog/run-code-in-a-macos-sandbox" />
+<meta name="generator" content="GravCMS" />
+<meta name="description" content="myByways - the road less travelled by C.Y. Wong" />
+<meta name="author" content="C.Y. Wong">
+<meta name="copyright" content="&copy; 2015-2026 C.Y. Wong">
+<script type="application/ld+json">
+{ "@context":"https://schema.org", "@type":"BlogPosting",
+"headline": "Run code in a macOS Sandbox",
+"datePublished": "2023-06-11",
+"dateModified": "2026-02-01",
+"author":[{"@type":"Person","name":"C.Y. Wong","url":"http://myByways.com/about"}] }
+</script>  
+<link href="/assets/d53168cc4efbfff50798e2f99eaa3eec.css?g-4971b261" type="text/css" rel="stylesheet">
+
+
+</head>
+<body class="has-navbar-fixed-top">
+<nav id="navbar" class="navbar is-dark is-fixed-top is-unselectable">
+<input id="navbar-toggle" type="checkbox" class="is-hidden"/>
+<div class="navbar-brand">
+<a class="navbar-item" href="/"><strong>myByways</strong></a>
+<label class="navbar-burger" for="navbar-toggle" aria-label="Navbar Burger" tabindex="-1" title="Navigation burger"><span></span><span></span><span></span></label>
+</div>
+<div class="navbar-menu pt-0 pb-0">
+<div class="navbar-start" role="menubar">
+<a class="navbar-item" href="/about" role="menuitem">About</a>
+<a class="navbar-item" href="/blog" role="menuitem">Blog</a>
+<a class="navbar-item" href="/archive" role="menuitem">Archive</a>
+<a class="navbar-item is-hidden-tablet" href="/search" role="none">
+<svg viewBox="0 0 24 20" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="11" cy="11" r="8"></circle>
+<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+</svg>
+</a>
+<form action="/simplesearch.php" class="field has-addons" name="searchfield" data-simplesearch-form>
+<label class="navbar-item is-hidden-mobile is-clickable" for="nav-search" tabindex="-1" title="Navigation search bar">
+<div class="control is-expanded">
+<input id="nav-search" name="searchfield" class="is-clickable" type="text" autocomplete="off" tabindex="-1" required placeholder="Search&#8230;"
+min="3" value=""
+data-search-invalid="Minimum is 3 characters"
+data-search-separator=":"
+data-search-input="/search/query" />
+</div>
+</label>
+</form>
+</div>
+</div>
+<div id="reading-progress" aria-hidden="true"></div>
+</nav><header id="header" class="hero is-dark image" style="--i-hero:url(/images/c/6/7/0/a/c670a52b7dae74537adebe8614fcf4c3105a20e7-consolesandboxlog.png)">
+<div class="hero-body">
+<div class="container is-max-desktop">
+<div class="columns is-multiline ">
+<div class="column is-two-thinds">
+<h1 class="title">Run code in a macOS Sandbox</h1>
+<div class="tags is-unselectable">
+<a class="tag is-primary is-rounded" href="/blog/tag:macos">macos</a>
+<a class="tag is-primary is-rounded" href="/blog/tag:shell">shell</a>
+<a class="tag is-primary is-rounded" href="/blog/tag:coding">coding</a>
+<a class="tag is-primary is-rounded" href="/blog/tag:regex">regex</a>
+<a class="tag is-primary is-rounded" href="/blog/tag:python">python</a>
+</div></div>
+<div class="column is-narrow has-text-black is-unselectable">
+<div class="date columns is-mobile pt-3">
+<div class="column is-narrow is-multiline my-0 ml-3">
+<span class="has-text-weight-semibold">Posted</span> 
+<time datetime="2023-06-11">11 Jun 2023</time>
+</div>
+</div>
+</div> 
+</div>
+</div>
+</div>
+</header>
+<main id="main" class="section">
+<div class="container is-max-desktop">
+<article class="content box">
+<p>I sometimes test randomly downloaded code on macOS in a <strong>Sandbox</strong> that has limited and network access. I posted about this way back in Jan 2017, <a href="/blog/creating-a-macos-sandbox-to-run-kodi">Creating a macOS Sandbox to run Kodi</a>, and this is a short refresher for me...</p>
+
+<div class="notices red">
+<p>The latest macOS <code>man sandbox-exec</code> page states that this command is DEPRECATED! However, I am not aware of any command line alternative... though someone replied on <a href="https://stackoverflow.com/questions/56703697/how-to-sandbox-third-party-applications-when-sandbox-exec-is-deprecated-now" target="_blank" rel="nofollow noopener noreferrer" class="external-link no-image">this topic at Stack Overflow</a>, indicating that the sandbox is not going away (yet).</p>
+</div>
+<h2>Sandbox Log</h2>
+<p>I use this command to view log output from the sandbox:</p>
+<pre><code class="language-sh">log stream --style compact --predicate 'sender=="Sandbox"'</code></pre>
+<p>And in this case, since I want to filter only for messages to do with <code>python</code>:</p>
+<pre><code class="language-sh">log stream --style compact --predicate 'sender=="Sandbox" and eventMessage contains "python"'</code></pre>
+<p>The <strong>Console.app</strong> may also help - hit the <strong>Start</strong> button and then search for <code>sandbox</code>:</p>
+<p><a rel="lightbox" href="/images/c/6/7/0/a/c670a52b7dae74537adebe8614fcf4c3105a20e7-consolesandboxlog.png" data-srcset="/images/6/3/c/3/e/63c3e28703b5e3fefc41d8b3983b084b069ca3a3-consolesandboxlog2x.png 1200w, /images/c/6/7/0/a/c670a52b7dae74537adebe8614fcf4c3105a20e7-consolesandboxlog.png 600w">
+  <img alt="Console.app filtered by &quot;sandbox&quot; logs" src="/images/c/6/7/0/a/c670a52b7dae74537adebe8614fcf4c3105a20e7-consolesandboxlog.png" width="600" height="400" />
+</a></p>
+<h2>Sandbox Exec that Denies by Default</h2>
+<p>The command <code>sandbox-exec</code> runs a process in a sandbox with a “profile” applied. The <code>-p</code> option allows the profile to be specified in-line rather than being read from a file. </p>
+<p>Understanding the profile format is a challenge, and you can <a href="/blog/creating-a-macos-sandbox-to-run-kodi">refer to my prior post</a> for a bit more explanation. Also, check out the in-built sandbox profiles at <code>/System/Library/Sandbox/Profiles</code> for more examples.</p>
+<p>The profile below will <code>deny</code> everything by default. Often the process I am testing will totally fail to run, so I have to monitor the log output above and bit by bit, add additional <code>allow</code>s. This is a long and tedious process!</p>
+<p>In the case of Python:</p>
+<ul>
+<li>Deny all networking... but to allow outgoing networking, I just add <code>(allow network-outbound)</code>, or to allow local networking, I add <code>(allow network* (local ip "localhost:*"))(allow network* (remote ip "localhost:*"))</code></li>
+<li>Allow mandatory IO access for console and files</li>
+<li>Allow reads for core system directory (root, <code>/System</code>, <code>/Library</code>, <code>/private</code>, <code>/dev</code> and <code>/usr</code>) and certain user directories (<code>~/Library</code>) </li>
+<li>Allow read and write to the current working directory <code>$PWD</code>.</li>
+<li>Allow specific processes to be run - in this case <code>python3</code> is a symbolic link to executables in the Xcode Command Line Tools directory.</li>
+</ul>
+<pre><code class="language-sh">sandbox-exec -p '(version 1)(deny default)
+(allow iokit-open)(allow mach* sysctl-read)
+(allow file-ioctl)(allow file-read-metadata)
+(allow file-read-data (literal "/") 
+ (regex "^/System" "^/Library" "^/private" "^/dev" "^/usr" "~/Library"))
+(allow file-read* file-write* (regex "^'$PWD'"))
+(allow process-exec
+ (regex "^/usr/bin/python3" "^/Library/Developer/CommandLineTools/"))' \
+python3</code></pre>
+<p>Quick tests: try opening a port <code>python3 -m http.server 8888</code> or connecting to Google:
+<code>import urllib.request; print(urllib.request.urlopen("http://google.com").read())</code></p>
+<h2>Sandbox Exec that Allows by Default</h2>
+<p>Here is a profile that does the opposite - it allows everything except networking and certain user folders:</p>
+<pre><code class="language-sh">sandbox-exec -p '(version 1)(allow default)(deny network*)(deny file-read-data
+ (regex "^/Users/'$USER'/(Documents|Desktop|Developer|Movies|Music|Pictures)"))' \
+zsh</code></pre>
+<p>Quick tests: try <code>curl google.com</code> or <code>ls ~/Documents</code>.</p>
+<p>You can replace <code>zsh</code> with other command line programs or run executables within Apps (e.g. <code>/Applications/myApp.app/Contents/MacOS/myApp</code>). Don’t  use <code>open /Applications/my.app</code>. Also, apps that manipulate the sandbox or spawn sandboxed children will fail, e.g. with errors like <code>deny forbidden-sandbox-reinit</code> due to missing entitlements for <code>com.apple.security.app-sandbox</code>, <a href="https://developer.apple.com/library/archive/documentation/Miscellaneous/Reference/EntitlementKeyReference/Chapters/EnablingAppSandbox.html" target="_blank" rel="nofollow noopener noreferrer" class="external-link no-image">as described here</a>.</p>
+<p>To quickly test something from the command like without networking and folder access, I use this alias so I can just <code>sandbox zsh</code>:</p>
+<pre><code class="language-sh">alias sandbox='sandbox-exec -p '\''(version 1)(allow default)(deny network*)(deny file-read-data (regex "^/Users/'$USER'/(Documents|Desktop|Developer|Movies|Music|Pictures)"))'\'''</code></pre>
+<p>That’s all for now!</p>
+<div class="level is-mobile">
+<div class="level-left">
+<div class="level-item has-text-left">
+<a class="button is-link is-outlined" role="button" tabindex="0" href="/blog/prevent-macs-from-sleeping">&#10094; Older</a>
+</div>
+</div>
+<div class="level-right">
+<div class="level-item has-text-left">
+<a class="button is-link is-outlined" role="button" tabindex="0" href="/blog/apple-game-porting-toolkit-with-whisky">Newer &#10095;</a>
+</div>
+</div>
+</div>
+</article>
+</div>
+</main>
+<nav id="related" class="section py-3">
+<div class="container is-max-desktop">
+<div class="content box">
+<h3 class="title is-5">Related Posts</h3>
+<div class="tags is-unselectable">
+<a class="tag is-primary is-rounded" href="/blog/tag:guide">guide</a>
+<a class="tag is-primary is-rounded" href="/blog/tag:macos">macos</a>
+<a class="tag is-primary is-rounded" href="/blog/tag:ai">ai</a>
+<a class="tag is-primary is-rounded" href="/blog/tag:container">container</a>
+<a class="tag is-primary is-rounded" href="/blog/tag:art">art</a>
+<a class="tag is-primary is-rounded" href="/blog/tag:coding">coding</a>
+<a class="tag is-primary is-rounded" href="/blog/tag:python">python</a>
+</div>   
+<ul class="related-pages">
+<li><a href="/blog/running-kokoro-tts-via-macos-containerisation-framework" title="Running Kokoro TTS via macOS Containerisation Framework">Running Kokoro TTS via macOS Containerisation Framework</a></li>
+<li><a href="/blog/using-flux1-in-gguf-format-on-macos" title="Using Flux.1 in GGUF format on macOS">Using Flux.1 in GGUF format on macOS</a></li>
+<li><a href="/blog/convert-animated-webp-to-webm-movie-with-python" title="Convert animated WebP to WebM movie with Python">Convert animated WebP to WebM movie with Python</a></li>
+<li><a href="/blog/extracting-images-from-pdf-files" title="Extracting images from PDF files">Extracting images from PDF files</a></li>
+<li><a href="/blog/stable-diffusion-sdxl-1-0-with-comfyui" title="Stable Diffusion SDXL 1.0 with ComfyUI">Stable Diffusion SDXL 1.0 with ComfyUI</a></li>
+</ul>
+        
+     
+</div>
+</div>
+</nav>
+<section id="lightbox" class="modal is-unselectable" role="dialog" aria-hidden="true">
+<div class="modal-background">
+<button class="modal-close is-large" aria-label="close"></button>
+<button class="modal-nav prev" aria-label="Previous"></button>
+<button class="modal-nav next" aria-label="Next"></button>
+</div>
+<div class="modal-content"><img class="image" alt="empty"/></div>
+<strong class="modal-caption pb-2 has-text-weight-bold"></strong>
+</section>
+<footer class="footer is-dark has-text-centered is-unselectable is-size-7 py-6 ">
+<div class="is-size-6">Copyright &copy; 2015-2026 C.Y. Wong</div>
+<div class="block">Served by <a href="https://getgrav.org" target="_blank" rel="noreferrer noopener">Grav</a> | Hand-crafted using <a href="https://bulma.io" target="_blank" rel="noreferrer noopener">Bulma</a> + <a href="https://feathericons.com/" target="_blank" rel="noreferrer noopener">Feather Icons</a></div>
+<div><a id="show-terms" href="/terms">Copyright | CC BY 4.0 | Disclaimer | Cookies</a></div>
+<div>
+<svg width="10" height="10" viewBox="0 0 24 24" stroke="currentColor"><path stroke-width="3" fill="none" d="M4 11a9 9 0 0 1 9 9"/><path stroke-width="3" fill="none" d="M4 4a16 16 0 0 1 16 16"/><circle stroke-width="2" cx="5" cy="19" r="1"/></svg>
+<a href="/blog.atom">Atom</a> | <a href="/blog.rss">RSS</a> | <a href="/blog.json">JSON</a>
+<div class="icon toggle is-pulled-left" title="Toggle dark mode">
+<div id="dark-mode" class="is-inline-flex is-hidden">
+<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+</div>
+<div id="light-mode" class="is-inline-flex is-hidden">
+<svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+</div>
+</div>
+<a id="scroll-top" class="icon is-pulled-right" href="#" title="Scroll to top" aria-label="Top">
+<div class="is-inline-flex"><svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></div>
+</a>
+</div>
+</footer><script src="/assets/007c1de3525f216acec8a7a382514734.js?g-4971b261"></script>
+
+</body>
+</html>

@@ -16,7 +16,7 @@ I was surprised when I realized that. I /did/ get a lot of mundane tasks done wi
 So I did.
 
 ** Common Lisp
-The first thing you learn about Common Lisp is that it is a standard, not an implementation. Luckily, most of online resources guides you to either SBCL or CCL. No headache here. Both worked fine for me.
+The first thing you learn about Common Lisp is that it is a standard, not an implementation. Luckily, most of online resources guide you to either SBCL or CCL. No headache here. Both worked fine for me.
 
 Development with Common Lisp using SLIME feels much like working with Emacs Lisp: immediate and transparent. I find Emacs to have better docstrings, but falling back to HyperSpec is nice too. For a "dead" language Common Lisp has decent amount of books and examples online and in print. Most popular systems have written documentation. I was pleasantly surprised.
 

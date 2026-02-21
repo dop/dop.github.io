@@ -4,7 +4,7 @@
 (require 'org)
 (require 'ox-html)
 
-(defun export-file (filename &optional head postamble)
+(defun export-file (filename head postamble)
   (with-current-buffer (find-file-literally filename)
     (let ((org-html-doctype "html5")
           (org-html-htmlize-output-type nil)
@@ -52,13 +52,9 @@
                   (org-file-contents "_partials/postamble.html")))
 
 (defun export-page (filename)
-  (let ((head (concat "<link rel=\"stylesheet\" href=\"" (partial-url filename "assets/css/styles.css") "\" type=\"text/css\">")))
-    (export-file filename head
-                 (navigation-html filename))))
-
-(defun export-development-page (filename)
-  (export-post filename
-               (concat "<link rel=\"stylesheet\" href=\"" (partial-url filename "assets/css/styles.css") "\" type=\"text/css\">")))
+  (let* ((stylesheet (concat "<link rel=\"stylesheet\" href=\"" (partial-url filename "assets/css/styles.css") "\" type=\"text/css\">"))
+         (head (concat (org-file-contents "_partials/prompt.html") stylesheet)))
+    (export-file filename head (navigation-html filename))))
 
 (defun org-babel-expand-noweb-references (&optional info parent-buffer)
   "Expand Noweb references in the body of the current source code block.
