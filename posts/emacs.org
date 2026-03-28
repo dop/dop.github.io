@@ -1,4 +1,5 @@
 #+TITLE: Why I use Emacs
+#+SUBTITLE: Thanks for asking
 
 #+begin_quote
 How do you tell if somebody's using Emacs?
