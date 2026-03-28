@@ -1,0 +1,35 @@
+#+TITLE: Protesilaos on Emacs
+#+OPTIONS: num:nil toc:nil
+#+PROPERTY: header-args :exports both :results scalar :noweb yes
+
+* Protesilaos on Emacs
+
+Ever since I stumbled upon [[https://www.youtube.com/@protesilaos][Prot's videos on Youtube]] on Emacs I could not help but admire his clarity of thought and thoroughness of his approach.
+
+It wasn't an exception this time around. But what prompted me to jot a note about it is that I found [[file:emacs.org][my feelings about Emacs]] be put in writing so accurately.
+
+* Computing in freedom with GNU Emacs
+
+I writing about Protesilaos' post [[https://protesilaos.com/codelog/2026-03-13-computing-in-freedom-with-gnu-emacs/][Computing in freedom with GNU Emacs]].
+
+Here are some quotes that speak to me the most:
+
+** "Integrated computing in practice"
+
+#+begin_quote
+When you work with many applications that do not play nicely together, you cannot do something that the developers have not envisaged.
+#+end_quote
+
+** "Integration gives you emergent properties"
+
+#+begin_quote
+You define something for one context you have in mind and, eventually, it can be used in another context that initially you had not even thought of.
+
+<...>
+
+The integrated computing environment of Emacs is more than the sum of its parts.
+#+end_quote
+
+* Unix Shell
+
+The last time I felt a revelation like this was when I learned about the shell while following Gentoo installation handbook some odd 20 years ago.
