@@ -124,9 +124,15 @@ Experienced full stack developer with strong JavaScript, TypeScript, and automat
 
 Wix has great culture to grow not only as an engineer or programmer but as a person. Everyday tasks involve a lot of communication, collaboration, and coordination both in spoken and written form. I enjoyed working on user facing products, having time to do it properly, and release it as soon as I'm done thanks to continuous delivery system.
 
+*** Miscellaneous projects
+
+/2025--present/
+
+Moved on to join and eventually lead "special forces" team to help kickstart various projects.
+
 *** Wix Pricing Plans
 
-/2019--Present/
+/2019--2025/
 
 Applied my extensive experience to rewrite and update mission critical parts of the application. Helped to grow frontend team, oversaw technical excellence.
 
@@ -149,7 +155,6 @@ Led exploration of integrating Hotels into WordPress as [[https://wordpress.org/
 /2013/
 
 As a introductory task I developed and deployed third party application for Wix App Market. Used angularjs, Node.js, MongoDB, and Heroku.
-
 ** Freelance web developer
 
 /2011--2013/
