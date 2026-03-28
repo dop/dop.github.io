@@ -4,3 +4,19 @@
 #+begin_quote
 I must not fear. Fear is the mind-killer.
 #+end_quote
+
+Fear is an important instinct to possess. It helps us stay alive.
+
+Fear can also be crippling and a detriment to our progress.
+
+Software engineering, at least when it comes to long term maintenance and development, is no exception. Big or deep changes may get postponed because of fear of breaking important functionality. This leads to requests for code-freeze, thorough manual QA cycles, branching (e.g. feature toggles) for parallel development which never catches up. All of this will stall the progress and most likely end up in failure -- bit rot and abandonment.
+
+The only solution that I found to work for me and the teams I worked on was to exercise early and often. Don't skip initial "too-simple" tests. Don't skip initial "not-worth-yet" E2E tests. Both of those will soon be needed as system's complexity grows.
+
+Complexity crosses the threshold of your mental capacity suddenly. At that moment one tends to moan "I wish I didn't skim on tests." Time to pay the debt or double down for even more stress and fear in the future.
+
+Use unit tests. Use integration tests. Use end-to-end tests. Use screenshot tests. Use live development if possible (hot code reloading.)
+
+You, your team mates, and newcomers will be able to fearlessly code and progress.
+
+And yes, your code must be written to be testable (exercisable.)
