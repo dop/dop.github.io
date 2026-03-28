@@ -94,3 +94,58 @@ h2, h3, h4, h5, h6, .figure {
 .note {
   display: none;
 }
+
+#help {
+  font-size: 12pt;
+  position: fixed;
+  display: flex;
+  left: 1em;
+  top: 1em;
+  color: black;
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 32px #eee;
+  border-radius: 1em;
+  padding: 1em;
+  box-sizing: border-box;
+}
+
+#help code {
+  color: black;
+  background: #eee;
+  margin: 0 0.2em;
+}
+
+#key-bindings {
+  th, td {
+    padding: 0.5em;
+    border: 1px solid #eee;
+  }
+
+  td:first-child, th:first-child {
+    text-align: right;
+  }
+  td:last-child, th:last-child {
+    text-align: left;
+  }
+}
+
+#help-toggle {
+  font-size: 14pt;
+  position: fixed;
+  right: 4px;
+  bottom: 4px;
+  color: var(--foreground);
+  border: 1px solid var(--foreground);
+  background: var(--background);
+  border-radius: 50%;
+  opacity: .75;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0;
+  cursor: pointer;
+}
+
+#postamble {
+  display: none;
+}

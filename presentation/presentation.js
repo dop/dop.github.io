@@ -78,37 +78,32 @@ function exitPresentation() {
   }
 }
 
-const commands = {
-  // Next
-  n: next,
-  N: next,
-  ArrowDown: next,
-  ArrowRight: next,
-  ' ': next,
 
-  // Previous
-  p: previous,
-  p: previous,
-  ArrowUp: previous,
-  ArrowLeft: previous,
-  Backspace: previous,
-  b: firstSlide,
-  B: firstSlide,
-  e: lastSlide,
-  E: lastSlide,
 
-  f: toggleFullscreen,
-  F: toggleFullscreen,
+const docs = new Map([
+  [next, 'Next slide.'],
+  [previous, 'Previous slide.'],
+]);
 
-  t: toggleColorScheme,
-  T: toggleColorScheme,
+const commands = new Map([
+  [next, { doc: 'Next slide.', keys: ['n', 'N', 'ArrowDown', 'ArrowRight', ' '] }],
+  [previous, { doc: 'Previous slide.', keys: ['p', 'P', 'ArrowUp', 'ArrowLeft', 'Backspace'] }],
+  [firstSlide, { doc: 'First slide.', keys: ['b', 'B'] }],
+  [lastSlide, { doc: 'Last slide.', keys: ['e', 'E'] }],
+  [toggleFullscreen, { doc: 'Toggle fullscreen.', keys: ['f', 'F'] }],
+  [toggleColorScheme, { doc: 'Toggle theme.', keys: ['t', 'T'] }],
+  [zoomIn, { doc: 'Zoom in.', keys: ['=', '+'] }],
+  [zoomOut, { doc: 'Zoom out.', keys: ['-'] }],
+  [zoom0, { doc: 'Default zoom.', keys: ['0'] }],
+  [exitPresentation, { doc: 'Exit presentation.', keys: ['x', 'X'] }],
+  [toggleHelp, { doc: 'Toggle help.', keys: ['?'] }],
+])
 
-  '-': zoomOut,
-  '=': zoomIn,
-  '0': zoom0,
-
-  x: exitPresentation,
-  X: exitPresentation,
+const commandByKey = new Map();
+for (const [command, {keys}] of commands.entries()) {
+  for (const key of keys) {
+    commandByKey[key] = command;
+  }
 }
 
 function setFontZoom() {
@@ -120,6 +115,7 @@ function initializePresentation() {
   initializeSlides();
   initializeKeyBindings();
   initializeMouseEvents();
+  initializeHelp();
 }
 
 function destroyPresentation() {
@@ -145,7 +141,7 @@ function initializeSlides() {
 }
 
 function runPresentation(event) {
-  const command = commands[event.key];
+  const command = commandByKey[event.key];
   if (command) {
     event.preventDefault();
     command();
@@ -181,3 +177,45 @@ function navigate(event) {
     next();
   }
 }
+
+function initializeHelp() {
+  document.body.insertAdjacentHTML(
+    'beforeend',
+    '<button id="help-toggle" onclick="javascript:toggleHelp()">?</button>',
+  );
+}
+
+function toggleHelp() {
+  const help = document.getElementById("help");
+  if (help) {
+    help.remove();
+  } else {
+    let table = '<div id="help"><table id="key-bindings">';
+    table += '<thead><th>Key</th><th>Binding</th></thead>';
+
+    for (const [command, {doc, keys}] of commands.entries()) {
+      table += '<tr><td>';
+      for (const key of keys) {
+        table += '<code>' + prettyKey(key) + '</code>';
+      }
+      table += `</td><td>${doc}</td></tr>`;
+    }
+
+    table += '</table></div>';
+    document.body.insertAdjacentHTML('afterbegin', table);
+  }
+}
+
+const prettyKeys = {
+  ArrowDown: '↓',
+  ArrowUp: '↑',
+  ArrowRight: '→',
+  ArrowLeft: '←',
+  Backspace: '⌫',
+  ' ': '␣',
+}
+
+function prettyKey(key) {
+  return prettyKeys[key] ?? key;
+}
+
