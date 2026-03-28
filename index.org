@@ -14,6 +14,7 @@
 - [[file:posts/aoc-quick-n-dirty-parsing.org][Advent of Code: Quick & Dirty Parsing]]
 - [[file:posts/two-pointers-technique.org][Two Pointers Technique]]
 - [[file:posts/protesilaos-on-emacs.org][Protesilaos on Emacs]]
+- [[file:posts/returning-early.org][Returning early]]
 
 * Miscellaneous
 

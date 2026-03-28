@@ -1,0 +1,141 @@
+#+TITLE: Returning early
+#+SUBTITLE: But not eerily!
+#+OPTIONS: num:nil toc:nil
+#+PROPERTY: header-args :exports both :results scalar :noweb yes
+
+* Early return
+
+From time to time I get criticized for not using early returns to improve code readability. Essentially writing this
+
+#+begin_src javascript
+  function doThatThing(thing, status) {
+    if (thing && status == 'good') {
+      doingThat(thing);
+      doingTelemetryOn(thing);
+    }
+  }
+#+end_src
+
+instead of
+
+#+begin_src javascript
+  function doThatThing(thing, status) {
+    if (!thing || status !== 'good') {
+      return;
+    }
+
+    doingThat(thing);
+    doingTelemetryOn(thing);
+  }
+#+end_src
+
+I guess this teeters on the line between style preference and actually being better or worse.
+
+* Explicit cases
+
+I don't have strong opinion on the early return example above. What I don't like is using it in cases where branch does more than just exit.
+
+#+begin_src javascript
+  function doSomeThing(thing, status) {
+    if (!thing || status !== 'good') {
+      handlingFailure(thing);
+      failureTelemetry(thing);
+      return;
+    }
+
+    doingThat(thing);
+    doingTelemetryOn(thing);
+  }
+#+end_src
+
+Somehow, that little =return= is getting lost. It's too easy to lose it when refactoring. In addition, first lines handle edge case instead of primary logic. Inverting and adding explicit =else= seems better.
+
+#+begin_src javascript
+  function doSomeThing(thing, status) {
+    if (thing && status == 'good') {
+      doingThat(thing);
+      doingTelemetryOn(thing);
+    } else {
+      handlingFailure(thing);
+      failureTelemetry(thing);
+    }
+  }
+#+end_src
+
+* Eerie return
+
+There are even worse offenders. Let's call them *earie returns*.
+
+Returning "early" but in the middle of a routine.
+
+#+begin_src javascript
+  function doSomeThing(thing, status) {
+    const someData = calculateData(thing);
+
+    if (status != 'done' && interestingCase(thing, someData)) {
+      handlingFailure(thing);
+      failureTelemetry(thing, someData);
+      return;
+    }
+
+    doingThat(thing);
+    doingTelemetryOn(thing);
+  }
+#+end_src
+
+Returning "early" but it is nested more than one level.
+
+#+begin_src javascript
+  function doSomeThing(thing, status) {
+    if (!thing || status != 'done') {
+      if (thing && specialCase(thing)) {
+        forSomeReasonThisIsFineAndCanContinue(thing);
+      } else {
+        handlingFailure(thing);
+        failureTelemetry(thing, someData);
+        return;
+      }
+    }
+
+    doingThat(thing);
+    doingTelemetryOn(thing);
+  }
+#+end_src
+
+All such cases require paying very good attention, which humans aren't good at.[fn:1]
+
+Losing =return= when refactoring can easily slip through automated test suite. Because every test case now requires checking that something did not happen. A thing that is famously hard to assert in asynchronous systems. [fn:2] [fn:3]
+
+* Returns I like
+
+I prefer one return at the end of a function.
+
+I'm also fine with early returns that help catch issues. But they should be an assertion style return.
+
+#+begin_src javascript
+  function doSomeThing(thing, status) {
+    if (invalidThing(thing)) {
+      throw new Error(...)
+      // or return console.error(...)
+    }
+
+    if (invalidStatus(status)) {
+      throw new Error(...)
+      // or return console.error(...)
+    }
+
+    doingThat(thing);
+    doingTelemetryOn(thing);
+  }
+#+end_src
+
+Everything else is just asking for trouble.
+
+* Footnotes
+
+[fn:3] How long to wait to know that button will not appear, email will not be sent, or message will not be logged? Some confidence can be gained by fuzzing or property testing. Redesigning system to have [[https://functional-architecture.org/functional_core_imperative_shell/][functional core and imperative shell]] could also help.
+
+[fn:2] https://en.wikipedia.org/wiki/Absence_of_evidence
+
+[fn:1] For this reason I've made Emacs highlight "dangerous" keywords:
+: (font-lock-add-keywords nil '(("\\<\\(continue\\|break\\|return\\|throw\\)\\>" . 'error)))
