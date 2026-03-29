@@ -20,7 +20,7 @@ clean:
 	rm -f $(htmls:html=html~)
 
 watch:
-	fswatch -0 -e .* -Ei '(\.org|Makefile|\.el)$$' . | xargs -0 -I {} make
+	fswatch -0 -e .* -Ei '(\.org|Makefile|\.el|_partials/.*\.html)$$' . | xargs -0 -I {} make
 
 serve:
 	go run serve.go
