@@ -82,9 +82,8 @@ h2, h3, h4, h5, h6 {
   display: block;
 }
 
-#contacts a {
-  margin: 0 .25em;
-}
+#contacts a { margin: 0 .25em; }
+#content #contacts a:after { display: none }
 
 @media (prefers-color-scheme: dark) {
   #contacts svg {

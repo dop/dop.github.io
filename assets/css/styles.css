@@ -120,6 +120,13 @@ h5 a[href^="#"]:hover
 {
   text-decoration: none;
 }
+#footnotes, #navigation, #content {
+  a[href^="http"]:after {
+    content: "↗";
+    font-family: Source Code Pro, 'IBM Plex Mono', Courier New, monospace, sans-serif;
+    display: inline-block;
+  }
+}
 
 code, pre {
   font-size: 10pt;
