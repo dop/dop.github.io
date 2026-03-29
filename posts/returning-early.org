@@ -1,7 +1,7 @@
 #+TITLE: Returning early
 #+SUBTITLE: But not eerily!
 #+OPTIONS: num:nil toc:nil
-#+PROPERTY: header-args :exports both :results scalar :noweb yes
+#+PROPERTY: header-args :eval no :exports both :results scalar :noweb yes
 
 * Early return
 

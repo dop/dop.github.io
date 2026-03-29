@@ -1,6 +1,7 @@
 #+TITLE: Writing Testable Code
 #+SUBTITLE: TypeScript and JavaScript Edition
 #+OPTIONS: num:nil
+#+PROPERTY: header-args :eval no :exports both :results scalar :noweb yes
 
 /Reading time: up to 10 years/.
 

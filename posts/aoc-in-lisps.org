@@ -1,7 +1,7 @@
 #+TITLE: Advent of Code and Going of Lisps
 #+SUBTITLE: Wasting time with dying languages
 #+OPTIONS: num:nil toc:nil
-#+PROPERTY: header-args :exports both :results scalar :noweb yes
+#+PROPERTY: header-args :eval no :exports both :results scalar :noweb yes
 
 * Falling in love with the old friend
 In recent years I discovered Lisp. It might sound strange, but I am using Emacs for more than a decade now and most of this time I regarded Emacs Lisp as unworthy of my attention. It did not look attractive. I would use it to get the job done and leave without any remorse or second thought[fn:1].

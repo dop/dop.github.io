@@ -1,6 +1,7 @@
 #+TITLE: Intro to React Component Driver
 #+SUBTITLE: Prezentacija Praktikantams
 #+DATE: <2020-05-20 Wed>
+#+PROPERTY: header-args :eval no :exports both :results scalar :noweb yes
 
 #+BEGIN_SRC elisp :exports none :results none
 (defvar demo-repl-buffer-name "repl")

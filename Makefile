@@ -7,15 +7,17 @@ posts := $(wildcard posts/*.org)
 pages := $(wildcard pages/*.org)
 htmls := index.html $(posts:org=html) $(pages:org=html)
 
+.PHONY: all clean watch
+
 all: $(htmls)
 
 %.html: %.org $(partials) $(libs)
+	@echo $@ $^
 	$(build) -eval "(export-page \"$<\")"
 
-.PHONEY: clean watch
-
 clean:
-	rm -f $(htmls) $(htmls:html:html~)
+	rm -f $(htmls)
+	rm -f $(htmls:html=html~)
 
 watch:
 	fswatch -0 -e .* -Ei '(\.org|Makefile|\.el)$$' . | xargs -0 -I {} make

@@ -1,6 +1,6 @@
 #+TITLE: Advent of Code: Quick & Dirty Parsing
 #+OPTIONS: num:nil toc:nil
-#+PROPERTY: header-args :exports both :results scalar :noweb yes
+#+PROPERTY: header-args :eval no :exports both :results scalar :noweb yes
 
 * [[https://adventofcode.com/2020/day/2][Password Philosophy]]
 After a couple of AoCs I have an impression that quick and dirty parsing is usually the best approach: choosing correct separator for string splitting and converting strings to numbers covers most of the requirements.

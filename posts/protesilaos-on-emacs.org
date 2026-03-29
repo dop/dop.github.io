@@ -1,6 +1,6 @@
 #+TITLE: Protesilaos on Emacs
 #+OPTIONS: num:nil toc:nil
-#+PROPERTY: header-args :exports both :results scalar :noweb yes
+#+PROPERTY: header-args :eval no :exports both :results scalar :noweb yes
 
 * Protesilaos on Emacs
 
