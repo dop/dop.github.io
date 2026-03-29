@@ -47,7 +47,8 @@
 
 (defun navigation-html (exported-filename)
   (string-replace "<!-- links -->"
-                  (cl-loop for (name link) in '(("Index" "index.html"))
+                  (cl-loop for (name link) in '(("Index" "index.html")
+                                                ("Resumé" "pages/resume.html"))
                            concat (concat "<li><a href=\"" (partial-url exported-filename link) "\">" name "</a></li>"))
                   (org-file-contents "_partials/postamble.html")))
 
