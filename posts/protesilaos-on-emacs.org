@@ -4,13 +4,13 @@
 
 * Protesilaos on Emacs
 
-Ever since I stumbled upon [[https://www.youtube.com/@protesilaos][Prot's videos on Youtube]] on Emacs I could not help but admire his clarity of thought and thoroughness of his approach.
+Ever since I stumbled upon [[https://www.youtube.com/@protesilaos][Prot's videos on Youtube]] about Emacs I could not help but admire his clarity of thought and thoroughness of his approach.
 
 It wasn't an exception this time around. But what prompted me to jot a note about it is that I found [[file:emacs.org][my feelings about Emacs]] be put in writing so accurately.
 
 * Computing in freedom with GNU Emacs
 
-I writing about Protesilaos' post [[https://protesilaos.com/codelog/2026-03-13-computing-in-freedom-with-gnu-emacs/][Computing in freedom with GNU Emacs]].
+I'm writing about Protesilaos' post [[https://protesilaos.com/codelog/2026-03-13-computing-in-freedom-with-gnu-emacs/][Computing in freedom with GNU Emacs]].
 
 Here are some quotes that speak to me the most:
 
