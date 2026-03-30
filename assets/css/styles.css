@@ -122,8 +122,8 @@ h5 a[href^="#"]:hover
 }
 #footnotes, #navigation, #content {
   a[href^="http"] {
-    text-wrap: nowrap;
-    &:after {
+    text-wrap: pretty;
+    &::after {
       content: "";
       background: currentColor;
       display: inline-block;
@@ -210,16 +210,16 @@ blockquote {
   background: linear-gradient(var(--dim), var(--dimmer));
   border-bottom: 1px solid var(--dim);
 }
-blockquote:before {
+blockquote::after {
   content: ',,';
   font-family: Georgia;
   font-style: normal;
   position: absolute;
-  font-size: 72pt;
+  font-size: 32pt;
   line-height: 1;
-  top: -.6em;
-  right: .1em;
-  color: var(--dimmer);
+  top: -0.8em;
+  right: 0.1em;
+  opacity: 0.5;
   z-index: 0;
 }
 
