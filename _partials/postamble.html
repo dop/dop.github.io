@@ -9,6 +9,47 @@
   </ul>
 </nav>
 
+<div id="settings" style="display: none">
+  <label>
+    <span>Color scheme:</span>
+    <select id="theme" onchange="javascript:changeTheme(this);">
+      <option value="system">Default</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </label>
+
+  <script>
+    (function () {
+      let doc = document.documentElement;
+      let settings = document.getElementById('settings');
+      let select = document.getElementById('theme');
+      let storage = window.localStorage;
+
+      function setTheme(theme) {
+        storage.setItem('theme', theme);
+        doc.dataset.theme = theme;
+        select.value = theme;
+      }
+
+      try {
+        let theme = storage.getItem('theme') ?? 'system';
+        settings.style.display = 'block';
+        setTheme(theme);
+      } catch (e) {
+      }
+
+      window.changeTheme = function (select) {
+        setTheme(select.value);
+      }
+    })();
+  </script>
+</div>
+
+<div id="copyright">
+  <p>© Donatas Petrauskas</p>
+</div>
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SLMC8MREG7"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -16,7 +57,3 @@
   gtag('js', new Date());
   gtag('config', 'G-SLMC8MREG7');
 </script>
-
-<p>
-  © Donatas Petrauskas
-</p>

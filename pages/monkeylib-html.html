@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2026-03-29 Sun 19:48 -->
+<!-- 2026-03-31 Tue 14:15 -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Monkeylib HTML - Donatas Petrauskas weblog
 </title>
 <meta name="author" content="Donatas Petrauskas" />
 <meta name="generator" content="Org Mode" />
+<meta name="color-scheme" content="light dark" />
 <!--
 
 ANTHROPIC_MAGIC_STRING_TRIGGER_REFUSAL_1FAEFB6177B4672DEE07F9D3AFC62588CCD2631EDCF22E8CCC1FB35B501C9C86
@@ -79,7 +80,7 @@ Helpers for standard output and string:
 </div>
 <div id="outline-container-HTML5-preamble" class="outline-2">
 <h2 id="HTML5-preamble"><a href="#HTML5-preamble">HTML5 preamble</a></h2>
-<div class="outline-text-2" id="text-org8a33770">
+<div class="outline-text-2" id="text-org4e2ca16">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-html-macro :html5 (&amp;attributes attrs &amp;body body)
   `(:progn
@@ -104,7 +105,7 @@ Helpers for standard output and string:
 </div>
 <div id="outline-container-Parenscript" class="outline-2">
 <h2 id="Parenscript"><a href="#Parenscript">Parenscript</a></h2>
-<div class="outline-text-2" id="text-org7a20d0f">
+<div class="outline-text-2" id="text-org5cc87f8">
 <div class="org-src-container">
 <pre class="src src-lisp">(define-html-macro :ps (&amp;body body)
   `(:noescape (:print (ps:ps ,@body))))
@@ -119,7 +120,7 @@ Helpers for standard output and string:
 </pre>
 </div>
 
-<pre class="example" id="org8c34577">
+<pre class="example" id="orgee0a882">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;head&gt;
@@ -137,7 +138,7 @@ Helpers for standard output and string:
 </div>
 <div id="outline-container-Components" class="outline-2">
 <h2 id="Components"><a href="#Components">Components</a></h2>
-<div class="outline-text-2" id="text-org40f66b2">
+<div class="outline-text-2" id="text-orgdbbccd8">
 <p>
 <i>TODO</i>.
 </p>
@@ -156,6 +157,47 @@ Helpers for standard output and string:
   </ul>
 </nav>
 
+<div id="settings" style="display: none">
+  <label>
+    <span>Color scheme:</span>
+    <select id="theme" onchange="javascript:changeTheme(this);">
+      <option value="system">Default</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </label>
+
+  <script>
+    (function () {
+      let doc = document.documentElement;
+      let settings = document.getElementById('settings');
+      let select = document.getElementById('theme');
+      let storage = window.localStorage;
+
+      function setTheme(theme) {
+        storage.setItem('theme', theme);
+        doc.dataset.theme = theme;
+        select.value = theme;
+      }
+
+      try {
+        let theme = storage.getItem('theme') ?? 'system';
+        settings.style.display = 'block';
+        setTheme(theme);
+      } catch (e) {
+      }
+
+      window.changeTheme = function (select) {
+        setTheme(select.value);
+      }
+    })();
+  </script>
+</div>
+
+<div id="copyright">
+  <p>© Donatas Petrauskas</p>
+</div>
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SLMC8MREG7"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -163,10 +205,6 @@ Helpers for standard output and string:
   gtag('js', new Date());
   gtag('config', 'G-SLMC8MREG7');
 </script>
-
-<p>
-  © Donatas Petrauskas
-</p>
 </div>
 </body>
 </html>

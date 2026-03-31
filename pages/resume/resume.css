@@ -85,15 +85,21 @@ h2, h3, h4, h5, h6 {
 #contacts a { margin: 0 .25em; }
 #content #contacts a:after { display: none }
 
-@media (prefers-color-scheme: dark) {
-  #contacts svg {
-    fill: white;
-  }
-
+:root[data-theme="dark"] {
+  #contacts svg { fill: white; }
   .spider-body { fill: white }
   .spider-legs { stroke: white; }
   .spider-eye { fill: black }
   .spider-web { stroke: #555 }
+}
+:root[data-theme="system"] {
+  @media (prefers-color-scheme: dark) {
+    #contacts svg { fill: white; }
+    .spider-body { fill: white }
+    .spider-legs { stroke: white; }
+    .spider-eye { fill: black }
+    .spider-web { stroke: #555 }
+  }
 }
 
 @media (min-width: 480px) {

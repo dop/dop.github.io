@@ -6,6 +6,10 @@
 
 (defvar blog-title-suffix (format " - %s weblog" user-full-name))
 
+(defun blog-html-meta-tags (info)
+  (append (org-html-meta-tags-default info)
+          '(("name" "color-scheme" "light dark"))))
+
 (defun export-file (filename head postamble)
   (with-current-buffer (find-file-literally filename)
     (let ((org-html-doctype "html5")
@@ -14,7 +18,8 @@
           (org-html-head-include-scripts nil)
           (org-html-postamble postamble)
           (org-html-head head)
-          (org-html-self-link-headlines t))
+          (org-html-self-link-headlines t)
+          (org-html-meta-tags #'blog-html-meta-tags))
       (org-html-export-to-html))))
 
 (defun slugify (text)

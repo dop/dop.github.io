@@ -1,3 +1,48 @@
+:root {
+  color-scheme: var(--color-scheme, light);
+  --foreground: #343637;
+  --background: white;
+  --dim: #eeeeec;
+  --dimmer: #fafafa;
+  --link: blue;
+  --highlight: rgba(255, 255, 0, 0.25);
+
+  a, a:visited { color: var(--link); }
+
+  h1, h2, h3, h4, h5 {
+    a[href^="#"] {
+      &, &:hover, &:visited {
+        text-decoration: none;
+        color: var(--foreground);
+      }
+    }
+    &:target {
+      background-color: var(--highlight);
+    }
+  }
+
+  &[data-theme="dark"] {
+    --color-scheme: dark;
+    --background: #343637;
+    --foreground: white;
+    --dim: #545657;
+    --dimmer: #444647;
+    --link: #00bfff;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    &[data-theme="system"] {
+      --color-scheme: dark;
+      --background: #343637;
+      --foreground: white;
+      --dim: #545657;
+      --dimmer: #444647;
+      --link: #00bfff;
+    }
+  }
+}
+
+
 body, html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -23,7 +68,7 @@ body, h1, h2, h3, h4, h5 {
 .done   { font-family: monospace; color: green; }
 .priority { font-family: monospace; color: orange; }
 .tag    { background-color: #eee; font-family: monospace;
-          padding: 2px; font-size: 80%; font-weight: normal; }
+  padding: 2px; font-size: 80%; font-weight: normal; }
 .timestamp { color: #bebebe; }
 .timestamp-kwd { color: #5f9ea0; }
 .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -74,13 +119,6 @@ textarea { overflow-x: auto; }
 { background-color: #ffff00; color: #000000; font-weight: bold; }
 .org-svg { width: 90%; }
 
-:root {
-  --foreground: #343637;
-  --background: white;
-  --dim: #eeeeec;
-  --dimmer: #fafafa;
-}
-
 body {
   margin: 10em auto 1em;
   max-width: 800px;
@@ -105,21 +143,7 @@ a {
 a:hover {
   text-decoration: underline;
 }
-h1 a[href^="#"],
-h2 a[href^="#"],
-h3 a[href^="#"],
-h4 a[href^="#"],
-h5 a[href^="#"] {
-  color: var(--foreground);
-}
-h1 a[href^="#"]:hover,
-h2 a[href^="#"]:hover,
-h3 a[href^="#"]:hover,
-h4 a[href^="#"]:hover,
-h5 a[href^="#"]:hover
-{
-  text-decoration: none;
-}
+
 #footnotes, #navigation, #content {
   a[href^="http"] {
     text-wrap: pretty;
@@ -157,13 +181,16 @@ code, pre {
   font-size: 10pt;
   font-family: sans-serif;
   padding-top: 3em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
 
 #navigation {
   display: flex;
   gap: 1em;
   flex-wrap: wrap;
-  padding: 2em 0;
+  padding: 2em 0 1em;
   border-top: 1px solid var(--dim);
 }
 
@@ -238,35 +265,5 @@ img, image, video {
   }
   #footnotes {
     font-size: 11pt;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #343637;
-    --foreground: white;
-    --dim: #545657;
-    --dimmer: #444647;
-  }
-  a {
-    color: #00bfff;
-  }
-  a:visited {
-    color: #938fff;
-  }
-  h1 a[href^="#"],
-  h2 a[href^="#"],
-  h3 a[href^="#"],
-  h4 a[href^="#"],
-  h5 a[href^="#"] {
-    color: var(--foreground);
-  }
-  h1 a[href^="#"]:hover,
-  h2 a[href^="#"]:hover,
-  h3 a[href^="#"]:hover,
-  h4 a[href^="#"]:hover,
-  h5 a[href^="#"]:hover
-  {
-    text-decoration: none;
   }
 }
