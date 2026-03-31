@@ -31,7 +31,7 @@
   }
 
   @media (prefers-color-scheme: dark) {
-    &[data-theme="system"] {
+    &[data-theme="system"], &:not(:has([data-theme]))  {
       --color-scheme: dark;
       --background: #343637;
       --foreground: white;
@@ -41,7 +41,6 @@
     }
   }
 }
-
 
 body, html {
   -webkit-font-smoothing: antialiased;
