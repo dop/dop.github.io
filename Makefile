@@ -12,7 +12,6 @@ htmls := index.html $(posts:org=html) $(pages:org=html)
 all: $(htmls)
 
 %.html: %.org $(partials) $(libs)
-	@echo $@ $^
 	$(build) -eval "(export-page \"$<\")"
 
 clean:
